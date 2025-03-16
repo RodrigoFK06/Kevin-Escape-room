@@ -60,16 +60,17 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video de fondo con efecto de distorsión */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+    <section className="relative w-screen h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-brand-dark/50 z-10"></div>
-        <div className="w-full h-full bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 bg-[url('/2151626660.jpg?height=1080&width=1920')] bg-cover bg-center bg-no-repeat"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/70 via-brand-dark/50 to-brand-dark z-10"></div>
       </div>
 
       {/* Contenido */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+
+        {/* Contenido Hero centrado */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,7 +83,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="block">Descifra. Resuelve. Escapa.</span>
+            <span className="block">Descifra Resuelve Escapa</span>
             <span className="block text-brand-gold">¿Podrás salir a tiempo?</span>
           </motion.h1>
 
@@ -132,7 +133,7 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Contador de tiempo - Con z-index más alto y posición fija */}
+      {/* Contador fijo */}
       <motion.div
         className="fixed left-4 bottom-4 z-[100] hidden md:block"
         initial={{ opacity: 0, scale: 0.8 }}
@@ -145,6 +146,7 @@ export function HeroSection() {
         </div>
       </motion.div>
     </section>
+
   )
 }
 

@@ -69,7 +69,10 @@ export function EscapeRooms() {
     return Array(5)
       .fill(0)
       .map((_, i) => (
-        <Star key={i} className={`h-4 w-4 ${i < difficulty ? "text-yellow-500 fill-yellow-500" : "text-gray-600"}`} />
+        <Star
+          key={i}
+          className={`h-4 w-4 ${i < difficulty ? "text-yellow-500 fill-yellow-500" : "text-gray-600"}`}
+        />
       ))
   }
 
@@ -91,7 +94,7 @@ export function EscapeRooms() {
   return (
     <section
       id="cuartos"
-      className="py-16 md:py-24 bg-gradient-to-b from-brand-dark to-[#0a141f] relative w-full overflow-hidden"
+      className="my-12 py-16 md:py-24 bg-gradient-to-b from-brand-dark to-[#0a141f] relative w-full overflow-hidden rounded-2xl"
     >
       <div className="absolute inset-0 opacity-30 mix-blend-overlay">
         <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-repeat opacity-5"></div>
@@ -124,7 +127,21 @@ export function EscapeRooms() {
         >
           {/* Sala destacada */}
           <motion.div variants={itemVariants} className="lg:col-span-8 lg:row-span-2">
-            <div className="relative h-full min-h-[400px] rounded-xl overflow-hidden border border-brand-gold/20 hover:border-brand-gold/50 transition-all duration-300 group">
+            <div
+              className="
+                relative 
+                h-full 
+                min-h-[400px] 
+                lg:h-[550px]                     /* <<< Ajuste de altura en pantallas grandes */
+                rounded-xl 
+                overflow-hidden 
+                border border-brand-gold/20 
+                hover:border-brand-gold/50 
+                transition-all 
+                duration-300 
+                group
+              "
+            >
               <Image
                 src={rooms[0].image || "/placeholder.svg"}
                 alt={rooms[0].name}
@@ -139,7 +156,9 @@ export function EscapeRooms() {
                   DESTACADO
                 </div>
 
-                <h3 className="text-3xl md:text-4xl font-bold mb-2 text-white font-display">{rooms[0].name}</h3>
+                <h3 className="text-3xl md:text-4xl font-bold mb-2 text-white font-display">
+                  {rooms[0].name}
+                </h3>
 
                 <div className="flex items-center mb-3">
                   <div className="flex mr-4">{renderStars(rooms[0].difficulty)}</div>
@@ -157,20 +176,28 @@ export function EscapeRooms() {
                   ))}
                 </div>
 
-                <p className="text-gray-300 mb-6 text-base md:text-lg max-w-2xl font-sans">{rooms[0].description}</p>
+                <p className="text-gray-300 mb-6 text-base md:text-lg max-w-2xl font-sans">
+                  {rooms[0].description}
+                </p>
 
                 <div className="flex flex-wrap items-center gap-4 mb-4">
                   <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-3 py-2 rounded-lg">
                     <Users className="h-4 w-4 text-brand-gold mr-2" />
-                    <span className="text-sm text-gray-300 font-sans">{rooms[0].players} jugadores</span>
+                    <span className="text-sm text-gray-300 font-sans">
+                      {rooms[0].players} jugadores
+                    </span>
                   </div>
                   <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-3 py-2 rounded-lg">
                     <Clock className="h-4 w-4 text-brand-gold mr-2" />
-                    <span className="text-sm text-gray-300 font-sans">{rooms[0].time}</span>
+                    <span className="text-sm text-gray-300 font-sans">
+                      {rooms[0].time}
+                    </span>
                   </div>
                   <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-3 py-2 rounded-lg">
                     <Key className="h-4 w-4 text-brand-gold mr-2" />
-                    <span className="text-sm text-gray-300 font-sans">Dificultad alta</span>
+                    <span className="text-sm text-gray-300 font-sans">
+                      Dificultad alta
+                    </span>
                   </div>
                 </div>
 
@@ -196,10 +223,29 @@ export function EscapeRooms() {
           <div className="lg:col-span-4 grid grid-cols-1 gap-8">
             {rooms.slice(1).map((room, index) => (
               <motion.div key={room.id} variants={itemVariants}>
-                <div className="bg-brand-dark border border-brand-gold/20 rounded-lg overflow-hidden hover:border-brand-gold/50 transition-all duration-300 group h-full">
-                  <div className="relative h-48 overflow-hidden">
+                <div
+                  className="
+                    bg-brand-dark 
+                    border border-brand-gold/20 
+                    rounded-lg 
+                    overflow-hidden 
+                    hover:border-brand-gold/50 
+                    transition-all 
+                    duration-300 
+                    group 
+                    h-full
+                  "
+                >
+                  <div
+                    className="
+                      relative 
+                      h-48 
+                      md:h-56           /* <<< Ajuste de altura para sec. cards en escritorio */
+                      overflow-hidden
+                    "
+                  >
                     <Image
-                      src={room.image || "/placeholder.svg"}
+                      src={room.image || '/placeholder.svg'}
                       alt={room.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -215,7 +261,18 @@ export function EscapeRooms() {
                   </div>
 
                   <div className="p-5 md:p-6">
-                    <h3 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-brand-gold transition-colors font-display">
+                    <h3
+                      className="
+                        text-xl 
+                        md:text-2xl 
+                        font-bold 
+                        mb-2 
+                        text-white 
+                        group-hover:text-brand-gold 
+                        transition-colors 
+                        font-display
+                      "
+                    >
                       {room.name}
                     </h3>
 
@@ -228,7 +285,16 @@ export function EscapeRooms() {
                       {room.tags?.map((tag, idx) => (
                         <span
                           key={idx}
-                          className="bg-[#0a141f]/50 border border-brand-gold/30 px-1.5 py-0.5 rounded text-xs font-sans"
+                          className="
+                            bg-[#0a141f]/50 
+                            border 
+                            border-brand-gold/30 
+                            px-1.5 
+                            py-0.5 
+                            rounded 
+                            text-xs 
+                            font-sans
+                          "
                         >
                           {tag}
                         </span>
@@ -238,15 +304,21 @@ export function EscapeRooms() {
                     <div className="flex items-center space-x-4 mb-4">
                       <div className="flex items-center">
                         <Users className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1" />
-                        <span className="text-xs md:text-sm text-gray-400 font-sans">{room.players} jugadores</span>
+                        <span className="text-xs md:text-sm text-gray-400 font-sans">
+                          {room.players} jugadores
+                        </span>
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1" />
-                        <span className="text-xs md:text-sm text-gray-400 font-sans">{room.time}</span>
+                        <span className="text-xs md:text-sm text-gray-400 font-sans">
+                          {room.time}
+                        </span>
                       </div>
                     </div>
 
-                    <p className="text-gray-400 mb-4 line-clamp-2 text-sm md:text-base font-sans">{room.description}</p>
+                    <p className="text-gray-400 mb-4 line-clamp-2 text-sm md:text-base font-sans">
+                      {room.description}
+                    </p>
 
                     <div className="flex flex-col space-y-3">
                       <Button variant="default" className="w-full group font-sans" asChild>
@@ -295,4 +367,3 @@ export function EscapeRooms() {
     </section>
   )
 }
-

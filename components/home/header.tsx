@@ -89,11 +89,11 @@ export function Header() {
   const navItems = [
     { name: "Inicio", href: "#inicio" },
     { name: "Cuartos", href: "#cuartos" },
-    { name: "Reservas", href: "#reservas" },
     { name: "Promociones", href: "#promociones" },
+    { name: "Reservas", href: "#reservas" },
     { name: "Clasificación", href: "#clasificacion" },
-    { name: "FAQ", href: "#faq" },
     { name: "Eventos", href: "#eventos" },
+    { name: "FAQ", href: "#faq" },
     { name: "Contacto", href: "#contacto" },
   ]
 

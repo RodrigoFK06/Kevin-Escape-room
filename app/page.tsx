@@ -31,10 +31,10 @@ export default function Home() {
       <div id="promociones">
         <Promotions />
       </div>
+      <ReservationSection />
       <div id="clasificacion">
         <Testimonials />
       </div>
-      <ReservationSection />
       <div id="eventos">
         <CorporateEvents />
       </div>

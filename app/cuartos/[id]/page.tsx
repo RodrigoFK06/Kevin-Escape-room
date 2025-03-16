@@ -191,7 +191,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
       {/* Hero Section */}
       <section className="w-full pt-24 md:pt-32 pb-12 md:pb-16 bg-brand-dark relative">
-        <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-[url('/lobo.svg?height=800&width=1200')] bg-cover bg-center opacity-10"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/95 to-brand-dark"></div>
 
         <div className="container mx-auto px-4 relative z-10">

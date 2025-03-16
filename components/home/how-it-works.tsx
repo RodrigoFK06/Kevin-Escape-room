@@ -61,7 +61,8 @@ export function HowItWorks() {
 
   return (
     <section id="como-funciona" className="py-16 md:py-24 bg-brand-dark relative overflow-hidden w-full">
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
+      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-5 rounded-3xl"></div>
+
 
       {/* Línea de tiempo vertical */}
       <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-brand-gold/30 to-transparent transform -translate-x-1/2 hidden md:block"></div>

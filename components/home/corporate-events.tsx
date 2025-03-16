@@ -28,7 +28,7 @@ export function CorporateEvents() {
 
   return (
     <section id="eventos" className="py-12 md:py-20 bg-brand-dark relative w-full overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
+      <div className="absolute inset-0 bg-[url('/lobo.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
 
       {/* Elementos decorativos */}
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-brand-blue/20 to-transparent"></div>

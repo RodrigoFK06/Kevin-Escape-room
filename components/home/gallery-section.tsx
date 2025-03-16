@@ -9,7 +9,7 @@ import { SectionWrapper } from "@/components/home/section-wrapper"
 const galleryImages = [
   {
     id: 1,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/2151626660.jpg?height=600&width=800",
     alt: "Jugadores resolviendo acertijos",
     category: "jugadores",
   },
@@ -63,7 +63,9 @@ export function GallerySection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.2 })
 
-  const filteredImages = filter === "todos" ? galleryImages : galleryImages.filter((img) => img.category === filter)
+  const filteredImages = filter === "todos"
+    ? galleryImages
+    : galleryImages.filter((img) => img.category === filter)
 
   const openModal = (index: number) => {
     setSelectedImage(index)
@@ -77,12 +79,12 @@ export function GallerySection() {
 
   const nextImage = () => {
     if (selectedImage === null) return
-    setSelectedImage((prev) => (prev + 1) % filteredImages.length)
+    setSelectedImage((prev) => ((prev ?? 0) + 1) % filteredImages.length)
   }
 
   const prevImage = () => {
     if (selectedImage === null) return
-    setSelectedImage((prev) => (prev - 1 + filteredImages.length) % filteredImages.length)
+    setSelectedImage((prev) => ((prev ?? 0) - 1 + filteredImages.length) % filteredImages.length)
   }
 
   const categories = [
@@ -98,9 +100,7 @@ export function GallerySection() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-      },
+      transition: { staggerChildren: 0.05 },
     },
   }
 
@@ -110,64 +110,79 @@ export function GallerySection() {
   }
 
   return (
-    <SectionWrapper id="galeria" className="bg-gradient-to-b from-[#0a141f] to-brand-dark">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-8 md:mb-12"
-      >
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 horror-title">
-          GALERÍA DE <span className="text-brand-gold">IMÁGENES</span>
-        </h2>
-        <p className="text-gray-400 max-w-2xl mx-auto px-2">
-          Explora nuestra colección de imágenes y descubre el terror que te espera.
-        </p>
-        <div className="w-20 h-1 bg-brand-gold mx-auto mt-4"></div>
-      </motion.div>
+    <SectionWrapper
+      id="galeria"
+      className="bg-gradient-to-b from-[#0a141f] to-brand-dark rounded-2xl"
+    >
+      {/* Asegúrate que SectionWrapper no oculte nada */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-8 md:mb-12"
+        >
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 horror-title">
+            GALERÍA DE <span className="text-brand-gold">IMÁGENES</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto px-2">
+            Explora nuestra colección de imágenes y descubre el terror que te espera.
+          </p>
+          <div className="w-20 h-1 bg-brand-gold mx-auto mt-4"></div>
+        </motion.div>
 
-      {/* Filtros */}
-      <div className="flex flex-wrap justify-center gap-2 mb-8 px-4">
-        {categories.map((category) => (
-          <motion.button
-            key={category.id}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap shadow-md ${
-              filter === category.id
-                ? "bg-brand-gold text-brand-dark"
-                : "bg-brand-dark/60 text-gray-300 hover:bg-brand-gold/20 border border-brand-gold/30"
-            } transition-colors`}
-            onClick={() => setFilter(category.id)}
-          >
-            {category.label}
-          </motion.button>
-        ))}
-      </div>
-
-      <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {filteredImages.map((image, index) => (
-            <motion.div
-              key={image.id}
-              variants={itemVariants}
-              className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group floating-card"
-              onClick={() => openModal(index)}
+        {/* Filtros */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8 px-4">
+          {categories.map((category) => (
+            <motion.button
+              key={category.id}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`
+                px-4 py-2 rounded-full text-sm shadow-md whitespace-nowrap
+                ${
+                  filter === category.id
+                    ? "bg-brand-gold text-brand-dark"
+                    : "bg-brand-dark/60 text-gray-300 hover:bg-brand-gold/20 border border-brand-gold/30"
+                }
+                transition-colors
+              `}
+              onClick={() => setFilter(category.id)}
             >
-              <Image
-                src={image.src || "/placeholder.svg"}
-                alt={image.alt}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <Camera className="h-8 w-8 text-white" />
-              </div>
-            </motion.div>
+              {category.label}
+            </motion.button>
           ))}
         </div>
-      </motion.div>
+
+        <motion.div
+          ref={ref}
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            {filteredImages.map((image, index) => (
+              <motion.div
+                key={image.id}
+                variants={itemVariants}
+                className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group floating-card"
+                onClick={() => openModal(index)}
+              >
+                <Image
+                  src={image.src || ""}
+                  alt={image.alt}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Camera className="h-8 w-8 text-white" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
 
       {/* Modal de galería */}
       <AnimatePresence>
@@ -188,7 +203,7 @@ export function GallerySection() {
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={filteredImages[selectedImage].src || "/placeholder.svg"}
+                src={filteredImages[selectedImage].src || "/2151626660.jpg"}
                 alt={filteredImages[selectedImage].alt}
                 fill
                 className="object-contain"

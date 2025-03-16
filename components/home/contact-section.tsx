@@ -48,7 +48,7 @@ export function ContactSection() {
 
   return (
     <section id="contacto" className="py-16 md:py-24 bg-brand-dark relative w-full overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
+      <div className="absolute inset-0 bg-[url('/lobo.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
