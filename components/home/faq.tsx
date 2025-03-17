@@ -81,9 +81,9 @@ export function Faq() {
   return (
     <section
       id="faq"
-      className="py-16 md:py-24 bg-gradient-to-b from-brand-dark to-[#0a141f] relative w-full overflow-hidden"
+      className="py-16 md:py-24 bg-gradient-to-b from-brand-dark to-[#0a141f] relative w-full overflow-hidden rounded-2xl mb-12"
     >
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
+      <div className="absolute inset-0 bg-[url('/fondo2.jpg?height=800&width=1200')] bg-cover bg-center opacity-5 rounded-2xl"></div>
 
       {/* Elementos decorativos */}
       <div className="absolute top-20 left-10 w-40 h-40 bg-brand-gold/5 rounded-full blur-3xl"></div>
@@ -111,7 +111,8 @@ export function Faq() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="max-w-3xl mx-auto"
+          // Agregamos un ancho fijo en pantallas grandes: w-full en móviles, y 700px en desktop
+          className="mx-auto w-full md:w-[700px]"
         >
           <Accordion type="single" collapsible className="space-y-4 md:space-y-6">
             {faqs.map((faq, index) => (
@@ -123,7 +124,11 @@ export function Faq() {
               >
                 <AccordionItem
                   value={`item-${index}`}
-                  className={`bg-brand-dark border border-brand-gold/20 rounded-lg px-4 md:px-6 hover:border-brand-gold/50 transition-all duration-300 ${hoveredIndex === index ? "shadow-lg shadow-brand-gold/10" : ""}`}
+                  className={`
+                    bg-brand-dark border border-brand-gold/20 rounded-lg px-4 md:px-6 
+                    hover:border-brand-gold/50 transition-all duration-300
+                    ${hoveredIndex === index ? "shadow-lg shadow-brand-gold/10" : ""}
+                  `}
                 >
                   <AccordionTrigger className="text-left font-bold py-4 md:py-5 text-sm md:text-base font-sans">
                     <span className="flex items-center">
@@ -164,4 +169,3 @@ export function Faq() {
     </section>
   )
 }
-

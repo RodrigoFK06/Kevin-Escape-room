@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -47,8 +46,13 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contacto" className="py-16 md:py-24 bg-brand-dark relative w-full overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/lobo.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
+    <section
+      id="contacto"
+      className="py-16 md:py-24 bg-brand-dark relative w-full rounded-2xl mb-12"
+      // Eliminamos overflow-hidden para que nada se corte en móvil
+    >
+      {/* Fondo lobo */}
+      <div className="absolute inset-0 bg-[url('/lobo.svg?height=800&width=1200')] bg-cover bg-center opacity-5 rounded-2xl" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -67,14 +71,22 @@ export function ContactSection() {
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-4"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {/* Formulario de contacto */}
-          <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+        {/* Grid principal (form + bloque derecho) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
+          {/* Columna Izquierda: Form */}
+          <motion.div
+            ref={ref}
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            // Para que ocupe la altura y coincida con mapa
+            className="flex flex-col h-full"
+          >
             {isSuccess ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-8 text-center h-full flex flex-col items-center justify-center"
+                className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-8 text-center flex-1 flex flex-col items-center justify-center"
               >
                 <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
                 <h3 className="text-xl font-bold mb-2 font-display">¡Mensaje Enviado!</h3>
@@ -93,9 +105,9 @@ export function ContactSection() {
               <motion.form
                 variants={containerVariants}
                 onSubmit={handleSubmit}
-                className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 md:p-8 hover:border-brand-gold/40 transition-all duration-300"
+                className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 md:p-8 hover:border-brand-gold/40 transition-all duration-300 flex-1 flex flex-col"
               >
-                <motion.div variants={itemVariants} className="space-y-4">
+                <motion.div variants={itemVariants} className="space-y-4 flex-1">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="font-sans">
@@ -134,7 +146,7 @@ export function ContactSection() {
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-2 flex-1">
                     <Label htmlFor="message" className="font-sans">
                       Mensaje
                     </Label>
@@ -143,10 +155,12 @@ export function ContactSection() {
                       rows={5}
                       placeholder="Escribe tu mensaje aquí..."
                       required
-                      className="w-full rounded-md border border-brand-gold/30 bg-[#0a141f] px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/20 focus-visible:border-brand-gold/80 disabled:cursor-not-allowed disabled:opacity-50 font-sans"
+                      className="w-full h-full rounded-md border border-brand-gold/30 bg-[#0a141f] px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/20 focus-visible:border-brand-gold/80 disabled:cursor-not-allowed disabled:opacity-50 font-sans resize-none"
                     />
                   </div>
+                </motion.div>
 
+                <div className="mt-4">
                   <Button type="submit" className="w-full group font-sans" disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>
@@ -161,28 +175,30 @@ export function ContactSection() {
                       </>
                     )}
                   </Button>
-                </motion.div>
+                </div>
               </motion.form>
             )}
           </motion.div>
 
-          {/* Información de contacto */}
+          {/* Columna Derecha */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="space-y-6"
+            // Estructura en 2 sub-bloques: Mapa arriba + 2 col layout para Info y Horarios
+            className="flex flex-col gap-6 h-full"
           >
+            {/* Mapa */}
             <motion.div
               variants={itemVariants}
-              className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300"
+              className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300 flex-1 flex flex-col"
             >
               <h3 className="text-xl font-bold mb-4 flex items-center font-display">
                 <MapPin className="h-5 w-5 text-brand-gold mr-2" />
                 Ubicación
               </h3>
               <p className="text-gray-300 mb-4 font-sans">Av. Ejemplo 123, Lima, Perú</p>
-              <div className="aspect-video w-full relative rounded-lg overflow-hidden">
+              <div className="relative flex-1 rounded-lg overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.964216405086!2d-77.03196684957949!3d-12.046654991455207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662c7%3A0x15f8dcc0194c8eb4!2sPlaza%20Mayor%20de%20Lima!5e0!3m2!1ses-419!2spe!4v1625160044500!5m2!1ses-419!2spe"
                   width="100%"
@@ -195,57 +211,61 @@ export function ContactSection() {
               </div>
             </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300"
-            >
-              <h3 className="text-xl font-bold mb-4 font-display">Información de Contacto</h3>
-              <ul className="space-y-4 font-sans">
-                <li className="flex items-start gap-3 group">
-                  <Phone className="h-5 w-5 text-brand-gold flex-shrink-0 mt-0.5 group-hover:animate-pulse" />
-                  <div>
-                    <p className="font-medium">Teléfono</p>
-                    <p className="text-gray-400">+51 123 456 789</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3 group">
-                  <Mail className="h-5 w-5 text-brand-gold flex-shrink-0 mt-0.5 group-hover:animate-pulse" />
-                  <div>
-                    <p className="font-medium">Email</p>
-                    <p className="text-gray-400">info@encrypted.com</p>
-                  </div>
-                </li>
-              </ul>
-            </motion.div>
+            {/* 2-col layout: Info de Contacto + Horarios */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Info de contacto */}
+              <motion.div
+                variants={itemVariants}
+                className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300"
+              >
+                <h3 className="text-xl font-bold mb-4 font-display">Información de Contacto</h3>
+                <ul className="space-y-4 font-sans">
+                  <li className="flex items-start gap-3 group">
+                    <Phone className="h-5 w-5 text-brand-gold flex-shrink-0 mt-0.5 group-hover:animate-pulse" />
+                    <div>
+                      <p className="font-medium">Teléfono</p>
+                      <p className="text-gray-400">+51 123 456 789</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3 group">
+                    <Mail className="h-5 w-5 text-brand-gold flex-shrink-0 mt-0.5 group-hover:animate-pulse" />
+                    <div>
+                      <p className="font-medium">Email</p>
+                      <p className="text-gray-400">info@encrypted.com</p>
+                    </div>
+                  </li>
+                </ul>
+              </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300"
-            >
-              <h3 className="text-xl font-bold mb-4 font-display">Horarios de Atención</h3>
-              <ul className="space-y-2 font-sans">
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Lunes a Jueves:</span>
-                  <span>15:00 - 22:00</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Viernes:</span>
-                  <span>15:00 - 23:00</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Sábados:</span>
-                  <span>11:00 - 23:00</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Domingos:</span>
-                  <span>11:00 - 22:00</span>
-                </li>
-              </ul>
-            </motion.div>
+              {/* Horarios de Atención */}
+              <motion.div
+                variants={itemVariants}
+                className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300"
+              >
+                <h3 className="text-xl font-bold mb-4 font-display">Horarios de Atención</h3>
+                <ul className="space-y-2 font-sans">
+                  <li className="flex justify-between">
+                    <span className="text-gray-400">Lunes a Jueves:</span>
+                    <span>15:00 - 22:00</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span className="text-gray-400">Viernes:</span>
+                    <span>15:00 - 23:00</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span className="text-gray-400">Sábados:</span>
+                    <span>11:00 - 23:00</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span className="text-gray-400">Domingos:</span>
+                    <span>11:00 - 22:00</span>
+                  </li>
+                </ul>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
     </section>
   )
 }
-

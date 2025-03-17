@@ -65,8 +65,8 @@ export function EscapeRooms() {
     },
   ])
 
-  const renderStars = (difficulty: number) => {
-    return Array(5)
+  const renderStars = (difficulty: number) =>
+    Array(5)
       .fill(0)
       .map((_, i) => (
         <Star
@@ -74,7 +74,6 @@ export function EscapeRooms() {
           className={`h-4 w-4 ${i < difficulty ? "text-yellow-500 fill-yellow-500" : "text-gray-600"}`}
         />
       ))
-  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -101,6 +100,7 @@ export function EscapeRooms() {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
+        {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -125,14 +125,14 @@ export function EscapeRooms() {
           animate={isInView ? "visible" : "hidden"}
           className="grid grid-cols-1 lg:grid-cols-12 gap-8"
         >
-          {/* Sala destacada */}
+          {/* Sala destacada - MODIFICADA para mejorar vista móvil */}
           <motion.div variants={itemVariants} className="lg:col-span-8 lg:row-span-2">
             <div
               className="
-                relative 
-                h-full 
-                min-h-[400px] 
-                lg:h-[550px]                     /* <<< Ajuste de altura en pantallas grandes */
+                relative
+                min-h-[500px]       /* Altura aumentada para móvil */
+                md:min-h-[525px]    /* Ajuste para tablets */
+                lg:h-[550px]        /* Mantiene altura en desktop */
                 rounded-xl 
                 overflow-hidden 
                 border border-brand-gold/20 
@@ -148,70 +148,67 @@ export function EscapeRooms() {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/70 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
 
-              <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                <div className="absolute top-4 right-4 bg-brand-gold/90 text-brand-dark px-3 py-1 rounded-full text-xs font-bold flex items-center">
-                  <Flame className="h-3 w-3 mr-1" />
-                  DESTACADO
-                </div>
+              <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-8">
+                {rooms[0].featured && (
+                  <div className="absolute top-3 right-3 bg-brand-gold/90 text-brand-dark px-2 py-1 rounded-full text-xs font-bold flex items-center">
+                    <Flame className="h-3 w-3 mr-1" />
+                    DESTACADO
+                  </div>
+                )}
 
-                <h3 className="text-3xl md:text-4xl font-bold mb-2 text-white font-display">
+                <h3 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2 text-white font-display">
                   {rooms[0].name}
                 </h3>
 
-                <div className="flex items-center mb-3">
-                  <div className="flex mr-4">{renderStars(rooms[0].difficulty)}</div>
-                  <span className="text-sm text-gray-300 font-sans">Dificultad</span>
+                <div className="flex items-center mb-2 md:mb-3">
+                  <div className="flex mr-3 md:mr-4">{renderStars(rooms[0].difficulty)}</div>
+                  <span className="text-xs md:text-sm text-gray-300 font-sans">Dificultad</span>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-1 md:gap-2 mb-2 md:mb-4">
                   {rooms[0].tags?.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="bg-[#0a141f]/50 border border-brand-gold/30 px-2 py-1 rounded text-xs font-sans"
+                      className="bg-[#0a141f]/50 border border-brand-gold/30 px-2 py-0.5 rounded text-xs font-sans"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <p className="text-gray-300 mb-6 text-base md:text-lg max-w-2xl font-sans">
+                {/* Descripción con opciones para truncar en móvil */}
+                <p className="text-gray-300 mb-3 md:mb-6 text-sm md:text-lg max-w-2xl line-clamp-3 md:line-clamp-none font-sans">
                   {rooms[0].description}
                 </p>
 
-                <div className="flex flex-wrap items-center gap-4 mb-4">
-                  <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-3 py-2 rounded-lg">
-                    <Users className="h-4 w-4 text-brand-gold mr-2" />
-                    <span className="text-sm text-gray-300 font-sans">
-                      {rooms[0].players} jugadores
-                    </span>
+                <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-3 md:mb-4">
+                  <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-2 md:px-3 py-1 md:py-2 rounded-lg">
+                    <Users className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1 md:mr-2" />
+                    <span className="text-xs md:text-sm text-gray-300 font-sans">{rooms[0].players} jugadores</span>
                   </div>
-                  <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-3 py-2 rounded-lg">
-                    <Clock className="h-4 w-4 text-brand-gold mr-2" />
-                    <span className="text-sm text-gray-300 font-sans">
-                      {rooms[0].time}
-                    </span>
+                  <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-2 md:px-3 py-1 md:py-2 rounded-lg">
+                    <Clock className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1 md:mr-2" />
+                    <span className="text-xs md:text-sm text-gray-300 font-sans">{rooms[0].time}</span>
                   </div>
-                  <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-3 py-2 rounded-lg">
-                    <Key className="h-4 w-4 text-brand-gold mr-2" />
-                    <span className="text-sm text-gray-300 font-sans">
-                      Dificultad alta
-                    </span>
+                  <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-2 md:px-3 py-1 md:py-2 rounded-lg">
+                    <Key className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1 md:mr-2" />
+                    <span className="text-xs md:text-sm text-gray-300 font-sans">Dificultad alta</span>
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button variant="default" size="lg" className="group font-sans" asChild>
+                <div className="flex flex-col sm:flex-row gap-2 md:gap-4">
+                  <Button variant="default" size="sm" className="group font-sans sm:text-base" asChild>
                     <Link href="#reservas" className="flex items-center gap-2">
-                      <Lock className="h-4 w-4 group-hover:hidden" />
-                      <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
+                      <Lock className="h-3 w-3 md:h-4 md:w-4 group-hover:hidden" />
+                      <Key className="h-3 w-3 md:h-4 md:w-4 hidden group-hover:block animate-key-turn" />
                       Reservar Ahora
                     </Link>
                   </Button>
 
-                  <p className="text-sm text-center sm:text-left text-brand-gold animate-pulse flex items-center justify-center sm:justify-start font-sans">
-                    <Lock className="h-4 w-4 mr-1" />
+                  <p className="text-xs md:text-sm text-center sm:text-left text-brand-gold animate-pulse flex items-center justify-center sm:justify-start font-sans">
+                    <Lock className="h-3 w-3 md:h-4 md:w-4 mr-1" />
                     {rooms[0].bookings} personas reservaron esta sala hoy
                   </p>
                 </div>
@@ -219,9 +216,9 @@ export function EscapeRooms() {
             </div>
           </motion.div>
 
-          {/* Salas secundarias */}
+          {/* Salas secundarias - Sin cambios */}
           <div className="lg:col-span-4 grid grid-cols-1 gap-8">
-            {rooms.slice(1).map((room, index) => (
+            {rooms.slice(1).map((room) => (
               <motion.div key={room.id} variants={itemVariants}>
                 <div
                   className="
@@ -236,16 +233,9 @@ export function EscapeRooms() {
                     h-full
                   "
                 >
-                  <div
-                    className="
-                      relative 
-                      h-48 
-                      md:h-56           /* <<< Ajuste de altura para sec. cards en escritorio */
-                      overflow-hidden
-                    "
-                  >
+                  <div className="relative h-48 md:h-56 overflow-hidden">
                     <Image
-                      src={room.image || '/placeholder.svg'}
+                      src={room.image || "/placeholder.svg"}
                       alt={room.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -304,15 +294,11 @@ export function EscapeRooms() {
                     <div className="flex items-center space-x-4 mb-4">
                       <div className="flex items-center">
                         <Users className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1" />
-                        <span className="text-xs md:text-sm text-gray-400 font-sans">
-                          {room.players} jugadores
-                        </span>
+                        <span className="text-xs md:text-sm text-gray-400 font-sans">{room.players} jugadores</span>
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1" />
-                        <span className="text-xs md:text-sm text-gray-400 font-sans">
-                          {room.time}
-                        </span>
+                        <span className="text-xs md:text-sm text-gray-400 font-sans">{room.time}</span>
                       </div>
                     </div>
 
@@ -352,12 +338,10 @@ export function EscapeRooms() {
             <div className="text-4xl font-bold text-brand-gold mb-2 font-display">98%</div>
             <p className="text-gray-300 font-sans">Tasa de adrenalina</p>
           </div>
-
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300">
             <div className="text-4xl font-bold text-brand-gold mb-2 font-display">+5000</div>
             <p className="text-gray-300 font-sans">Enigmas resueltos</p>
           </div>
-
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300">
             <div className="text-4xl font-bold text-brand-gold mb-2 font-display">42%</div>
             <p className="text-gray-300 font-sans">Tasa de escape</p>

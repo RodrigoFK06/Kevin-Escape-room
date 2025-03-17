@@ -4,18 +4,23 @@ import { useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, useReducedMotion } from "framer-motion"
 import { Briefcase, Gift, Users, Check, Building, Calendar, Award } from "lucide-react"
 
 export function CorporateEvents() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.2 })
 
+  // 1) Detectar si el usuario prefiere reducir animaciones
+  const reduceMotion = useReducedMotion()
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
+        // Respetar reduceMotion
+        duration: reduceMotion ? 0 : 0.5,
         staggerChildren: 0.1,
       },
     },
@@ -23,23 +28,37 @@ export function CorporateEvents() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: reduceMotion ? 0 : 0.5
+      }
+    },
   }
 
   return (
-    <section id="eventos" className="py-12 md:py-20 bg-brand-dark relative w-full overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/lobo.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
+    <section 
+      id="eventos" 
+      className="
+        py-12 md:py-20 bg-brand-dark relative w-full overflow-hidden 
+        rounded-2xl mb-12
+      "
+    >
+      {/* Fondo con opacidad */}
+      <div className="absolute inset-0 bg-[url('/lobo.svg')] bg-cover bg-center opacity-5"></div>
 
       {/* Elementos decorativos */}
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-brand-blue/20 to-transparent"></div>
       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-brand-blue/20 to-transparent"></div>
 
       <div className="container mx-auto px-4 relative z-10">
+        {/* Encabezado */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: reduceMotion ? 0 : 0.5 }}
           className="text-center mb-8 md:mb-12"
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 horror-title">
@@ -51,25 +70,37 @@ export function CorporateEvents() {
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-4"></div>
         </motion.div>
 
+        {/* Contenedor principal (usando ref) */}
         <motion.div
           ref={ref}
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          // 2) Añadir will-change para mejorar rendimiento
+          style={{ willChange: "transform" }}
         >
-          {/* Team Building */}
+          {/* Tarjeta Team Building */}
           <motion.div
             variants={itemVariants}
-            whileHover={{ y: -10 }}
-            className="bg-brand-blue border border-brand-gold/20 rounded-lg overflow-hidden hover:border-brand-gold/50 transition-all duration-300 group horror-card"
+            whileHover={reduceMotion ? {} : { y: -10 }}
+            className="
+              bg-brand-blue border border-brand-gold/20 
+              rounded-lg overflow-hidden hover:border-brand-gold/50 
+              transition-all duration-300 group horror-card
+            "
+            style={{ willChange: "transform" }}
           >
             <div className="relative h-48 md:h-56 overflow-hidden">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/placeholder.svg"
                 alt="Team Building"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                // 3) Optimización de imágenes
+                width={600}
+                height={400}
+                placeholder="blur"
+                blurDataURL="/tiny-blur.jpg" 
+                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
               <div className="absolute top-4 left-4 bg-brand-gold/90 text-brand-dark px-3 py-1 rounded-full text-xs font-bold flex items-center">
@@ -86,8 +117,7 @@ export function CorporateEvents() {
                 Team Building Corporativo
               </h3>
               <p className="text-gray-400 mb-4">
-                Desafía a tu equipo en una experiencia única que fortalecerá la comunicación, el liderazgo y el trabajo
-                en equipo.
+                Desafía a tu equipo en una experiencia única que fortalecerá la comunicación, el liderazgo y el trabajo en equipo.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
@@ -113,18 +143,26 @@ export function CorporateEvents() {
             </div>
           </motion.div>
 
-          {/* Cumpleaños */}
+          {/* Tarjeta Cumpleaños */}
           <motion.div
             variants={itemVariants}
-            whileHover={{ y: -10 }}
-            className="bg-brand-blue border border-brand-gold/20 rounded-lg overflow-hidden hover:border-brand-gold/50 transition-all duration-300 group horror-card"
+            whileHover={reduceMotion ? {} : { y: -10 }}
+            className="
+              bg-brand-blue border border-brand-gold/20 
+              rounded-lg overflow-hidden hover:border-brand-gold/50 
+              transition-all duration-300 group horror-card
+            "
+            style={{ willChange: "transform" }}
           >
             <div className="relative h-48 md:h-56 overflow-hidden">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/placeholder.svg"
                 alt="Cumpleaños"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                width={600}
+                height={400}
+                placeholder="blur"
+                blurDataURL="/tiny-blur.jpg"
+                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
               <div className="absolute top-4 left-4 bg-brand-gold/90 text-brand-dark px-3 py-1 rounded-full text-xs font-bold flex items-center">
@@ -141,8 +179,7 @@ export function CorporateEvents() {
                 Celebraciones y Cumpleaños
               </h3>
               <p className="text-gray-400 mb-4">
-                Celebra tu cumpleaños en una experiencia inolvidable con tus amigos. Una alternativa única para
-                festejar.
+                Celebra tu cumpleaños en una experiencia inolvidable con tus amigos. Una alternativa única para festejar.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
@@ -168,18 +205,26 @@ export function CorporateEvents() {
             </div>
           </motion.div>
 
-          {/* Gift Cards */}
+          {/* Tarjeta Gift Cards */}
           <motion.div
             variants={itemVariants}
-            whileHover={{ y: -10 }}
-            className="bg-brand-blue border border-brand-gold/20 rounded-lg overflow-hidden hover:border-brand-gold/50 transition-all duration-300 group horror-card"
+            whileHover={reduceMotion ? {} : { y: -10 }}
+            className="
+              bg-brand-blue border border-brand-gold/20 
+              rounded-lg overflow-hidden hover:border-brand-gold/50 
+              transition-all duration-300 group horror-card
+            "
+            style={{ willChange: "transform" }}
           >
             <div className="relative h-48 md:h-56 overflow-hidden">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/placeholder.svg"
                 alt="Gift Cards"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                width={600}
+                height={400}
+                placeholder="blur"
+                blurDataURL="/tiny-blur.jpg"
+                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
               <div className="absolute top-4 left-4 bg-brand-gold/90 text-brand-dark px-3 py-1 rounded-full text-xs font-bold flex items-center">
@@ -192,10 +237,11 @@ export function CorporateEvents() {
             </div>
 
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-3 group-hover:text-brand-gold transition-colors">Gift Cards</h3>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-brand-gold transition-colors">
+                Gift Cards
+              </h3>
               <p className="text-gray-400 mb-4">
-                Regala una experiencia de terror y adrenalina. La gift card perfecta para los amantes del misterio y el
-                suspenso.
+                Regala una experiencia de terror y adrenalina. La gift card perfecta para los amantes del misterio y el suspenso.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
@@ -227,24 +273,21 @@ export function CorporateEvents() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.3 }}
           className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-4 text-center"
         >
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4 horror-card">
             <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+50</div>
             <p className="text-gray-300 text-sm">Empresas confían en nosotros</p>
           </div>
-
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4 horror-card">
             <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+200</div>
             <p className="text-gray-300 text-sm">Eventos corporativos</p>
           </div>
-
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4 horror-card">
             <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+500</div>
             <p className="text-gray-300 text-sm">Cumpleaños celebrados</p>
           </div>
-
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4 horror-card">
             <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">98%</div>
             <p className="text-gray-300 text-sm">Satisfacción garantizada</p>
@@ -256,11 +299,14 @@ export function CorporateEvents() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: reduceMotion ? 0 : 0.5, delay: 0.5 }}
           className="mt-16 text-center"
+          style={{ willChange: "transform" }}
         >
           <div className="bg-brand-dark/80 backdrop-blur-sm border border-brand-gold/30 rounded-lg p-8 max-w-3xl mx-auto horror-card">
-            <h3 className="text-2xl font-bold mb-4 text-brand-gold horror-text">¿LISTO PARA UNA EXPERIENCIA ÚNICA?</h3>
+            <h3 className="text-2xl font-bold mb-4 text-brand-gold horror-text">
+              ¿LISTO PARA UNA EXPERIENCIA ÚNICA?
+            </h3>
             <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
               Ya sea para fortalecer tu equipo de trabajo o celebrar una ocasión especial, nuestras salas de escape
               ofrecen una experiencia inolvidable. Contáctanos para diseñar un evento a tu medida.
@@ -284,4 +330,3 @@ export function CorporateEvents() {
     </section>
   )
 }
-
