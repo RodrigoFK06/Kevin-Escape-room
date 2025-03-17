@@ -11,49 +11,49 @@ import { SectionWrapper } from "@/components/home/section-wrapper"
 const galleryImages = [
   {
     id: 1,
-    src: "/group2.svg", // <-- Sin parámetros
+    src: "/Group2.svg", // <-- Sin parámetros
     alt: "Jugadores resolviendo acertijos",
     category: "jugadores",
   },
   {
     id: 2,
-    src: "/group2.svg", // <-- Sin parámetros
+    src: "/Group2.svg", // <-- Sin parámetros
     alt: "Interior del Asilo Maldito",
     category: "salas",
   },
   {
     id: 3,
-    src: "/group2.svg",
+    src: "/Group2.svg",
     alt: "Decoración terrorífica",
     category: "decoracion",
   },
   {
     id: 4,
-    src: "/group2.svg",
+    src: "/Group2.svg",
     alt: "Equipo celebrando su escape",
     category: "jugadores",
   },
   {
     id: 5,
-    src: "/group2.svg",
+    src: "/Group2.svg",
     alt: "Interior de la Mansión Embrujada",
     category: "salas",
   },
   {
     id: 6,
-    src: "/group2.svg",
+    src: "/Group2.svg",
     alt: "Acertijos y pistas",
     category: "acertijos",
   },
   {
     id: 7,
-    src: "/group2.svg",
+    src: "/Group2.svg",
     alt: "Efectos especiales",
     category: "efectos",
   },
   {
     id: 8,
-    src: "/group2.svg",
+    src: "/Group2.svg",
     alt: "Interior del Laboratorio Zombie",
     category: "salas",
   },
