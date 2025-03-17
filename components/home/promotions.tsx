@@ -35,7 +35,7 @@ export function Promotions() {
 
   return (
     <section id="promociones" className="py-12 md:py-20 bg-brand-dark relative w-full">
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-10"></div>
+      <div className="absolute inset-0 bg-[url('/spookyback.jpg?height=800&width=1200')] bg-cover bg-center opacity-10 rounded-2xl"></div>
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -172,8 +172,8 @@ function ReservationSystem() {
   }
 
   return (
-    <section id="reservas" className="py-16 md:py-24 bg-brand-dark relative w-full">
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-5"></div>
+    <section id="reservas" className="py-16 md:py-24 bg-brand-dark relative w-full my-12">
+      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=1200')] bg-cover bg-center opacity-5 rounded-2xl"></div>
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#0a141f]/20 to-transparent"></div>
       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-[#0a141f]/20 to-transparent"></div>
       <div className="container mx-auto px-6 relative z-10">

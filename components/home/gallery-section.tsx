@@ -6,52 +6,54 @@ import { motion, AnimatePresence, useInView } from "framer-motion"
 import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react"
 import { SectionWrapper } from "@/components/home/section-wrapper"
 
+// ⚠️ 1) Ajusta tus imágenes sin ?height=..., 
+//    para que Next las sirva de /public sin problemas.
 const galleryImages = [
   {
     id: 1,
-    src: "/2151626660.jpg?height=600&width=800",
+    src: "/group2.svg", // <-- Sin parámetros
     alt: "Jugadores resolviendo acertijos",
     category: "jugadores",
   },
   {
     id: 2,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/group2.svg", // <-- Sin parámetros
     alt: "Interior del Asilo Maldito",
     category: "salas",
   },
   {
     id: 3,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/group2.svg",
     alt: "Decoración terrorífica",
     category: "decoracion",
   },
   {
     id: 4,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/group2.svg",
     alt: "Equipo celebrando su escape",
     category: "jugadores",
   },
   {
     id: 5,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/group2.svg",
     alt: "Interior de la Mansión Embrujada",
     category: "salas",
   },
   {
     id: 6,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/group2.svg",
     alt: "Acertijos y pistas",
     category: "acertijos",
   },
   {
     id: 7,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/group2.svg",
     alt: "Efectos especiales",
     category: "efectos",
   },
   {
     id: 8,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/group2.svg",
     alt: "Interior del Laboratorio Zombie",
     category: "salas",
   },
@@ -63,27 +65,26 @@ export function GallerySection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.2 })
 
+  // Filtrado normal
   const filteredImages = filter === "todos"
     ? galleryImages
     : galleryImages.filter((img) => img.category === filter)
 
+  // Modal handlers
   const openModal = (index: number) => {
     setSelectedImage(index)
     document.body.style.overflow = "hidden"
   }
-
   const closeModal = () => {
     setSelectedImage(null)
     document.body.style.overflow = "auto"
   }
-
   const nextImage = () => {
-    if (selectedImage === null) return
+    if (selectedImage == null) return
     setSelectedImage((prev) => ((prev ?? 0) + 1) % filteredImages.length)
   }
-
   const prevImage = () => {
-    if (selectedImage === null) return
+    if (selectedImage == null) return
     setSelectedImage((prev) => ((prev ?? 0) - 1 + filteredImages.length) % filteredImages.length)
   }
 
@@ -96,6 +97,7 @@ export function GallerySection() {
     { id: "efectos", label: "Efectos" },
   ]
 
+  // Animations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -103,7 +105,6 @@ export function GallerySection() {
       transition: { staggerChildren: 0.05 },
     },
   }
-
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1 },
@@ -114,8 +115,8 @@ export function GallerySection() {
       id="galeria"
       className="bg-gradient-to-b from-[#0a141f] to-brand-dark rounded-2xl"
     >
-      {/* Asegúrate que SectionWrapper no oculte nada */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Encabezado */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -155,6 +156,7 @@ export function GallerySection() {
           ))}
         </div>
 
+        {/* Galería */}
         <motion.div
           ref={ref}
           variants={containerVariants}
@@ -169,12 +171,20 @@ export function GallerySection() {
                 className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group floating-card"
                 onClick={() => openModal(index)}
               >
+                {/*
+                  2) Quitamos fill y params, 
+                     Indicamos width & height => Next optimiza las imágenes
+                */}
                 <Image
-                  src={image.src || ""}
+                  src={image.src}
                   alt={image.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  width={800}
+                  height={800}
+                  className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                  // 3) Optional: placeholder="blur" blurDataURL="/tiny-blur.jpg"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
+
                 <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <Camera className="h-8 w-8 text-white" />
                 </div>
@@ -202,11 +212,17 @@ export function GallerySection() {
               className="relative w-full max-w-4xl aspect-video rounded-xl overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* 
+                2) Eliminamos fill, 
+                   width & height => se optimiza 
+              */}
               <Image
-                src={filteredImages[selectedImage].src || "/2151626660.jpg"}
+                src={filteredImages[selectedImage].src}
                 alt={filteredImages[selectedImage].alt}
-                fill
-                className="object-contain"
+                width={1200}
+                height={675}
+                className="object-contain w-full h-full"
+                // 3) placeholder="blur" blurDataURL="/tiny-blur.jpg"
               />
 
               <button
@@ -246,4 +262,3 @@ export function GallerySection() {
     </SectionWrapper>
   )
 }
-
