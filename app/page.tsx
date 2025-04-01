@@ -11,11 +11,13 @@ import { GallerySection } from "@/components/home/gallery-section"
 import { BlogSection } from "@/components/home/blog-section"
 import { ContactSection } from "@/components/home/contact-section"
 import { Footer } from "@/components/ui/footer"
+import SplashCursor from "@/components/ui/splashcursor"
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between w-full overflow-hidden">
       <Header />
+      <SplashCursor />
       <div id="inicio">
         <HeroSection />
       </div>

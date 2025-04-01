@@ -9,6 +9,9 @@ const config = {
     "./src/**/*.{ts,tsx}",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "grid", "grid-cols-7", "text-center", "text-sm"
+  ],
   prefix: "",
   theme: {
     container: {

@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 // Loading component
 function ReservationLoading() {
   return (
-    <div className="py-16 md:py-24 bg-brand-dark relative w-full my-12">
+    <div className="py-16 md:py-24 bg-brand-dark relative w-full">
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-8 md:mb-12">
           <Skeleton className="h-10 w-64 mx-auto mb-4" />
