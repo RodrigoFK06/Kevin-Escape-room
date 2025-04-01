@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
+import { useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -63,43 +64,32 @@ export function Testimonials() {
     },
   ]
 
-  const rankings: TeamRanking[] = [
-    {
-      id: 1,
-      name: "Los Criptógrafos",
-      time: "42:30",
-      date: "15/03/2023",
-      room: "Código Enigma",
-    },
-    {
-      id: 2,
-      name: "Escape Masters",
-      time: "45:12",
-      date: "22/03/2023",
-      room: "La Bóveda",
-    },
-    {
-      id: 3,
-      name: "Cipher Squad",
-      time: "48:45",
-      date: "05/04/2023",
-      room: "El Laboratorio",
-    },
-    {
-      id: 4,
-      name: "Los Descifradores",
-      time: "50:18",
-      date: "12/04/2023",
-      room: "Código Enigma",
-    },
-    {
-      id: 5,
-      name: "Enigma Team",
-      time: "52:33",
-      date: "18/04/2023",
-      room: "El Laboratorio",
-    },
-  ]
+  const [rankings, setRankings] = useState<TeamRanking[]>([])
+
+  useEffect(() => {
+    const loadRanking = async () => {
+      try {
+        const res = await fetch("/api/ranking/obtener")
+        const json = await res.json()
+
+        if (json && Array.isArray(json)) {
+          const parsed = json.map((item: any) => ({
+            id: Number(item.id),
+            name: item.equipo_nombre,
+            time: item.tiempo.slice(0, 5), // cortar segundos si vienen como "00:45:12"
+            date: item.registrado_en,
+            room: item.sala_nombre,
+          }))
+          setRankings(parsed)
+        }
+      } catch (err) {
+        console.error("Error cargando ranking:", err)
+      }
+    }
+
+    loadRanking()
+  }, [])
+
 
   const renderStars = (rating: number) => {
     return Array(5)
@@ -239,9 +229,8 @@ export function Testimonials() {
                 <button
                   key={index}
                   onClick={() => setActiveTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    activeTestimonial === index ? "bg-brand-gold" : "bg-gray-600"
-                  }`}
+                  className={`w-3 h-3 rounded-full transition-colors ${activeTestimonial === index ? "bg-brand-gold" : "bg-gray-600"
+                    }`}
                   aria-label={`Ver testimonio ${index + 1}`}
                 />
               ))}
