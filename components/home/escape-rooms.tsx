@@ -34,7 +34,7 @@ export function EscapeRooms() {
       time: "60 min",
       description:
         "Atrapado en una antigua oficina de inteligencia, debes descifrar los códigos secretos para evitar que información clasificada caiga en manos enemigas.",
-      bookings: 15,
+      bookings: 3,
       featured: true,
       tags: ["Enigmas", "Histórico", "Difícil"],
     },
@@ -47,7 +47,7 @@ export function EscapeRooms() {
       time: "60 min",
       description:
         "Un robo perfecto a la bóveda más segura del mundo. Encuentra la combinación maestra y escapa con el botín antes de que suene la alarma.",
-      bookings: 20,
+      bookings: 2,
       featured: true,
       tags: ["Heist", "Lógica", "Extremo"],
     },
@@ -60,7 +60,7 @@ export function EscapeRooms() {
       time: "60 min",
       description:
         "Un experimento secreto ha salido mal. Descubre la fórmula correcta y escapa del laboratorio antes de que sea demasiado tarde.",
-      bookings: 12,
+      bookings: 3,
       tags: ["Ciencia", "Misterio", "Medio"],
     },
   ])
@@ -194,7 +194,7 @@ export function EscapeRooms() {
                   </div>
                   <div className="flex items-center bg-brand-dark/70 backdrop-blur-sm px-2 md:px-3 py-1 md:py-2 rounded-lg">
                     <Key className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1 md:mr-2" />
-                    <span className="text-xs md:text-sm text-gray-300 font-sans">Dificultad alta</span>
+                    <span className="text-xs md:text-sm text-gray-300 font-sans"> Record: 40 min</span>
                   </div>
                 </div>
 

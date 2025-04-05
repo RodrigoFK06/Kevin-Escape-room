@@ -61,7 +61,7 @@ const rooms = [
         date: "22/04/2023",
       },
     ],
-    bookings: 15,
+    bookings: 4,
     tags: ["Terror", "Psicológico", "Difícil"],
   },
   {
@@ -113,7 +113,7 @@ const rooms = [
         date: "15/05/2023",
       },
     ],
-    bookings: 12,
+    bookings: 7,
     tags: ["Fantasmas", "Misterio", "Medio"],
   },
   {
@@ -165,7 +165,7 @@ const rooms = [
         date: "12/06/2023",
       },
     ],
-    bookings: 20,
+    bookings: 3,
     tags: ["Zombies", "Ciencia", "Extremo"],
   },
 ]

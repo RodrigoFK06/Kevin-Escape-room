@@ -289,10 +289,18 @@ export function Testimonials() {
             <motion.div variants={itemVariants} className="mt-6 text-center">
               <div className="bg-[#0a141f]/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4">
                 <p className="text-gray-400 mb-4 text-sm md:text-base font-sans">
-                  Equipo 'Los Criptógrafos' escapó en 42:30 min. ¿Podrás superarlos?
-                  <br />
-                  Juega 3 veces y gana un 50% de descuento en tu siguiente juego.
+                  {rankings.length > 0 ? (
+                    <>
+                      El equipo <strong className="text-brand-gold">{rankings[0].name}</strong> escapó en{" "}
+                      <strong className="text-brand-gold">{rankings[0].time} min</strong>. ¿Podrás superarlos?
+                      <br />
+                      Juega 3 veces y gana un 50% de descuento en tu siguiente juego.
+                    </>
+                  ) : (
+                    <>Compite por ser el equipo más rápido en nuestro ranking.</>
+                  )}
                 </p>
+
 
                 <Button variant="default" className="group font-sans" asChild>
                   <Link href="#reservas" className="flex items-center gap-2">

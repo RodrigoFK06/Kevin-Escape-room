@@ -277,19 +277,19 @@ export function CorporateEvents() {
           className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-4 text-center"
         >
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4 horror-card">
-            <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+50</div>
+            <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+5</div>
             <p className="text-gray-300 text-sm">Empresas confían en nosotros</p>
           </div>
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4 horror-card">
-            <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+200</div>
+            <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+20</div>
             <p className="text-gray-300 text-sm">Eventos corporativos</p>
           </div>
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4 horror-card">
-            <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+500</div>
+            <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">+50</div>
             <p className="text-gray-300 text-sm">Cumpleaños celebrados</p>
           </div>
           <div className="bg-brand-dark/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4 horror-card">
-            <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">98%</div>
+            <div className="text-3xl font-bold text-brand-gold mb-2 horror-text">100%</div>
             <p className="text-gray-300 text-sm">Satisfacción garantizada</p>
           </div>
         </motion.div>

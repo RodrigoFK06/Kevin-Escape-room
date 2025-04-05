@@ -15,6 +15,8 @@ import { CreditCard, Smartphone, Clock, Users, Lock, Key, CheckCircle, AlertCirc
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { DatePicker } from "@/components/ui/date-picker"
+import { fetchHorariosDisponibles } from "@/lib/api-horarios"
+
 
 type TimeSlot = {
   id: string
@@ -41,14 +43,9 @@ function ReservationSystem() {
   const isInView = useInView(ref, { once: false, amount: 0.2 })
 
   // Horarios disponibles (simulados)
-  const timeSlots: TimeSlot[] = [
-    { id: "1", time: "15:00", available: true },
-    { id: "2", time: "16:30", available: true },
-    { id: "3", time: "18:00", available: false },
-    { id: "4", time: "19:30", available: true },
-    { id: "5", time: "21:00", available: true },
-    { id: "6", time: "22:30", available: false },
-  ]
+  // Declara un estado para almacenar los horarios disponibles desde la API
+  const [availableTimes, setAvailableTimes] = useState<TimeSlot[]>([])
+
 
   // Room images mapping
   const roomImages = {
@@ -57,12 +54,30 @@ function ReservationSystem() {
     "el-laboratorio": "/placeholder.svg?height=800&width=1200",
   }
 
+  const roomIds: Record<string, number> = {
+    "codigo-enigma": 1,
+    "la-boveda": 2,
+    "el-laboratorio": 3,
+  }
+
+  const roomPrices: Record<string, number> = {
+    "codigo-enigma": 120,    // Precio para Código Enigma
+    "la-boveda": 100,        // Precio para La Bóveda
+    "el-laboratorio": 150,   // Precio para El Laboratorio
+  }
+
+
   const handleRoomSelect = (roomId: string) => {
     setSelectedRoom(roomId)
     setSelectedRoomImage(roomImages[roomId as keyof typeof roomImages])
     setShowRoomPreview(true)
 
-    // Reproducción de sonido con manejo de errores
+    // Reinicia la fecha y horarios al cambiar de sala
+    setDate(undefined)
+    setAvailableTimes([])
+    setSelectedTime("")
+
+    // Reproducción de sonido
     try {
       const audio = new Audio("/placeholder.mp3")
       audio.volume = 0.3
@@ -77,6 +92,31 @@ function ReservationSystem() {
       setShowRoomPreview(false)
     }, 2000)
   }
+
+  const handleDateSelect = async (selected: Date | undefined) => {
+    setDate(selected)
+    setSelectedTime("")  // Reinicia la selección de horario
+
+    if (!selectedRoom || !selected) return
+
+    const formatted = format(selected, "yyyy-MM-dd")
+    try {
+      const response = await fetchHorariosDisponibles(roomIds[selectedRoom].toString(), formatted)
+      const { horarios, ocupados } = response
+      const final = horarios.map((h: any) => ({
+        id: h.id,
+        time: h.hora,
+        available: !ocupados.includes(h.id),
+      }))
+      setAvailableTimes(final)
+    } catch (error) {
+      console.error("Error al obtener horarios desde el componente:", error)
+      setAvailableTimes([])
+    }
+  }
+
+
+
 
   const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {}
@@ -104,47 +144,58 @@ function ReservationSystem() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
     if (!validateStep(3)) return
 
     setIsSubmitting(true)
-
     try {
-      // Simulación de llamada API
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      setIsSuccess(true)
+      // Construimos el body dinámico
+      const horarioId = parseInt(selectedTime, 10) // Convierte el string a número
+      const formattedDate = date ? format(date, "yyyy-MM-dd") : ""
+      const pricePerPerson = roomPrices[selectedRoom] || 120 // Obtiene el precio según la sala seleccionada, con valor por defecto si no existe
+      const total = players ? Number(players) * pricePerPerson : 0
 
-      // Logging for production
+
+      const body = {
+        reserva: {
+          cliente: name,
+          correo: email,
+          telefono: phone,
+          horario_id: horarioId,
+          fecha: formattedDate,
+          cantidad_jugadores: Number(players),
+          metodo_pago: paymentMethod,
+          precio_total: total,
+          estado: "confirmada",
+        },
+      }
+
+      // Hacemos POST a la ruta local
+      const response = await fetch("/api/reservas/crear", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+
+      if (!response.ok) {
+        throw new Error("Error al crear la reserva")
+      }
+
+      // Si llega aquí, todo OK
+      setIsSuccess(true)
+      // Logging en producción
       if (process.env.NODE_ENV === "production") {
-        // Example logging
-        console.info("Reserva exitosa:", {
-          room: selectedRoom,
-          date: date,
-          time: selectedTime,
-          players: players,
-          user: email,
-        })
+        console.info("Reserva exitosa:", body)
       }
     } catch (error) {
       console.error("Error en la reserva:", error)
-
-      // Production error logging
-      if (process.env.NODE_ENV === "production") {
-        // Example with a hypothetical logging service
-        // captureException(error, {
-        //   context: {
-        //     component: 'ReservationSystem',
-        //     user: email,
-        //     step: formStep
-        //   }
-        // });
-      }
-
       setErrors({ form: "Ocurrió un error inesperado" })
     } finally {
       setIsSubmitting(false)
     }
   }
+
 
   const nextStep = () => {
     if (validateStep(formStep)) {
@@ -235,7 +286,8 @@ function ReservationSystem() {
                     <li className="flex justify-between">
                       <span>Hora:</span>
                       <span className="font-medium">
-                        {timeSlots.find((slot) => slot.id === selectedTime)?.time || ""}
+                        {availableTimes.find((slot) => slot.id === selectedTime)?.time || ""
+                        }
                       </span>
                     </li>
                     <li className="flex justify-between">
@@ -270,9 +322,8 @@ function ReservationSystem() {
                   {[1, 2, 3].map((step) => (
                     <div key={step} className="flex flex-col items-center">
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          formStep >= step ? "bg-brand-gold text-brand-dark" : "bg-brand-dark/50 text-gray-400"
-                        } transition-colors duration-300`}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center ${formStep >= step ? "bg-brand-gold text-brand-dark" : "bg-brand-dark/50 text-gray-400"
+                          } transition-colors duration-300`}
                       >
                         {step}
                       </div>
@@ -366,7 +417,7 @@ function ReservationSystem() {
                         <CalendarIcon className="mr-2 h-5 w-5 text-brand-gold" />
                         Selecciona una fecha
                       </Label>
-                      <DatePicker date={date} onSelect={setDate} error={Boolean(errors.date)} />
+                      <DatePicker date={date} onSelect={handleDateSelect} error={Boolean(errors.date)} />
                       {errors.date && (
                         <p className="text-red-500 text-xs mt-1 flex items-center font-sans">
                           <AlertCircle className="h-3 w-3 mr-1" />
@@ -381,25 +432,35 @@ function ReservationSystem() {
                         Selecciona un horario
                       </Label>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3">
-                        {timeSlots.map((slot) => (
-                          <Button
-                            key={slot.id}
-                            type="button"
-                            variant={selectedTime === slot.id ? "default" : "outline"}
-                            className={cn(
-                              "flex items-center justify-center text-xs sm:text-sm group font-sans py-3 h-auto",
-                              !slot.available && "opacity-50 cursor-not-allowed",
-                              selectedTime === slot.id && "bg-brand-gold text-brand-dark",
-                              "border-brand-gold/30 hover:bg-brand-gold/10",
-                            )}
-                            disabled={!slot.available}
-                            onClick={() => slot.available && setSelectedTime(slot.id)}
-                          >
-                            <Clock className="mr-1 h-3 w-3 sm:h-4 sm:w-4" />
-                            {slot.time}
-                            {!slot.available && <Lock className="ml-1 h-3 w-3" />}
-                          </Button>
-                        ))}
+                        {availableTimes.length === 0 ? (
+                          <div className="col-span-full w-full max-w-sm mx-auto text-center">
+                            <p className="text-gray-400 text-xs mt-1">
+                              No hay horarios disponibles para la fecha seleccionada.
+                            </p>
+                          </div>
+
+                        ) : (
+                          availableTimes.map((slot) => (
+                            <Button
+                              key={slot.id}
+                              type="button"
+                              variant={selectedTime === slot.id ? "default" : "outline"}
+                              className={cn(
+                                "flex items-center justify-center text-xs sm:text-sm group font-sans py-3 h-auto",
+                                !slot.available && "opacity-50 cursor-not-allowed",
+                                selectedTime === slot.id && "bg-brand-gold text-brand-dark",
+                                "border-brand-gold/30 hover:bg-brand-gold/10"
+                              )}
+                              disabled={!slot.available}
+                              onClick={() => slot.available && setSelectedTime(slot.id)}
+                            >
+                              <Clock className="mr-1 h-3 w-3 sm:h-4 sm:w-4" />
+                              {slot.time.slice(0, 5)}
+                              {!slot.available && <Lock className="ml-1 h-3 w-3" />}
+                            </Button>
+                          ))
+                        )}
+
                       </div>
                       {errors.time && (
                         <p className="text-red-500 text-xs mt-1 flex items-center font-sans">
@@ -548,60 +609,75 @@ function ReservationSystem() {
                         onValueChange={setPaymentMethod}
                         className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4"
                       >
-                        <div
-                          className={cn(
-                            "flex items-center space-x-2 border border-brand-gold/20 rounded-md p-4 cursor-pointer hover:border-brand-gold/50 transition-colors",
-                            paymentMethod === "card" && "bg-brand-gold/10 border-brand-gold/50",
-                            errors.payment && "border-red-500",
-                          )}
-                          onClick={() => setPaymentMethod("card")}
-                        >
-                          <RadioGroupItem value="card" id="card" />
-                          <Label
-                            htmlFor="card"
-                            className="flex items-center cursor-pointer text-sm md:text-base font-sans"
-                          >
-                            <CreditCard className="mr-2 h-4 w-4 md:h-5 md:w-5 text-brand-gold" />
-                            Tarjeta de crédito/débito
-                          </Label>
-                        </div>
-                        <div
+                        <label
+                          htmlFor="yape"
                           className={cn(
                             "flex items-center space-x-2 border border-brand-gold/20 rounded-md p-4 cursor-pointer hover:border-brand-gold/50 transition-colors",
                             paymentMethod === "yape" && "bg-brand-gold/10 border-brand-gold/50",
-                            errors.payment && "border-red-500",
+                            errors.payment && "border-red-500"
                           )}
-                          onClick={() => setPaymentMethod("yape")}
                         >
-                          <RadioGroupItem value="yape" id="yape" />
-                          <Label
-                            htmlFor="yape"
-                            className="flex items-center cursor-pointer text-sm md:text-base font-sans"
-                          >
+                          <RadioGroupItem value="yape" id="yape" className="hidden" />
+                          <span className="flex items-center text-sm md:text-base font-sans">
                             <Smartphone className="mr-2 h-4 w-4 md:h-5 md:w-5 text-brand-gold" />
                             <Smartphone className="mr-2 h-4 w-4 md:h-5 md:w-5 text-brand-gold" />
                             Yape / Plin
-                          </Label>
-                        </div>
-                        <div
+                          </span>
+                        </label>
+                        <label
+                          htmlFor="local"
                           className={cn(
                             "flex items-center space-x-2 border border-brand-gold/20 rounded-md p-4 cursor-pointer hover:border-brand-gold/50 transition-colors",
                             paymentMethod === "local" && "bg-brand-gold/10 border-brand-gold/50",
-                            errors.payment && "border-red-500",
+                            errors.payment && "border-red-500"
                           )}
-                          onClick={() => setPaymentMethod("local")}
                         >
-                          <RadioGroupItem value="local" id="local" />
-                          <Label htmlFor="local" className="cursor-pointer text-sm md:text-base font-sans">
-                            Pago en local
-                          </Label>
-                        </div>
+                          <RadioGroupItem value="local" id="local" className="hidden" />
+                          <span className="cursor-pointer text-sm md:text-base font-sans">
+                            Transferencia bancaria
+                          </span>
+                        </label>
                       </RadioGroup>
+
                       {errors.payment && (
                         <p className="text-red-500 text-xs mt-1 flex items-center font-sans">
                           <AlertCircle className="h-3 w-3 mr-1" />
                           {errors.payment}
                         </p>
+                      )}
+                    </motion.div>
+                    {/* Detalle dinámico según método de pago */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.4 }}
+                      className="mt-4 space-y-4"
+                    >
+                      {paymentMethod === "yape" && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <Image
+                            src="/placeholder.svg"
+                            alt="Código QR Yape"
+                            width={400}
+                            height={400}
+                            className="rounded-lg border border-brand-gold/30"
+                          />
+                          <Image
+                            src="/placeholder.svg"
+                            alt="Código QR Plin"
+                            width={400}
+                            height={400}
+                            className="rounded-lg border border-brand-gold/30"
+                          />
+                        </div>
+                      )}
+
+                      {paymentMethod === "local" && (
+                        <div className="bg-brand-dark/50 border border-brand-gold/30 rounded-lg p-4 text-sm text-white font-sans leading-relaxed">
+                          <p className="mb-2 text-brand-gold font-semibold">Transferencia Bancaria</p>
+                          <p><span className="text-gray-400">Cuenta BCP Soles:</span> <strong>57007192985095</strong></p>
+                          <p><span className="text-gray-400">Cuenta interbancaria:</span> <strong>00257010719298509506</strong></p>
+                        </div>
                       )}
                     </motion.div>
 
@@ -625,16 +701,18 @@ function ReservationSystem() {
                         <div className="font-medium text-white">{date ? format(date, "PPP", { locale: es }) : ""}</div>
                         <div className="text-gray-400">Hora:</div>
                         <div className="font-medium text-white">
-                          {timeSlots.find((slot) => slot.id === selectedTime)?.time || ""}
+                          {availableTimes.find((slot) => slot.id === selectedTime)?.time || ""
+                          }
                         </div>
                         <div className="text-gray-400">Jugadores:</div>
                         <div className="font-medium text-white">{players}</div>
                         <div className="text-gray-400">Precio por persona:</div>
-                        <div className="font-medium text-brand-gold">S/. 120.00</div>
+                        <div className="font-medium text-brand-gold">S/. {(roomPrices[selectedRoom] || 120).toFixed(2)}</div>
                         <div className="text-gray-400 font-bold">Total:</div>
                         <div className="font-bold text-brand-gold text-lg">
-                          S/. {players ? (Number.parseInt(players) * 120).toFixed(2) : "0.00"}
+                          S/. {players ? (Number.parseInt(players) * (roomPrices[selectedRoom] || 120)).toFixed(2) : "0.00"}
                         </div>
+
                       </div>
                     </motion.div>
 

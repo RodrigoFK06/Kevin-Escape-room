@@ -9,13 +9,14 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, X, Clock, Lock, Key } from "lucide-react"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 import { Logo } from "@/components/ui/logo"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("inicio")
-  const [countdown, setCountdown] = useState(60 * 60) // 60 minutos en segundos
+  const [countdown, setCountdown] = useState(30 * 60) // 60 minutos en segundos
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,7 +57,7 @@ export function Header() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
-        if (prev <= 0) return 60 * 60
+        if (prev <= 0) return 30 * 60
         return prev - 1
       })
     }, 1000)
@@ -134,7 +135,8 @@ export function Header() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Logo variant="full" className="py-2" />
+        <Image src="/logoencryp.png" alt="Logo Encryp" width={190} height={70} className="py-2" />
+
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center">
@@ -191,7 +193,8 @@ export function Header() {
               <SheetContent side="right" className="bg-brand-dark/95 border-brand-gold/50 w-[80vw] sm:max-w-sm p-0">
                 <div className="flex flex-col h-full p-6">
                   <div className="flex items-center justify-between mb-8">
-                    <Logo variant="icon" iconClassName="w-8 h-8" />
+                  <Image src="/logoencryp.png" alt="Logo Encryp" width={40} height={40} />
+
                     <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
                       <X className="h-6 w-6" />
                       <span className="sr-only">Cerrar menú</span>

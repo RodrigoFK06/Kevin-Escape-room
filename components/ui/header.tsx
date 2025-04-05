@@ -13,7 +13,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("inicio")
-  const [countdown, setCountdown] = useState(60 * 60) // 60 minutos en segundos
+  const [countdown, setCountdown] = useState(30 * 60) // 60 minutos en segundos
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export function Header() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
-        if (prev <= 0) return 60 * 60
+        if (prev <= 0) return 30 * 60
         return prev - 1
       })
     }, 1000)

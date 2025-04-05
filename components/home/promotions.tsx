@@ -8,6 +8,12 @@ import { Gift, Users, GraduationCap, Award } from "lucide-react"
 export function Promotions() {
   const promotions = [
     {
+      icon: <Award className="h-10 w-10 text-brand-gold" />,
+      title: "Jugadores Frecuentes",
+      description: "Juega 3 veces y gana un 50% de descuento en tu siguiente reserva.",
+      delay: 0.4,
+    },
+    {
       icon: <Gift className="h-10 w-10 text-brand-gold" />,
       title: "Cumpleaños",
       description: "El cumpleañero juega GRATIS si viene con 4 amigos.",
@@ -25,12 +31,7 @@ export function Promotions() {
       description: "Muestra tu carnet y obtén 15% de descuento.",
       delay: 0.3,
     },
-    {
-      icon: <Award className="h-10 w-10 text-brand-gold" />,
-      title: "Jugadores Frecuentes",
-      description: "Juega 3 veces y gana un 50% de descuento en tu siguiente reserva.",
-      delay: 0.4,
-    },
+    
   ]
 
   return (

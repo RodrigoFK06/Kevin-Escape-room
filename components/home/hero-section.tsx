@@ -7,27 +7,44 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { Lock, Key } from "lucide-react"
+import { fetchHorariosDisponibles } from "@/lib/api-horarios"
 
 export function HeroSection() {
   const [remainingSlots, setRemainingSlots] = useState(2)
-  const [countdown, setCountdown] = useState(60 * 60) // 60 minutos en segundos
+  const [countdown, setCountdown] = useState(30 * 60) // 60 minutos en segundos
 
-  // Simular urgencia con un contador que disminuye
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (remainingSlots > 1) {
-        setRemainingSlots(remainingSlots - 1)
-      }
-    }, 60000) // Disminuye cada minuto
+    const fetchAvailable = async () => {
+      try {
+        const today = new Date()
+        const formatted = today.toISOString().split("T")[0] // yyyy-mm-dd
 
-    return () => clearTimeout(timer)
-  }, [remainingSlots])
+        const salaIds = ["1", "2", "3"]
+        let totalDisponibles = 0
+
+        for (const salaId of salaIds) {
+          const data = await fetchHorariosDisponibles(salaId, formatted)
+          const horariosDisponibles = data.horarios.filter(
+            (h: any) => !data.ocupados.includes(h.id)
+          )
+          totalDisponibles += horariosDisponibles.length
+        }
+
+        setRemainingSlots(totalDisponibles)
+      } catch (error) {
+        console.error("Error al obtener horarios para HeroSection:", error)
+        setRemainingSlots(0)
+      }
+    }
+
+    fetchAvailable()
+  }, [])
 
   // Efecto para el contador regresivo
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
-        if (prev <= 0) return 60 * 60
+        if (prev <= 0) return 30 * 60
         return prev - 1
       })
     }, 1000)
@@ -35,7 +52,6 @@ export function HeroSection() {
     return () => clearInterval(timer)
   }, [])
 
-  // Formatear el tiempo
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
@@ -49,7 +65,7 @@ export function HeroSection() {
       const targetId = href.substring(1)
       const targetElement = document.getElementById(targetId)
       if (targetElement) {
-        const headerHeight = 80 // Altura aproximada del header
+        const headerHeight = 80
         const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight
         window.scrollTo({
           top: targetPosition,
@@ -67,10 +83,7 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/70 via-brand-dark/50 to-brand-dark z-10"></div>
       </div>
 
-      {/* Contenido */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-
-        {/* Contenido Hero centrado */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -133,7 +146,6 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Contador fijo */}
       <motion.div
         className="fixed left-4 bottom-4 z-[100] hidden md:block"
         initial={{ opacity: 0, scale: 0.8 }}
@@ -146,7 +158,5 @@ export function HeroSection() {
         </div>
       </motion.div>
     </section>
-
   )
 }
-

@@ -132,7 +132,7 @@ export function BlogSection() {
                   asChild
                 >
                   <Link href={`/blog/${post.id}`} className="flex items-center">
-                    <span className="mr-1">Leer más</span>
+                    <span className="mr-1">Próximamente</span>
                     <ArrowRight className="h-3 w-3" />
                   </Link>
                 </Button>
@@ -154,9 +154,9 @@ export function BlogSection() {
           className="border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button"
           asChild
         >
-          <Link href="/blog">
+        {/*<Link href="/blog">
             <span className="relative z-10">VER TODOS LOS ARTÍCULOS</span>
-          </Link>
+          </Link">*/}
         </Button>
       </motion.div>
     </SectionWrapper>
