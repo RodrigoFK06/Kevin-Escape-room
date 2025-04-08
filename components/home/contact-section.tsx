@@ -49,7 +49,7 @@ export function ContactSection() {
     <section
       id="contacto"
       className="py-16 md:py-24 bg-brand-dark relative w-full rounded-2xl mb-12"
-      // Eliminamos overflow-hidden para que nada se corte en móvil
+    // Eliminamos overflow-hidden para que nada se corte en móvil
     >
       {/* Fondo lobo */}
       <div className="absolute inset-0 bg-[url('/lobo.svg?height=800&width=1200')] bg-cover bg-center opacity-5 rounded-2xl" />
@@ -198,7 +198,7 @@ export function ContactSection() {
                 Ubicación
               </h3>
               <p className="text-gray-300 mb-4 font-sans">Av. Ejemplo 123, Lima, Perú</p>
-              <div className="relative flex-1 rounded-lg overflow-hidden">
+              <div className="relative h-64 md:flex-1 rounded-lg overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.964216405086!2d-77.03196684957949!3d-12.046654991455207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662c7%3A0x15f8dcc0194c8eb4!2sPlaza%20Mayor%20de%20Lima!5e0!3m2!1ses-419!2spe!4v1625160044500!5m2!1ses-419!2spe"
                   width="100%"
@@ -206,11 +206,11 @@ export function ContactSection() {
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
-                  className="absolute inset-0"
+                  className="absolute inset-0 w-full h-full"
                 />
               </div>
-            </motion.div>
 
+            </motion.div>
             {/* 2-col layout: Info de Contacto + Horarios 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
