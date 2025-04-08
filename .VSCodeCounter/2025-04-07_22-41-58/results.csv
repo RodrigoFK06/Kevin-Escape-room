@@ -1,0 +1,113 @@
+"filename", "language", "JavaScript", "TypeScript", "JSON with Comments", "CSS", "JSON", "YAML", "XML", "TypeScript JSX", "comment", "blank", "total"
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\app\api\horarios\disponibles\route.ts", "TypeScript", 0, 27, 0, 0, 0, 0, 0, 0, 0, 6, 33
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\app\api\ranking\obtener\route.ts", "TypeScript", 0, 22, 0, 0, 0, 0, 0, 0, 0, 5, 27
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\app\api\reservas\crear\route.ts", "TypeScript", 0, 26, 0, 0, 0, 0, 0, 0, 3, 6, 35
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\app\cuartos\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 350, 10, 33, 393
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\app\fonts.css", "CSS", 0, 0, 0, 42, 0, 0, 0, 0, 0, 7, 49
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\app\globals.css", "CSS", 0, 0, 0, 804, 0, 0, 0, 0, 17, 153, 974
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\app\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 29, 0, 3, 32
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\app\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 54, 0, 3, 57
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components.json", "JSON", 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 21
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\blog-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 148, 3, 15, 166
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\contact-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 242, 13, 17, 272
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\corporate-events.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 303, 13, 17, 333
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\escape-rooms.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 320, 5, 29, 354
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\faq.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 156, 3, 13, 172
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\gallery-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 229, 19, 17, 265
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 230, 11, 31, 272
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\hero-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 143, 1, 19, 163
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\how-it-works.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 148, 6, 18, 172
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\promotions.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 83, 0, 8, 91
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\reservation-client.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 38, 2, 6, 46
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\reservation-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 8, 0, 3, 11
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\reservation-system.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 698, 11, 56, 765
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\section-wrapper.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 18, 0, 3, 21
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\testimonials.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 284, 5, 32, 321
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\home\useApi.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\rooms\room-booking-widget.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 204, 6, 18, 228
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\rooms\room-difficulty.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 47, 1, 10, 58
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\rooms\room-gallery.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 113, 1, 15, 129
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\rooms\room-reviews.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 95, 0, 15, 110
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\theme-provider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 9, 0, 3, 12
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\accordion.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 44, 0, 9, 53
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\alert-dialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 127, 0, 15, 142
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\alert.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 53, 0, 7, 60
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\aspect-ratio.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 8
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\avatar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 44, 0, 7, 51
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\badge.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 31, 0, 6, 37
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\breadcrumb.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 105, 0, 11, 116
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\button.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 51, 0, 6, 57
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\calendar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 72, 0, 6, 78
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\card.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 71, 0, 9, 80
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\carousel.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 232, 0, 31, 263
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\chart.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 327, 2, 37, 366
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\checkbox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 26, 0, 5, 31
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\collapsible.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 6, 0, 6, 12
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\command.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 136, 0, 18, 154
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\context-menu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 182, 0, 19, 201
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\date-picker.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 51, 0, 6, 57
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\dialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 109, 0, 14, 123
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\drawer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 105, 0, 14, 119
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\dropdown-menu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 182, 0, 19, 201
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\footer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 155, 1, 12, 168
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 153, 0, 26, 179
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 202, 9, 23, 234
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\hover-card.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 23, 0, 7, 30
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\input-otp.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 63, 0, 9, 72
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\input.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 18, 0, 6, 24
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\label.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 14, 0, 7, 21
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\logo.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 55, 0, 4, 59
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\menubar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 217, 0, 20, 237
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\navigation-menu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 117, 0, 12, 129
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\pagination.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 107, 0, 11, 118
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\popover.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 25, 0, 8, 33
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\progress.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 24, 0, 5, 29
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\radio-group.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 33, 0, 7, 40
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\resizable.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 39, 0, 7, 46
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\scroll-area.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 43, 0, 6, 49
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\select.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 131, 0, 16, 147
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\separator.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 27, 0, 5, 32
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\sheet.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 94, 0, 17, 111
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\sidebar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 697, 12, 55, 764
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\skeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 13, 0, 3, 16
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\slider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 24, 0, 5, 29
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\sonner.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 26, 0, 6, 32
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\splashcursor.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 1407, 29, 111, 1547
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\switch.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 25, 0, 5, 30
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 107, 0, 11, 118
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\tabs.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 48, 0, 8, 56
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\textarea.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 19, 0, 4, 23
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\theme-provider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 6, 0, 3, 9
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\toast.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 100, 0, 15, 115
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\toaster.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 21, 0, 5, 26
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\toggle-group.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 52, 0, 10, 62
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\toggle.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 39, 0, 7, 46
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\tooltip.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 23, 0, 8, 31
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\use-mobile.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 15, 0, 5, 20
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\components\ui\use-toast.ts", "TypeScript", 0, 155, 0, 0, 0, 0, 0, 0, 3, 33, 191
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\hooks\use-mobile.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 15, 0, 5, 20
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\hooks\use-toast.ts", "TypeScript", 0, 160, 0, 0, 0, 0, 0, 0, 3, 32, 195
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\lib\api-clientes.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\lib\api-equipo.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\lib\api-horarios.ts", "TypeScript", 0, 23, 0, 0, 0, 0, 0, 0, 0, 4, 27
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\lib\api-ranking.ts", "TypeScript", 0, 23, 0, 0, 0, 0, 0, 0, 0, 4, 27
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\lib\api-reservas.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\lib\config.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\lib\utils.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 8
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\next.config.mjs", "JavaScript", 41, 0, 0, 0, 0, 0, 0, 0, 2, 6, 49
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\package-lock.json", "JSON", 0, 0, 0, 0, 4769, 0, 0, 0, 0, 1, 4770
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\package.json", "JSON", 0, 0, 0, 0, 75, 0, 0, 0, 0, 1, 76
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\pnpm-lock.yaml", "YAML", 0, 0, 0, 0, 0, 3064, 0, 0, 0, 626, 3690
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\postcss.config.mjs", "JavaScript", 6, 0, 0, 0, 0, 0, 0, 0, 1, 2, 9
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\public\20623015_key1.svg", "XML", 0, 0, 0, 0, 0, 0, 2560, 0, 1, 1, 2562
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\public\Group2.svg", "XML", 0, 0, 0, 0, 0, 0, 28, 0, 0, 1, 29
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\public\Group3.svg", "XML", 0, 0, 0, 0, 0, 0, 29, 0, 0, 1, 30
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\public\Group4.svg", "XML", 0, 0, 0, 0, 0, 0, 28, 0, 0, 1, 29
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\public\lobo.svg", "XML", 0, 0, 0, 0, 0, 0, 188, 0, 1, 1, 190
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\public\placeholder-logo.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\public\placeholder.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\styles\calendar.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\styles\globals.css", "CSS", 0, 0, 0, 90, 0, 0, 0, 0, 0, 5, 95
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\tailwind.config.ts", "TypeScript", 0, 90, 0, 0, 0, 0, 0, 0, 1, 4, 95
+"c:\Bytecore\Clientes\Kevin Escape Room\V1.0\tsconfig.json", "JSON with Comments", 0, 0, 27, 0, 0, 0, 0, 0, 0, 1, 28
+"Total", "-", 47, 532, 27, 936, 4865, 3064, 2835, 10084, 195, 2017, 24602

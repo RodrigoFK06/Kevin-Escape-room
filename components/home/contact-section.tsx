@@ -211,9 +211,9 @@ export function ContactSection() {
               </div>
             </motion.div>
 
-            {/* 2-col layout: Info de Contacto + Horarios */}
+            {/* 2-col layout: Info de Contacto + Horarios 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Info de contacto */}
+              
               <motion.div
                 variants={itemVariants}
                 className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300"
@@ -237,7 +237,7 @@ export function ContactSection() {
                 </ul>
               </motion.div>
 
-              {/* Horarios de Atención */}
+              
               <motion.div
                 variants={itemVariants}
                 className="bg-[#0a141f] border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/40 transition-all duration-300"
@@ -262,7 +262,7 @@ export function ContactSection() {
                   </li>
                 </ul>
               </motion.div>
-            </div>
+            </div>*/}
           </motion.div>
         </div>
       </div>

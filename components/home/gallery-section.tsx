@@ -13,49 +13,49 @@ const galleryImages = [
     id: 1,
     src: "/Group2.svg", // <-- Sin parámetros
     alt: "Jugadores resolviendo acertijos",
-    category: "jugadores",
+    category: "insta",
   },
   {
     id: 2,
     src: "/Group2.svg", // <-- Sin parámetros
     alt: "Interior del Asilo Maldito",
-    category: "salas",
+    category: "tiktok",
   },
   {
     id: 3,
     src: "/Group2.svg",
     alt: "Decoración terrorífica",
-    category: "decoracion",
+    category: "face",
   },
   {
     id: 4,
     src: "/Group2.svg",
     alt: "Equipo celebrando su escape",
-    category: "jugadores",
+    category: "yt",
   },
   {
     id: 5,
     src: "/Group2.svg",
     alt: "Interior de la Mansión Embrujada",
-    category: "salas",
+    category: "x",
   },
   {
     id: 6,
     src: "/Group2.svg",
     alt: "Acertijos y pistas",
-    category: "acertijos",
+    category: "tiktok",
   },
   {
     id: 7,
     src: "/Group2.svg",
     alt: "Efectos especiales",
-    category: "efectos",
+    category: "insta",
   },
   {
     id: 8,
     src: "/Group2.svg",
     alt: "Interior del Laboratorio Zombie",
-    category: "salas",
+    category: "x",
   },
 ]
 
@@ -90,11 +90,11 @@ export function GallerySection() {
 
   const categories = [
     { id: "todos", label: "Todos" },
-    { id: "salas", label: "Salas" },
-    { id: "jugadores", label: "Jugadores" },
-    { id: "decoracion", label: "Decoración" },
-    { id: "acertijos", label: "Acertijos" },
-    { id: "efectos", label: "Efectos" },
+    { id: "insta", label: "Instagram" },
+    { id: "tiktok", label: "Tiktok" },
+    { id: "face", label: "Facebook" },
+    { id: "x", label: "X" },
+    { id: "yt", label: "Youtube" },
   ]
 
   // Animations
@@ -124,11 +124,11 @@ export function GallerySection() {
           transition={{ duration: 0.5 }}
           className="text-center mb-8 md:mb-12"
         >
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 horror-title">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
             GALERÍA DE <span className="text-brand-gold">IMÁGENES</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-2">
-            Explora nuestra colección de imágenes y descubre el terror que te espera.
+            Explora nuestra colección de imágenes subidas a nuestras redes sociales.
           </p>
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-4"></div>
         </motion.div>

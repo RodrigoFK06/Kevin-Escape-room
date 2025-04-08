@@ -45,6 +45,7 @@ function ReservationSystem() {
   // Horarios disponibles (simulados)
   // Declara un estado para almacenar los horarios disponibles desde la API
   const [availableTimes, setAvailableTimes] = useState<TimeSlot[]>([])
+  const previewTimerRef = useRef<NodeJS.Timeout | null>(null);
 
 
   // Room images mapping
@@ -88,9 +89,12 @@ function ReservationSystem() {
       console.error("Error al reproducir audio:", error)
     }
 
-    setTimeout(() => {
-      setShowRoomPreview(false)
-    }, 2000)
+    if (previewTimerRef.current) {
+      clearTimeout(previewTimerRef.current);
+    }
+    previewTimerRef.current = setTimeout(() => {
+      setShowRoomPreview(false);
+    }, 2000);
   }
 
   const handleDateSelect = async (selected: Date | undefined) => {
@@ -241,6 +245,9 @@ function ReservationSystem() {
           <p className="text-gray-400 max-w-2xl mx-auto px-2 text-sm md:text-base font-sans">
             Reserva tu experiencia en pocos pasos. Selecciona fecha, hora y sala para comenzar tu desafío.
           </p>
+          <p className="text-gray-400 max-w-2xl mx-auto px-2 text-sm md:text-base font-sans">
+            * Recuerda que para reservar solo necesitas un abono de S/. 50.00 por equipo *
+          </p>
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-3 md:mt-4"></div>
         </motion.div>
 
@@ -260,7 +267,10 @@ function ReservationSystem() {
                 className="text-center py-8 md:py-16"
               >
                 <CheckCircle className="h-12 w-12 md:h-16 md:w-16 text-green-500 mx-auto mb-4" />
-                <h3 className="text-xl md:text-2xl font-bold mb-2 text-white font-display">¡Reserva Confirmada!</h3>
+                <h3 className="text-xl md:text-2xl font-bold mb-2 text-white font-display">¡Reserva Separada!</h3>
+                <p className="text-gray-400 mb-6 font-sans text-sm md:text-base">
+                  * No olvides enviar tu comprobante de pago al WhatsApp o correo de Encrypted *
+                </p>
                 <p className="text-gray-400 mb-6 font-sans text-sm md:text-base">
                   Recibirás un correo electrónico con los detalles de tu reserva. ¡Prepárate para el desafío!
                 </p>
@@ -346,6 +356,10 @@ function ReservationSystem() {
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                           className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center"
+                          onClick={() => {
+                            if (previewTimerRef.current) clearTimeout(previewTimerRef.current);
+                            setShowRoomPreview(false);
+                          }}
                         >
                           <motion.div
                             initial={{ scale: 0.8, rotateY: 90 }}
@@ -358,6 +372,7 @@ function ReservationSystem() {
                             }}
                             className="relative w-full max-w-4xl aspect-video"
                             style={{ perspective: 1000 }}
+                            onClick={(e) => e.stopPropagation()}
                           >
                             <Image
                               src={selectedRoomImage || "/placeholder.svg"}
@@ -370,6 +385,7 @@ function ReservationSystem() {
                         </motion.div>
                       )}
                     </AnimatePresence>
+
 
                     <div className="space-y-3 md:space-y-4">
                       <Label htmlFor="room" className="text-base md:text-lg font-medium flex items-center font-sans">
@@ -706,8 +722,10 @@ function ReservationSystem() {
                         </div>
                         <div className="text-gray-400">Jugadores:</div>
                         <div className="font-medium text-white">{players}</div>
-                        <div className="text-gray-400">Precio por persona:</div>
+                        <div className="text-gray-400">Precio total por persona:</div>
                         <div className="font-medium text-brand-gold">S/. {(roomPrices[selectedRoom] || 120).toFixed(2)}</div>
+                        <div className="text-gray-400">Precio para reservar:</div>
+                        <div className="font-medium text-brand-gold">S/. 50</div>
                         <div className="text-gray-400 font-bold">Total:</div>
                         <div className="font-bold text-brand-gold text-lg">
                           S/. {players ? (Number.parseInt(players) * (roomPrices[selectedRoom] || 120)).toFixed(2) : "0.00"}

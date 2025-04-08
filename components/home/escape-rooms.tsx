@@ -12,6 +12,7 @@ type Room = {
   name: string
   image: string
   difficulty: number
+  happy: number
   players: string
   time: string
   description: string
@@ -30,6 +31,7 @@ export function EscapeRooms() {
       name: "Código Enigma",
       image: "/placeholder.svg?height=600&width=800",
       difficulty: 4,
+      happy: 5,
       players: "2-6",
       time: "60 min",
       description:
@@ -43,6 +45,7 @@ export function EscapeRooms() {
       name: "La Bóveda",
       image: "/placeholder.svg?height=600&width=800",
       difficulty: 5,
+      happy: 5,
       players: "3-6",
       time: "60 min",
       description:
@@ -56,6 +59,7 @@ export function EscapeRooms() {
       name: "El Laboratorio",
       image: "/placeholder.svg?height=600&width=800",
       difficulty: 3,
+      happy: 5,
       players: "2-6",
       time: "60 min",
       description:
@@ -132,7 +136,7 @@ export function EscapeRooms() {
                 relative
                 min-h-[500px]       /* Altura aumentada para móvil */
                 md:min-h-[525px]    /* Ajuste para tablets */
-                lg:h-[550px]        /* Mantiene altura en desktop */
+                lg:h-[580px]        /* Mantiene altura en desktop */
                 rounded-xl 
                 overflow-hidden 
                 border border-brand-gold/20 
@@ -165,6 +169,10 @@ export function EscapeRooms() {
                 <div className="flex items-center mb-2 md:mb-3">
                   <div className="flex mr-3 md:mr-4">{renderStars(rooms[0].difficulty)}</div>
                   <span className="text-xs md:text-sm text-gray-300 font-sans">Dificultad</span>
+                </div>
+                <div className="flex items-center mb-2 md:mb-3">
+                  <div className="flex mr-3 md:mr-4">{renderStars(rooms[0].happy)}</div>
+                  <span className="text-xs md:text-sm text-gray-300 font-sans">Diversión</span>
                 </div>
 
                 <div className="flex flex-wrap gap-1 md:gap-2 mb-2 md:mb-4">
@@ -270,6 +278,10 @@ export function EscapeRooms() {
                       <div className="flex mr-4">{renderStars(room.difficulty)}</div>
                       <span className="text-xs md:text-sm text-gray-400 font-sans">Dificultad</span>
                     </div>
+                    <div className="flex items-center mb-3">
+                      <div className="flex mr-4">{renderStars(room.happy)}</div>
+                      <span className="text-xs md:text-sm text-gray-400 font-sans">Diversión</span>
+                    </div>
 
                     <div className="flex flex-wrap gap-1 mb-3">
                       {room.tags?.map((tag, idx) => (
@@ -326,7 +338,7 @@ export function EscapeRooms() {
           </div>
         </motion.div>
 
-        {/* Sección de estadísticas */}
+        {/* Sección de estadísticas
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -346,7 +358,7 @@ export function EscapeRooms() {
             <div className="text-4xl font-bold text-brand-gold mb-2 font-display">42%</div>
             <p className="text-gray-300 font-sans">Tasa de escape</p>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   )

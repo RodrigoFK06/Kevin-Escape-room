@@ -59,7 +59,7 @@ export function BlogSection() {
     visible: { opacity: 1, y: 0 },
   }
 
-  return (
+  {/*return (
     <SectionWrapper id="blog" className="bg-brand-dark">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -154,12 +154,12 @@ export function BlogSection() {
           className="border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button"
           asChild
         >
-        {/*<Link href="/blog">
+        <Link href="/blog">
             <span className="relative z-10">VER TODOS LOS ARTÍCULOS</span>
-          </Link">*/}
+          </Link">
         </Button>
       </motion.div>
     </SectionWrapper>
-  )
+  )*/}
 }
 

@@ -135,7 +135,10 @@ export function Header() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex items-center justify-between h-16 md:h-20">
-        <Image src="/logoencryp.png" alt="Logo Encryp" width={190} height={70} className="py-2" />
+          <Link href="#inicio" onClick={handleLinkClick}>
+            <Image src="/logoencryp.png" alt="Logo Encryp" width={190} height={70} className="py-2 cursor-pointer" />
+          </Link>
+
 
 
           {/* Desktop Navigation */}
@@ -145,11 +148,10 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors relative whitespace-nowrap ${
-                    activeSection === item.href.replace("#", "")
-                      ? "text-brand-gold"
-                      : "text-white hover:text-brand-gold"
-                  }`}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors relative whitespace-nowrap ${activeSection === item.href.replace("#", "")
+                    ? "text-brand-gold"
+                    : "text-white hover:text-brand-gold"
+                    }`}
                   onClick={handleLinkClick}
                 >
                   {item.name}
@@ -193,7 +195,13 @@ export function Header() {
               <SheetContent side="right" className="bg-brand-dark/95 border-brand-gold/50 w-[80vw] sm:max-w-sm p-0">
                 <div className="flex flex-col h-full p-6">
                   <div className="flex items-center justify-between mb-8">
-                  <Image src="/logoencryp.png" alt="Logo Encryp" width={40} height={40} />
+                    <Link href="#inicio" onClick={(e) => {
+                      handleLinkClick(e)
+                      setIsMenuOpen(false)
+                    }}>
+                      <Image src="/logoencryp.png" alt="Logo Encryp" width={40} height={40} className="cursor-pointer" />
+                    </Link>
+
 
                     <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
                       <X className="h-6 w-6" />
@@ -205,11 +213,10 @@ export function Header() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={`text-lg font-medium transition-colors font-sans ${
-                          activeSection === item.href.replace("#", "")
-                            ? "text-brand-gold"
-                            : "text-white hover:text-brand-gold"
-                        }`}
+                        className={`text-lg font-medium transition-colors font-sans ${activeSection === item.href.replace("#", "")
+                          ? "text-brand-gold"
+                          : "text-white hover:text-brand-gold"
+                          }`}
                         onClick={(e) => {
                           handleLinkClick(e)
                           setIsMenuOpen(false)

@@ -120,9 +120,20 @@ export function HowItWorks() {
                 </p>
 
                 {/* Número de paso */}
-                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-brand-gold text-brand-dark flex items-center justify-center font-bold text-sm">
+                {/* Número de paso */}
+                <div
+                  className={`
+    absolute -top-3 w-8 h-8 rounded-full bg-brand-gold text-brand-dark 
+    flex items-center justify-center font-bold text-sm
+    ${index % 2 === 0
+                      ? "md:left-2 left-3"
+                      : "md:left-[3.5rem] left-3"
+                    }
+  `}
+                >
                   {index + 1}
                 </div>
+
               </div>
             </motion.div>
           ))}
