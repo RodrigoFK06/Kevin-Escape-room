@@ -77,7 +77,7 @@ export function Promotions() {
                   className="border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-light text-xs sm:text-sm w-full md:w-auto"
                   asChild
                 >
-                  <Link href="#reservas">RESERVA Y OBTÉN TU DESCUENTO</Link>
+                  <Link href="/reservas">RESERVA Y OBTÉN TU DESCUENTO</Link>
                 </Button>
               </div>
             </motion.div>

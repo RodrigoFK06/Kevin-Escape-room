@@ -94,8 +94,7 @@ export function ContactSection() {
                   Gracias por contactarnos. Te responderemos lo antes posible.
                 </p>
                 <Button
-                  variant="outline"
-                  className="border-brand-gold text-brand-gold hover:bg-brand-gold/10 font-sans"
+                  className="border-brand-gold text-brand-gold hover:bg-brand-gold/10 font-sans outline"
                   onClick={() => setIsSuccess(false)}
                 >
                   Enviar otro mensaje

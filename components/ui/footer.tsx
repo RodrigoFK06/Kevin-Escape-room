@@ -58,7 +58,7 @@ export function Footer() {
             <ul className="space-y-2">
               {[
                 { name: "Cuartos de escape", href: "#cuartos" },
-                { name: "Reservas", href: "#reservas" },
+                { name: "Reservas", href: "/reservas" },
                 { name: "Promociones", href: "#promociones" },
                 { name: "Preguntas frecuentes", href: "#faq" },
                 { name: "Eventos corporativos", href: "#eventos" },
@@ -149,10 +149,10 @@ export function Footer() {
             &copy; {currentYear} Encrypted Escape Room. Todos los derechos reservados.
           </p>
           <div className="flex space-x-4 mt-3 md:mt-0">
-            <Link href="#" className="text-xs text-gray-500 hover:text-brand-gold transition-colors font-sans">
+            <Link href="/terminos" className="text-xs text-gray-500 hover:text-brand-gold transition-colors font-sans">
               Términos y condiciones
             </Link>
-            <Link href="#" className="text-xs text-gray-500 hover:text-brand-gold transition-colors font-sans">
+            <Link href="/reclamaciones" className="text-xs text-gray-500 hover:text-brand-gold transition-colors font-sans">
               Política de privacidad
             </Link>
           </div>

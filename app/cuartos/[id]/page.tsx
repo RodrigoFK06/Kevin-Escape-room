@@ -253,7 +253,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button variant="destructive" size="lg" className="horror-button" asChild>
-                  <Link href="#reservar">RESERVAR AHORA</Link>
+                  <Link href="/reservas">RESERVAR AHORA</Link>
                 </Button>
 
                 <Button

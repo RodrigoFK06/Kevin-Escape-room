@@ -154,7 +154,7 @@ export function HowItWorks() {
             </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-block">
               <a
-                href="#reservas"
+                href="/reservas"
                 className="flex items-center gap-2 bg-brand-gold text-brand-dark font-bold py-3 px-6 rounded-lg group"
               >
                 <Clock className="h-5 w-5 group-hover:hidden" />

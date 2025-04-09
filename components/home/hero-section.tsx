@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -11,7 +10,7 @@ import { fetchHorariosDisponibles } from "@/lib/api-horarios"
 
 export function HeroSection() {
   const [remainingSlots, setRemainingSlots] = useState(2)
-  const [countdown, setCountdown] = useState(30 * 60) // 60 minutos en segundos
+  const [countdown, setCountdown] = useState(30 * 60)
 
   useEffect(() => {
     const fetchAvailable = async () => {
@@ -40,13 +39,9 @@ export function HeroSection() {
     fetchAvailable()
   }, [])
 
-  // Efecto para el contador regresivo
   useEffect(() => {
     const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 0) return 30 * 60
-        return prev - 1
-      })
+      setCountdown((prev) => (prev <= 0 ? 30 * 60 : prev - 1))
     }, 1000)
 
     return () => clearInterval(timer)
@@ -58,19 +53,17 @@ export function HeroSection() {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`
   }
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
+  // Esta función solo se usará en enlaces con hash
+  const handleHashLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const href = e.currentTarget.getAttribute("href")
     if (href && href.startsWith("#")) {
+      e.preventDefault()
       const targetId = href.substring(1)
       const targetElement = document.getElementById(targetId)
       if (targetElement) {
         const headerHeight = 80
         const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        })
+        window.scrollTo({ top: targetPosition, behavior: "smooth" })
       }
     }
   }
@@ -82,7 +75,6 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[url('/2151626660.jpg?height=1080&width=1920')] bg-cover bg-center bg-no-repeat"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/70 via-brand-dark/50 to-brand-dark z-10"></div>
       </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -99,17 +91,14 @@ export function HeroSection() {
             <span className="block">Descifra Resuelve Escapa</span>
             <span className="block text-brand-gold">¿Podrás salir a tiempo?</span>
           </motion.h1>
-
           <motion.p
             className="text-lg md:text-xl lg:text-2xl text-white mb-6 md:mb-8 max-w-2xl mx-auto px-2 font-sans"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Adéntrate en nuestras salas de escape donde cada enigma te acerca a la libertad. El tiempo corre. La llave
-            espera.
+            Adéntrate en nuestras salas de escape donde cada enigma te acerca a la libertad. El tiempo corre. La llave espera.
           </motion.p>
-
           <motion.div
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
             initial={{ opacity: 0, y: 20 }}
@@ -122,30 +111,23 @@ export function HeroSection() {
               className="text-base md:text-lg px-6 md:px-8 py-5 md:py-6 group font-sans"
               asChild
             >
-              <Link href="#reservas" className="flex items-center gap-2" onClick={handleLinkClick}>
+              {/* Este Link no dispara handleHashLinkClick porque href no empieza con "#" */}
+              <Link href="/reservas" className="flex items-center gap-2">
                 <Lock className="h-5 w-5 group-hover:hidden" />
                 <Key className="h-5 w-5 hidden group-hover:block animate-key-turn" />
                 RESERVA AHORA
               </Link>
             </Button>
-
             <motion.p
               className="text-sm font-medium text-brand-gold font-sans"
-              animate={{
-                opacity: [0.5, 1, 0.5],
-                scale: [0.98, 1.02, 0.98],
-              }}
-              transition={{
-                repeat: Number.POSITIVE_INFINITY,
-                duration: 2,
-              }}
+              animate={{ opacity: [0.5, 1, 0.5], scale: [0.98, 1.02, 0.98] }}
+              transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
             >
               ¡Solo quedan {remainingSlots} horarios para hoy!
             </motion.p>
           </motion.div>
         </motion.div>
       </div>
-
       <motion.div
         className="fixed left-4 bottom-4 z-[100] hidden md:block"
         initial={{ opacity: 0, scale: 0.8 }}

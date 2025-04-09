@@ -88,10 +88,10 @@ export function Header() {
   }
 
   const navItems = [
-    { name: "Inicio", href: "#inicio" },
+    { name: "Inicio", href: "/" },
     { name: "Cuartos", href: "#cuartos" },
     { name: "Promociones", href: "#promociones" },
-    { name: "Reservas", href: "#reservas" },
+    { name: "Reservas", href: "/reservas" },
     { name: "Clasificación", href: "#clasificacion" },
     { name: "Eventos", href: "#eventos" },
     { name: "FAQ", href: "#faq" },
@@ -135,7 +135,7 @@ export function Header() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link href="#inicio" onClick={handleLinkClick}>
+          <Link href="/" onClick={handleLinkClick}>
             <Image src="/logoencryp.png" alt="Logo Encryp" width={190} height={70} className="py-2 cursor-pointer" />
           </Link>
 
@@ -177,7 +177,7 @@ export function Header() {
             </div>
 
             <Button variant="default" size="lg" className="hidden sm:flex text-sm font-sans group" asChild>
-              <Link href="#reservas" className="flex items-center gap-2" onClick={handleLinkClick}>
+              <Link href="/reservas" className="flex items-center gap-2" onClick={handleLinkClick}>
                 <Lock className="h-4 w-4 group-hover:hidden" />
                 <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
                 RESERVA AHORA
@@ -195,7 +195,7 @@ export function Header() {
               <SheetContent side="right" className="bg-brand-dark/95 border-brand-gold/50 w-[80vw] sm:max-w-sm p-0">
                 <div className="flex flex-col h-full p-6">
                   <div className="flex items-center justify-between mb-8">
-                    <Link href="#inicio" onClick={(e) => {
+                    <Link href="/" onClick={(e) => {
                       handleLinkClick(e)
                       setIsMenuOpen(false)
                     }}>
@@ -246,7 +246,7 @@ export function Header() {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <Link
-                        href="#reservas"
+                        href="/reservas"
                         className="flex items-center justify-center gap-2"
                         onClick={(e) => {
                           handleLinkClick(e)

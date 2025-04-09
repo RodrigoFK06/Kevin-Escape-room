@@ -82,7 +82,7 @@ export function Header() {
   const navItems = [
     { name: "Inicio", href: "/" },
     { name: "Cuartos", href: "#cuartos" },
-    { name: "Reservas", href: "#reservas" },
+    { name: "Reservas", href: "/reservas" },
     { name: "Promociones", href: "#promociones" },
     { name: "Clasificación", href: "#clasificacion" },
     { name: "FAQ", href: "#faq" },
@@ -139,7 +139,7 @@ export function Header() {
           </div>
 
           <Button variant="default" size="lg" className="hidden sm:flex text-sm font-sans group" asChild>
-            <Link href="#reservas" className="flex items-center gap-2">
+            <Link href="/reservas" className="flex items-center gap-2">
               <Lock className="h-4 w-4 group-hover:hidden" />
               <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
               RESERVA AHORA
@@ -215,7 +215,7 @@ export function Header() {
                     asChild
                     onClick={handleNavItemClick}
                   >
-                    <Link href="#reservas" className="flex items-center justify-center gap-2">
+                    <Link href="/reservas" className="flex items-center justify-center gap-2">
                       <Lock className="h-4 w-4 group-hover:hidden" />
                       <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
                       RESERVA AHORA

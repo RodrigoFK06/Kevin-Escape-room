@@ -313,7 +313,7 @@ export function CorporateEvents() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="destructive" size="lg" className="horror-button" asChild>
-                <Link href="#reservas">RESERVAR AHORA</Link>
+                <Link href="/reservas">RESERVAR AHORA</Link>
               </Button>
               <Button
                 variant="outline"

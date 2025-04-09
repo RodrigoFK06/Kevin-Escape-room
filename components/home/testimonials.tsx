@@ -303,7 +303,7 @@ export function Testimonials() {
 
 
                 <Button variant="default" className="group font-sans" asChild>
-                  <Link href="#reservas" className="flex items-center gap-2">
+                  <Link href="/reservas" className="flex items-center gap-2">
                     <Lock className="h-4 w-4 group-hover:hidden" />
                     <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
                     JUEGA Y APARECE EN EL RANKING
