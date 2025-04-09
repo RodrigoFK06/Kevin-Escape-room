@@ -91,7 +91,7 @@ export function Header() {
     { name: "Inicio", href: "/" },
     { name: "Cuartos", href: "#cuartos" },
     { name: "Promociones", href: "#promociones" },
-    { name: "Reservas", href: "/reservas" },
+    /*{ name: "Reservas", href: "/reservas" },*/
     { name: "Clasificación", href: "#clasificacion" },
     { name: "Eventos", href: "#eventos" },
     { name: "FAQ", href: "#faq" },

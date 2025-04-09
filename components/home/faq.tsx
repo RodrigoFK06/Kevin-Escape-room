@@ -22,43 +22,55 @@ export function Faq() {
     {
       question: "¿Qué pasa si llego tarde?",
       answer:
-        "Es importante llegar 15 minutos antes de la hora reservada para recibir las instrucciones. Si llegas tarde, tu tiempo de juego se reducirá proporcionalmente, ya que las siguientes sesiones están programadas y no podemos extender tu tiempo.",
+        "Te pedimos que llegues 15 minutos antes de la hora reservada. Si llegas tarde, el tiempo de juego será más corto, ya que no podemos extenderlo por otras reservas programadas.",
       icon: <Clock className="h-5 w-5 text-brand-gold" />,
     },
     {
       question: "¿Qué nivel de dificultad tienen los enigmas?",
       answer:
-        "Nuestras salas combinan elementos de lógica, observación y deducción. El nivel de dificultad varía según la sala elegida. 'Código Enigma' y 'La Bóveda' tienen elementos más complejos, mientras que 'El Laboratorio' se enfoca más en la inmersión y la narrativa.",
+        "Cada sala tiene su propio nivel de dificultad. Algunas son más desafiantes y otras están enfocadas en la historia o la experiencia. Siempre necesitarás observar, pensar en equipo y resolver pistas. Puedes elegir la sala que mejor se adapte a lo que buscas.",
       icon: <Key className="h-5 w-5 text-brand-gold" />,
     },
     {
       question: "¿Puedo cancelar o cambiar mi reserva?",
       answer:
-        "Puedes cancelar o modificar tu reserva hasta 24 horas antes de la hora programada con un reembolso del 80%. Para cambios o cancelaciones con menos de 24 horas de anticipación, no se realizan reembolsos, pero puedes reprogramar tu visita para otra fecha pagando una penalidad del 20%.",
+        "Sí. Puedes hacerlo hasta 24 horas antes de la hora programada y recibirás un reembolso del 100%. Pasado ese plazo, no realizamos reembolsos ni cambios.",
       icon: <AlertTriangle className="h-5 w-5 text-brand-gold" />,
     },
     {
       question: "¿Hay edad mínima para participar?",
       answer:
-        "La edad mínima recomendada es de 14 años para 'El Laboratorio' y 16 años para 'Código Enigma' y 'La Bóveda' debido a su complejidad. Los menores de 18 años deben estar acompañados por un adulto responsable.",
+        "Sí, desde los 14 años pueden ingresar a algunas salas. Otras salas pueden requerir una edad mínima de 16 años, según la temática. Los jugadores menores de 18 deben venir acompañados por un adulto responsable.",
       icon: <Users className="h-5 w-5 text-brand-gold" />,
     },
     {
       question: "¿Qué debo llevar?",
       answer:
-        "Solo necesitas traer tu confirmación de reserva (digital o impresa) y una identificación. Te recomendamos usar ropa cómoda y no traer objetos de valor, ya que no nos hacemos responsables por pérdidas.",
+        "Solo necesitas tu confirmación de reserva (digital o impresa) y una identificación válida. Recomendamos usar ropa cómoda y evitar traer objetos de valor, ya que no nos hacemos responsables por las pérdidas.",
       icon: <HelpCircle className="h-5 w-5 text-brand-gold" />,
-    },
-    {
-      question: "¿Las salas son claustrofóbicas?",
-      answer:
-        "Nuestras salas tienen diferentes tamaños, pero todas cuentan con sistemas de seguridad y salidas de emergencia. Si sufres de claustrofobia severa, te recomendamos informarnos al momento de tu llegada para que nuestro personal esté atento a cualquier situación.",
-      icon: <AlertTriangle className="h-5 w-5 text-brand-gold" />,
     },
     {
       question: "¿Puedo salir de la sala antes de completar el juego?",
       answer:
-        "Sí, puedes abandonar el juego en cualquier momento si te sientes incómodo. Solo debes avisar a través de las cámaras de seguridad y nuestro personal te asistirá inmediatamente.",
+        "Sí, si necesitas salir por cualquier motivo, puedes hacerlo. Solo avísanos a través de las cámaras y el equipo te asistirá de inmediato.",
+      icon: <AlertTriangle className="h-5 w-5 text-brand-gold" />,
+    },
+    {
+      question: "¿Hay sustos? ¿Da miedo?",
+      answer:
+        "Algunas salas tienen una ambientación más oscura o de suspenso, pero no todas están pensadas para asustar. Puedes ver el nivel de terror de cada sala al momento de hacer tu reserva, y así elegir la experiencia que más se ajuste a ti.",
+      icon: <Lock className="h-5 w-5 text-brand-gold" />,
+    },
+    {
+      question: "¿Hacen secuencias de terror a menores de edad?",
+      answer:
+        "No, no realizamos secuencias de terror a menores de 14 años. Jugadores de 14 a 17 años pueden ingresar a salas de terror solo si vienen acompañados por un adulto que autorice su ingreso. Esto aplica para salas como El Paciente 136.",
+      icon: <Lock className="h-5 w-5 text-brand-gold" />,
+    },
+    {
+      question: "¿Puedo jugar el mismo escape room más de una vez?",
+      answer:
+        "Sí, puedes repetir la misma sala si lo deseas. Tenemos un sistema de puntaje que premia a los jugadores con mejores tiempos y desempeño. Quienes logren buenos resultados pueden ganar descuentos en nuestras salas de escape y productos en nuestro store. Si te gusta competir o mejorar tu marca, siempre puedes volver a intentarlo 😉.",
       icon: <Lock className="h-5 w-5 text-brand-gold" />,
     },
   ])

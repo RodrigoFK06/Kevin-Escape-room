@@ -331,12 +331,12 @@ export function EscapeRooms() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
 
-                    {room.featured && (
+                    {/*room.featured && (
                       <div className="absolute top-2 right-2 bg-brand-gold/90 text-brand-dark px-2 py-0.5 rounded-full text-xs font-bold flex items-center">
                         <Flame className="h-3 w-3 mr-1" />
                         DESTACADO
                       </div>
-                    )}
+                    )*/}
                     {/* Botón Play si esa sala tiene slides */}
                     {room.slides && room.slides.length > 0 && (
                       <div className="absolute inset-0 flex items-center justify-center z-20">
