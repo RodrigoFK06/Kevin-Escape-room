@@ -37,7 +37,7 @@ export default function Home() {
       <div id="teams">
         <TeamAndResultsSection />
       </div>
-      <ReservationSection />
+      {/* <ReservationSection />*/}
       <div id="clasificacion">
         <Testimonials />
       </div>
