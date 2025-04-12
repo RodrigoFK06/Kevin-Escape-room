@@ -186,7 +186,7 @@ export function Footer() {
               href="/reclamaciones"
               className="text-xs text-gray-500 hover:text-brand-gold transition-colors font-sans"
             >
-              Política de privacidad
+              Libro de Reclamaciones
             </Link>
           </div>
         </div>
