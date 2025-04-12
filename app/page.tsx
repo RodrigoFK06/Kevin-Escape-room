@@ -10,6 +10,7 @@ import { CorporateEvents } from "@/components/home/corporate-events"
 import { GallerySection } from "@/components/home/gallery-section"
 import { BlogSection } from "@/components/home/blog-section"
 import { ContactSection } from "@/components/home/contact-section"
+import { TeamAndResultsSection } from "@/components/home/teamsandresultssection"
 import { Footer } from "@/components/ui/footer"
 import SplashCursor from "@/components/ui/splashcursor"
 
@@ -32,6 +33,9 @@ export default function Home() {
       </div>
       <div id="promociones">
         <Promotions />
+      </div>
+      <div id="teams">
+        <TeamAndResultsSection />
       </div>
       <ReservationSection />
       <div id="clasificacion">
