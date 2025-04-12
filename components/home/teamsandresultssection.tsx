@@ -20,7 +20,7 @@ export function TeamAndResultsSection() {
           className="text-center mb-10 md:mb-14"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-100 font-display">
-            Módulo <span className="text-brand-gold">Unificado</span>
+            Crea y registra tu <span className="text-brand-gold">Equipo y Puntaje</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-2 text-lg md:text-xl font-sans">
             Registra nuevos equipos y registra los resultados finales tras cada experiencia,

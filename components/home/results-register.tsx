@@ -58,7 +58,7 @@ export function ResultRegistrationForm() {
           Registrar <span className="text-brand-gold">Resultados</span>
         </h3>
         <p className="text-sm md:text-base text-gray-400 font-sans">
-          Introduce el código de tu equipo y el código encriptado.
+          Tras la experiencia ingresa los siguientes datos.
         </p>
         <div className="w-16 h-1 bg-brand-gold mt-2"></div>
       </motion.div>
