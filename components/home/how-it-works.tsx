@@ -1,8 +1,9 @@
 "use client"
 
-import { Users, Search, Clock, Key, Brain, DoorOpen } from "lucide-react"
+import { useState, useRef, useEffect } from "react"
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { Users, Brain, Search, Key, Clock, DoorOpen } from "lucide-react"
 
 export function HowItWorks() {
   const containerRef = useRef(null)
@@ -20,51 +21,42 @@ export function HowItWorks() {
       title: "Forma tu equipo",
       description: "De 2 a 6 jugadores para enfrentar el desafío juntos.",
       delay: 0.1,
-      bg: "bg-[url('/placeholder.svg?height=200&width=200')]",
     },
     {
       icon: <Brain className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Resuelve enigmas",
       description: "Usa tu ingenio para descifrar acertijos y encontrar pistas ocultas.",
       delay: 0.2,
-      bg: "bg-[url('/placeholder.svg?height=200&width=200')]",
     },
     {
       icon: <Search className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Descubre secretos",
       description: "Investiga cada rincón y revela los misterios encriptados.",
       delay: 0.3,
-      bg: "bg-[url('/placeholder.svg?height=200&width=200')]",
     },
     {
       icon: <Key className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Encuentra las llaves",
       description: "Localiza las llaves físicas y mentales que te permitirán avanzar.",
       delay: 0.4,
-      bg: "bg-[url('/placeholder.svg?height=200&width=200')]",
     },
     {
       icon: <Clock className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Contra el tiempo",
       description: "Solo tienes 60 minutos antes de que sea demasiado tarde.",
       delay: 0.5,
-      bg: "bg-[url('/placeholder.svg?height=200&width=200')]",
     },
     {
       icon: <DoorOpen className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Escapa o quédate",
       description: "Encuentra la salida o conviértete en parte de la historia encriptada.",
       delay: 0.6,
-      bg: "bg-[url('/placeholder.svg?height=200&width=200')]",
     },
   ]
 
   return (
     <section id="como-funciona" className="py-16 md:py-24 bg-brand-dark relative overflow-hidden w-full">
-      <div className="absolute inset-0 bg-[url('/Group3.svg?height=800&width=1200')] bg-cover bg-center opacity-5 rounded-3xl"></div>
-
-
-      {/* Línea de tiempo vertical */}
+      {/* Línea vertical central en desktop */}
       <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-brand-gold/30 to-transparent transform -translate-x-1/2 hidden md:block"></div>
 
       <motion.div ref={containerRef} style={{ opacity, scale }} className="container mx-auto px-6 relative z-10">
@@ -91,17 +83,48 @@ export function HowItWorks() {
               transition={{ duration: 0.5, delay: step.delay }}
               className={`relative ${index % 2 === 0 ? "md:text-right md:pr-12" : "md:pl-12"}`}
             >
-              {/* Conector para desktop */}
+              {/* Conector horizontal en desktop */}
               <div
                 className={`absolute top-10 ${index % 2 === 0 ? "right-0" : "left-0"} w-12 h-0.5 bg-brand-gold/50 hidden md:block`}
               ></div>
 
-              {/* Punto para desktop */}
+              {/* Círculo con el paso en desktop: se ubica en la línea horizontal */}
               <div
-                className={`absolute top-10 ${index % 2 === 0 ? "right-0" : "left-0"} w-4 h-4 rounded-full bg-brand-gold transform translate-x-${index % 2 === 0 ? "1/2" : "-1/2"} -translate-y-1/2 hidden md:block`}
-              ></div>
+                className={`
+                  absolute top-10 
+                  ${index % 2 === 0 ? "right-0" : "left-0"}
+                  w-6 h-6
+                  rounded-full
+                  bg-brand-gold
+                  text-brand-dark
+                  flex
+                  items-center
+                  justify-center
+                  font-bold
+                  text-sm
+                  transform
+                  ${index % 2 === 0 ? "translate-x-1/2" : "-translate-x-1/2"}
+                  -translate-y-1/2
+                  hidden md:flex
+                `}
+              >
+                {index + 1}
+              </div>
 
-              <div className="bg-[#0a141f]/50 border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/50 transition-all duration-300">
+              {/* Tarjeta principal */}
+              <div className="bg-[#0a141f]/50 border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/50 transition-all duration-300 relative">
+                {/* Círculo con el paso en mobile: parte superior del card */}
+                <div
+                  className={`
+                    absolute -top-3 w-8 h-8 rounded-full bg-brand-gold text-brand-dark 
+                    flex items-center justify-center font-bold text-sm
+                    left-3 md:hidden
+                  `}
+                >
+                  {index + 1}
+                </div>
+
+                {/* Ícono */}
                 <div className={`flex ${index % 2 === 0 ? "md:justify-end" : ""} mb-4`}>
                   <div className="relative">
                     <div className="absolute -inset-1 bg-brand-gold/20 rounded-full blur-sm"></div>
@@ -109,31 +132,23 @@ export function HowItWorks() {
                   </div>
                 </div>
 
+                {/* Título */}
                 <h3
-                  className={`text-xl md:text-2xl font-bold mb-3 font-display ${index % 2 === 0 ? "md:text-right" : ""}`}
+                  className={`text-xl md:text-2xl font-bold mb-3 font-display ${
+                    index % 2 === 0 ? "md:text-right" : ""
+                  }`}
                 >
                   {step.title}
                 </h3>
 
-                <p className={`text-gray-400 text-sm md:text-base font-sans ${index % 2 === 0 ? "md:text-right" : ""}`}>
+                {/* Descripción */}
+                <p
+                  className={`text-gray-400 text-sm md:text-base font-sans ${
+                    index % 2 === 0 ? "md:text-right" : ""
+                  }`}
+                >
                   {step.description}
                 </p>
-
-                {/* Número de paso */}
-                {/* Número de paso */}
-                <div
-                  className={`
-    absolute -top-3 w-8 h-8 rounded-full bg-brand-gold text-brand-dark 
-    flex items-center justify-center font-bold text-sm
-    ${index % 2 === 0
-                      ? "md:left-2 left-3"
-                      : "md:left-[3.5rem] left-3"
-                    }
-  `}
-                >
-                  {index + 1}
-                </div>
-
               </div>
             </motion.div>
           ))}
@@ -168,4 +183,3 @@ export function HowItWorks() {
     </section>
   )
 }
-

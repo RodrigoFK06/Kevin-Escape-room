@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
-import { useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -24,12 +23,14 @@ type TeamRanking = {
   time: string
   date: string
   room: string
+  puntaje: string
 }
 
 export function Testimonials() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.2 })
   const [activeTestimonial, setActiveTestimonial] = useState(0)
+  const [visibleCount, setVisibleCount] = useState(6)
 
   const testimonials: Testimonial[] = [
     {
@@ -71,14 +72,14 @@ export function Testimonials() {
       try {
         const res = await fetch("/api/ranking/obtener")
         const json = await res.json()
-
         if (json && Array.isArray(json)) {
           const parsed = json.map((item: any) => ({
             id: Number(item.id),
             name: item.equipo_nombre,
-            time: item.tiempo.slice(0, 5), // cortar segundos si vienen como "00:45:12"
+            time: item.tiempo.slice(0, 5), // quitar segundos si están presentes
             date: item.registrado_en,
             room: item.sala_nombre,
+            puntaje: item.puntaje,
           }))
           setRankings(parsed)
         }
@@ -86,10 +87,8 @@ export function Testimonials() {
         console.error("Error cargando ranking:", err)
       }
     }
-
     loadRanking()
   }, [])
-
 
   const renderStars = (rating: number) => {
     return Array(5)
@@ -111,10 +110,7 @@ export function Testimonials() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        duration: 0.5,
-      },
+      transition: { staggerChildren: 0.1, duration: 0.5 },
     },
   }
 
@@ -229,8 +225,7 @@ export function Testimonials() {
                 <button
                   key={index}
                   onClick={() => setActiveTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${activeTestimonial === index ? "bg-brand-gold" : "bg-gray-600"
-                    }`}
+                  className={`w-3 h-3 rounded-full transition-colors ${activeTestimonial === index ? "bg-brand-gold" : "bg-gray-600"}`}
                   aria-label={`Ver testimonio ${index + 1}`}
                 />
               ))}
@@ -244,16 +239,18 @@ export function Testimonials() {
               Ranking de Equipos
             </h3>
 
+            {/* Contenedor principal del ranking */}
             <div className="bg-[#0a141f] border border-brand-gold/20 rounded-lg overflow-hidden w-full">
               <div className="p-3 md:p-4 bg-brand-gold/20 border-b border-brand-gold/30 grid grid-cols-12 gap-2 md:gap-4 text-sm md:text-base font-sans">
                 <div className="col-span-1 font-bold text-center">#</div>
-                <div className="col-span-5 font-bold">Equipo</div>
-                <div className="col-span-3 font-bold text-center">Tiempo</div>
+                <div className="col-span-4 font-bold">Equipo</div>
+                <div className="col-span-2 font-bold text-center">Tiempo</div>
+                <div className="col-span-2 font-bold text-center">Puntaje</div>
                 <div className="col-span-3 font-bold text-center">Sala</div>
               </div>
 
               <div className="divide-y divide-brand-gold/10">
-                {rankings.map((team, index) => (
+                {rankings.slice(0, visibleCount).map((team, index) => (
                   <motion.div
                     key={team.id}
                     className="p-3 md:p-4 grid grid-cols-12 gap-2 md:gap-4 hover:bg-brand-gold/5 transition-colors text-sm md:text-base font-sans"
@@ -262,6 +259,7 @@ export function Testimonials() {
                       transition: { duration: 0.2 },
                     }}
                   >
+                    {/* Columna Ranking (#) */}
                     <div className="col-span-1 text-center font-bold">
                       {index === 0 ? (
                         <span className="text-yellow-500 flex justify-center">
@@ -275,46 +273,66 @@ export function Testimonials() {
                         index + 1
                       )}
                     </div>
-                    <div className="col-span-5 font-medium truncate">{team.name}</div>
-                    <div className="col-span-3 text-center flex items-center justify-center">
+
+                    {/* Columna Equipo */}
+                    <div className="col-span-4 font-medium truncate">{team.name}</div>
+
+                    {/* Columna Tiempo */}
+                    <div className="col-span-2 text-center flex items-center justify-center">
                       <Clock className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1" />
                       <span>{team.time}</span>
                     </div>
+
+                    {/* Columna Puntaje */}
+                    <div className="col-span-2 text-center text-gray-400 truncate">{team.puntaje}</div>
+
+                    {/* Columna Sala */}
                     <div className="col-span-3 text-center text-gray-400 truncate">{team.room}</div>
                   </motion.div>
                 ))}
               </div>
             </div>
 
-            <motion.div variants={itemVariants} className="mt-6 text-center">
-              <div className="bg-[#0a141f]/60 backdrop-blur-sm border border-brand-gold/20 rounded-lg p-4">
-                <p className="text-gray-400 mb-4 text-sm md:text-base font-sans">
-                  {rankings.length > 0 ? (
-                    <>
-                      El equipo <strong className="text-brand-gold">{rankings[0].name}</strong> escapó en{" "}
-                      <strong className="text-brand-gold">{rankings[0].time} min</strong>. ¿Podrás superarlos?
-                      <br />
-                      Juega 3 veces y gana un 50% de descuento en tu siguiente juego.
-                    </>
-                  ) : (
-                    <>Compite por ser el equipo más rápido en nuestro ranking.</>
-                  )}
-                </p>
+            {/* Botón para cambiar la cantidad visible */}
+            <div className="mt-4 text-center">
+              <button
+                onClick={() => setVisibleCount(visibleCount === 6 ? 10 : 6)}
+                className="text-brand-gold underline hover:no-underline text-sm md:text-base font-sans"
+              >
+                {visibleCount === 6 ? "Ver los 10 mejores" : "Ver solo los 5 mejores"}
+              </button>
+            </div>
 
+            {/* Bloque de texto y botón final */}
+            <div className="mt-6 text-center bg-[#0a141f]/60 backdrop-blur-sm border border-brand-gold/30 rounded-lg p-4">
+              <p className="text-gray-400 mb-4 text-sm md:text-base font-sans">
+                {rankings.length > 0 ? (
+                  <>
+                    El equipo <strong className="text-brand-gold">{rankings[0].name}</strong> escapó en{" "}
+                    <strong className="text-brand-gold">{rankings[0].time} min</strong>. ¿Podrás superarlos?
+                    <br />
+                    Juega 3 veces y gana un 50% de descuento en tu siguiente juego.
+                  </>
+                ) : (
+                  <>Compite por ser el equipo más rápido en nuestro ranking.</>
+                )}
+              </p>
 
-                <Button variant="default" className="group font-sans" asChild>
-                  <Link href="/reservas" className="flex items-center gap-2">
-                    <Lock className="h-4 w-4 group-hover:hidden" />
-                    <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
-                    JUEGA Y APARECE EN EL RANKING
-                  </Link>
-                </Button>
-              </div>
-            </motion.div>
+              <Button variant="default" className="group font-sans" asChild>
+                <Link
+                  href="/reservas"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-background h-10 px-4 py-2 w-full border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button"
+                >
+                  <Lock className="h-4 w-4 group-hover:hidden" />
+                  <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
+                  JUEGA Y APARECE EN EL RANKING
+                </Link>
+              </Button>
+            </div>
           </motion.div>
+
         </motion.div>
       </div>
     </section>
   )
 }
-

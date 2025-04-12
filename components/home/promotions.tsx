@@ -74,7 +74,7 @@ export function Promotions() {
                 <p className="text-gray-400 mb-4">{promo.description}</p>
                 <Button
                   variant="outline"
-                  className="border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-light text-xs sm:text-sm w-full md:w-auto"
+                  className="border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark text-xs sm:text-sm w-full md:w-auto"
                   asChild
                 >
                   <Link href="/reservas">RESERVA Y OBTÉN TU DESCUENTO</Link>
