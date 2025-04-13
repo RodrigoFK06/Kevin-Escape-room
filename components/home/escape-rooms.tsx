@@ -113,9 +113,8 @@ export function EscapeRooms() {
       .map((_, i) => (
         <Star
           key={i}
-          className={`h-4 w-4 ${
-            i < value ? "text-yellow-500 fill-yellow-500" : "text-gray-600"
-          }`}
+          className={`h-4 w-4 ${i < value ? "text-yellow-500 fill-yellow-500" : "text-gray-600"
+            }`}
         />
       ));
 
@@ -218,17 +217,16 @@ export function EscapeRooms() {
 
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
 
-              {/* Play button si esa sala tiene slides */}
+              {/* Botón Play si esa sala tiene slides */}
               {rooms[0].slides && rooms[0].slides.length > 0 && (
-                <div className="absolute inset-0 flex items-center justify-center z-20">
-                  <button
-                    onClick={() => handleOpenModal(rooms[0].slides!)}
-                    className="bg-black/50 hover:bg-black/70 p-4 rounded-full transition-all"
-                  >
-                    <Play className="h-8 w-8 text-white" />
-                  </button>
-                </div>
+                <button
+                  onClick={() => handleOpenModal(rooms[0].slides!)}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 p-4 rounded-full transition-all"
+                >
+                  <Play className="h-8 w-8 text-white" />
+                </button>
               )}
+
 
               {/* Info sala */}
               <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-8">
@@ -413,7 +411,7 @@ export function EscapeRooms() {
                       {room.description}
                     </p>
 
-                    <div className="flex flex-col space-y-3">
+                    <div className="flex flex-col space-y-3 z-100">
                       <Button variant="default" className="w-full group font-sans" asChild>
                         <Link href="/reservas" className="flex items-center justify-center gap-2">
                           <Lock className="h-4 w-4 group-hover:hidden" />
