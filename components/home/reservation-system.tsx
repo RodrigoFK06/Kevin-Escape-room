@@ -696,8 +696,21 @@ function ReservationSystem() {
                             <p className="mb-2 text-brand-gold font-semibold">Yape / Plin</p>
                             <p>
                               <span className="text-gray-400">Número de celular:</span>{" "}
-                              <strong>904 293 507</strong>
+                              <button
+                                onClick={() => {
+                                  navigator.clipboard.writeText("904293507");
+                                  toast({
+                                    title: "¡Copiado!",
+                                    description: "Número de celular copiado al portapapeles.",
+                                  });
+                                }}
+                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform"
+                              >
+                                904 293 507
+                              </button>
                             </p>
+
+
                             <p className="text-xs mt-2 text-gray-400">
                               Realiza el pago a este número y envía el comprobante por WhatsApp.
                             </p>
