@@ -277,7 +277,7 @@ function ReservationSystem() {
           className="text-center mb-8 md:mb-12"
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 font-display">
-            SISTEMA DE <span className="text-brand-gold">RESERVAS</span>
+            REALIZA YA TU <span className="text-brand-gold">RESERVA</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-2 text-sm md:text-base font-sans">
             Reserva tu experiencia en pocos pasos. Selecciona fecha, hora y sala para comenzar tu desafío.
