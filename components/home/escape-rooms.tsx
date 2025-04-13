@@ -46,6 +46,8 @@ export function EscapeRooms() {
   const [showModal, setShowModal] = useState(false);
   const [currentSlides, setCurrentSlides] = useState<Slide[]>([]); // Slides de la sala actual
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [expandedDescriptions, setExpandedDescriptions] = useState<Record<string, boolean>>({});
+
 
   // Ejemplo de datos de sala con su propio array de slides
   const [rooms] = useState<Room[]>([
@@ -105,6 +107,13 @@ export function EscapeRooms() {
       ],
     },
   ]);
+
+  const toggleDescription = (roomId: string) => {
+    setExpandedDescriptions((prev) => ({
+      ...prev,
+      [roomId]: !prev[roomId],
+    }));
+  };
 
   // Función para renderizar estrellas
   const renderStars = (value: number) =>
@@ -407,9 +416,27 @@ export function EscapeRooms() {
                       </div>
                     </div>
 
-                    <p className="text-gray-400 mb-4 line-clamp-2 text-sm md:text-base font-sans">
+                    <p
+                      className={`
+    text-gray-400 mb-2 text-sm md:text-base font-sans
+    transition-all duration-300 ease-in-out
+    ${expandedDescriptions[room.id] ? "" : "line-clamp-2"}
+    md:line-clamp-none
+  `}
+                    >
                       {room.description}
                     </p>
+
+                    {/* Botón solo visible en móvil si el texto es largo */}
+                    {room.description.length > 90 && (
+                      <button
+                        onClick={() => toggleDescription(room.id)}
+                        className="text-brand-gold text-xs md:hidden font-medium mb-2 focus:outline-none"
+                      >
+                        {expandedDescriptions[room.id] ? "Ver menos ▲" : "Ver más ▼"}
+                      </button>
+                    )}
+
 
                     <div className="flex flex-col space-y-3 z-100">
                       <Button variant="default" className="w-full group font-sans" asChild>
