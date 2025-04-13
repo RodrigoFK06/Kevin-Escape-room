@@ -13,49 +13,49 @@ const galleryImages = [
     id: 1,
     src: "/Group2.svg", // <-- Sin parámetros
     alt: "Jugadores resolviendo acertijos",
-    category: "insta",
+    category: "salas",
   },
   {
     id: 2,
     src: "/Group2.svg", // <-- Sin parámetros
     alt: "Interior del Asilo Maldito",
-    category: "tiktok",
+    category: "salas",
   },
   {
     id: 3,
     src: "/Group2.svg",
     alt: "Decoración terrorífica",
-    category: "face",
+    category: "decoracion",
   },
   {
     id: 4,
     src: "/Group2.svg",
     alt: "Equipo celebrando su escape",
-    category: "yt",
+    category: "efectos",
   },
   {
     id: 5,
     src: "/Group2.svg",
     alt: "Interior de la Mansión Embrujada",
-    category: "x",
+    category: "jugadores",
   },
   {
     id: 6,
     src: "/Group2.svg",
     alt: "Acertijos y pistas",
-    category: "tiktok",
+    category: "jugadores",
   },
   {
     id: 7,
     src: "/Group2.svg",
     alt: "Efectos especiales",
-    category: "insta",
+    category: "efectos",
   },
   {
     id: 8,
     src: "/Group2.svg",
     alt: "Interior del Laboratorio Zombie",
-    category: "x",
+    category: "acertijos",
   },
 ]
 
@@ -90,11 +90,11 @@ export function GallerySection() {
 
   const categories = [
     { id: "todos", label: "Todos" },
-    { id: "insta", label: "Instagram" },
-    { id: "tiktok", label: "Tiktok" },
-    { id: "face", label: "Facebook" },
-    { id: "x", label: "X" },
-    { id: "yt", label: "Youtube" },
+    { id: "salas", label: "Salas" },
+    { id: "jugadores", label: "Jugadores" },
+    { id: "decoracion", label: "Decoracion" },
+    { id: "acertijos", label: "Acertijos" },
+    { id: "efectos", label: "Efectos" },
   ]
 
   // Animations
