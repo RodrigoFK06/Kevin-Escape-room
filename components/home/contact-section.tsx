@@ -1,34 +1,68 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { motion, useInView } from "framer-motion"
-import { Send, MapPin, Phone, Mail, CheckCircle, Key } from "lucide-react"
+import type React from "react";
+import { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { motion, useInView } from "framer-motion";
+import { Send, MapPin, Phone, Mail, CheckCircle, Key, AlertCircle } from "lucide-react";
 
 export function ContactSection() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: false, amount: 0.2 })
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState<{ email?: string }>({});
+
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, amount: 0.2 });
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrors({});
+
+    // Validación del Email
+    if (!email.trim()) {
+      setErrors({ email: "Ingresa tu email" });
+      setIsSubmitting(false);
+      return;
+    }
+
+    const allowedTLDs = [
+      "com", "net", "org", "edu", "gov", "mil", "info", "biz", "us", "uk",
+      "ca", "de", "fr", "au", "ru", "ch", "it", "nl", "se", "no", "es", "co",
+      "io", "tech", "xyz", "site", "online", "shop", "store", "blog", "app", "design",
+      "space", "today", "club", "live", "news", "world", "company", "agency", "media",
+      "pro", "in", "jp", "kr", "cn", "br", "mobi", "tv", "me", "int", "arpa", "ae",
+      "at", "be", "dk", "fi", "gr", "hk", "ie", "il", "lt", "lu", "mx", "nz", "pl",
+      "pt", "ro", "sg", "si", "sk", "tr", "tw", "vn", "click", "cloud", "solutions",
+      "marketing", "digital", "software", "systems", "network", "services", "consulting",
+      "experts", "gallery", "ltd", "ventures", "community", "social", "capital", "partners",
+      "international", "engineering", "photography", "fashion", "bike", "coffee", "cafe",
+      "art", "studio", "video", "games", "audio", "love", "one", "dev", "crew", "center",
+      "family", "works", "directory", "support", "global", "trade", "best", "zone"
+    ];
+
+    const tldPattern = allowedTLDs.join("|");
+    const emailRegex = new RegExp(`^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.(${tldPattern})$`, "i");
+
+    if (!emailRegex.test(email)) {
+      setErrors({ email: "Email inválido. Asegúrate de ingresar un correo con un dominio válido." });
+      setIsSubmitting(false);
+      return;
+    }
 
     // Simulación de envío
     setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSuccess(true)
+      setIsSubmitting(false);
+      setIsSuccess(true);
 
-      // Resetear después de 3 segundos
       setTimeout(() => {
-        setIsSuccess(false)
-      }, 3000)
-    }, 1500)
-  }
+        setIsSuccess(false);
+      }, 3000);
+    }, 1500);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -128,8 +162,15 @@ export function ContactSection() {
                         type="email"
                         placeholder="tu@email.com"
                         required
-                        className="bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans"
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={`bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans ${errors.email ? "border-red-500" : ""}`}
                       />
+                      {errors.email && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center font-sans">
+                          <AlertCircle className="h-3 w-3 mr-1" />
+                          {errors.email}
+                        </p>
+                      )}
                     </div>
                   </div>
 

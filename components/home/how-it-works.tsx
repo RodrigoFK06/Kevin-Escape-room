@@ -83,75 +83,90 @@ export function HowItWorks() {
               transition={{ duration: 0.5, delay: step.delay }}
               className={`relative ${index % 2 === 0 ? "md:text-right md:pr-12" : "md:pl-12"}`}
             >
-              {/* Conector horizontal en desktop */}
+              {/* ESTE bloque se mantiene sin cambios */}
               <div
                 className={`absolute top-10 ${index % 2 === 0 ? "right-0" : "left-0"} w-12 h-0.5 bg-brand-gold/50 hidden md:block`}
               ></div>
 
-              {/* Círculo con el paso en desktop: se ubica en la línea horizontal */}
+              {/* ESTE círculo central se mantiene sin cambios (para la línea horizontal) */}
               <div
                 className={`
-                  absolute top-10 
-                  ${index % 2 === 0 ? "right-0" : "left-0"}
-                  w-6 h-6
-                  rounded-full
-                  bg-brand-gold
-                  text-brand-dark
-                  flex
-                  items-center
-                  justify-center
-                  font-bold
-                  text-sm
-                  transform
-                  ${index % 2 === 0 ? "translate-x-1/2" : "-translate-x-1/2"}
-                  -translate-y-1/2
-                  hidden md:flex
-                `}
+        absolute top-10
+        ${index % 2 === 0 ? "right-0" : "left-0"}
+        w-6 h-6
+        rounded-full
+        bg-brand-gold
+        text-brand-dark
+        flex
+        items-center
+        justify-center
+        font-bold
+        text-sm
+        transform
+        ${index % 2 === 0 ? "translate-x-1/2" : "-translate-x-1/2"}
+        -translate-y-1/2
+        hidden md:flex
+      `}
               >
-                {index + 1}
+                {/* <--- NO BORRAR NI MOVER ESTE DIV */}
               </div>
 
               {/* Tarjeta principal */}
               <div className="bg-[#0a141f]/50 border border-brand-gold/20 rounded-lg p-6 hover:border-brand-gold/50 transition-all duration-300 relative">
-                {/* Círculo con el paso en mobile: parte superior del card */}
+
                 <div
                   className={`
-                    absolute -top-3 w-8 h-8 rounded-full bg-brand-gold text-brand-dark 
-                    flex items-center justify-center font-bold text-sm
-                    left-3 md:hidden
-                  `}
+    absolute top-0
+    -translate-y-1/2
+    w-8 h-8
+    rounded-full
+    bg-brand-gold
+    text-brand-dark
+    flex items-center justify-center
+    font-bold text-sm
+
+    ${index % 2 === 0
+                      ? "left-0 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-1/2"
+                      : "right-0 translate-x-1/2 md:left-0 md:-translate-x-1/2"
+                    }
+  `}
+                  style={{
+                    marginTop: "-0.5rem"
+                  }}
                 >
                   {index + 1}
                 </div>
+
 
                 {/* Ícono */}
                 <div className={`flex ${index % 2 === 0 ? "md:justify-end" : ""} mb-4`}>
                   <div className="relative">
                     <div className="absolute -inset-1 bg-brand-gold/20 rounded-full blur-sm"></div>
-                    <div className="relative bg-brand-dark p-3 md:p-4 rounded-full">{step.icon}</div>
+                    <div className="relative bg-brand-dark p-3 md:p-4 rounded-full">
+                      {step.icon}
+                    </div>
                   </div>
                 </div>
 
                 {/* Título */}
                 <h3
-                  className={`text-xl md:text-2xl font-bold mb-3 font-display ${
-                    index % 2 === 0 ? "md:text-right" : ""
-                  }`}
+                  className={`text-xl md:text-2xl font-bold mb-3 font-display ${index % 2 === 0 ? "md:text-right" : ""
+                    }`}
                 >
                   {step.title}
                 </h3>
 
                 {/* Descripción */}
                 <p
-                  className={`text-gray-400 text-sm md:text-base font-sans ${
-                    index % 2 === 0 ? "md:text-right" : ""
-                  }`}
+                  className={`text-gray-400 text-sm md:text-base font-sans ${index % 2 === 0 ? "md:text-right" : ""
+                    }`}
                 >
                   {step.description}
                 </p>
               </div>
             </motion.div>
           ))}
+
         </div>
 
         {/* Llamada a la acción */}

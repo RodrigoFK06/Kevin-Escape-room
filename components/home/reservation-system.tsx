@@ -53,6 +53,7 @@ function ReservationSystem() {
   const isInView = useInView(ref, { once: false, amount: 0.2 });
   const [availableTimes, setAvailableTimes] = useState<TimeSlot[]>([]);
   const previewTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [paymentAmountOption, setPaymentAmountOption] = useState<"adelanto" | "total">("adelanto");
 
   // Inicialmente el cronómetro NO arranca; se definirá cuando se seleccione el método de pago
   const [countdown, setCountdown] = useState(15 * 60);
@@ -691,28 +692,24 @@ function ReservationSystem() {
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="mt-4 space-y-4">
                       {paymentMethod === "yape" && (
                         <>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Image
-                              src="/placeholder.svg"
-                              alt="Código QR Yape"
-                              width={400}
-                              height={400}
-                              className="rounded-lg border border-brand-gold/30"
-                            />
-                            <Image
-                              src="/placeholder.svg"
-                              alt="Código QR Plin"
-                              width={400}
-                              height={400}
-                              className="rounded-lg border border-brand-gold/30"
-                            />
+                          <div className="bg-brand-dark/50 border border-brand-gold/30 rounded-lg p-4 text-sm text-white font-sans leading-relaxed">
+                            <p className="mb-2 text-brand-gold font-semibold">Yape / Plin</p>
+                            <p>
+                              <span className="text-gray-400">Número de celular:</span>{" "}
+                              <strong>904 293 507</strong>
+                            </p>
+                            <p className="text-xs mt-2 text-gray-400">
+                              Realiza el pago a este número y envía el comprobante por WhatsApp.
+                            </p>
                           </div>
+
                           <div className="flex items-center justify-between bg-brand-dark/70 p-3 rounded-md border border-brand-gold/30">
                             <p className="text-sm text-white font-sans">Tiempo para realizar el pago:</p>
                             <span className="text-white font-sans font-semibold">{formatTime(countdown)}</span>
                           </div>
                         </>
                       )}
+
 
                       {paymentMethod === "local" && (
                         <>
@@ -756,14 +753,66 @@ function ReservationSystem() {
                         </div>
                         <div className="text-gray-400">Jugadores:</div>
                         <div className="font-medium text-white">{players}</div>
-                        <div className="text-gray-400">Precio total por persona:</div>
+                        {/*<div className="text-gray-400">Precio total por persona:</div>
                         <div className="font-medium text-brand-gold">S/. {(roomPrices[selectedRoom] || 120).toFixed(2)}</div>
                         <div className="text-gray-400">Precio para reservar:</div>
                         <div className="font-medium text-brand-gold">S/. 50</div>
                         <div className="text-gray-400 font-bold">Total:</div>
                         <div className="font-bold text-brand-gold text-lg">
                           S/. {players ? (Number.parseInt(players) * (roomPrices[selectedRoom] || 120)).toFixed(2) : "0.00"}
-                        </div>
+                        </div>*/}
+                      </div>
+                    </motion.div>
+                    <motion.div variants={itemVariants} className="mt-8 p-4 border border-brand-gold/30 rounded-lg bg-brand-dark/50">
+                      <h3 className="text-lg font-bold mb-3 text-brand-gold font-display">
+                        Selecciona el monto a pagar ahora
+                      </h3>
+
+                      <div className="space-y-3">
+                        <label className="flex items-center space-x-3">
+                          <input
+                            type="radio"
+                            name="pago"
+                            value="adelanto"
+                            checked={paymentAmountOption === "adelanto"}
+                            onChange={() => setPaymentAmountOption("adelanto")}
+                            className="accent-brand-gold"
+                          />
+                          <div className="text-white font-sans text-sm md:text-base">
+                            <strong>Reservar con S/ 50</strong> (adelanto mínimo)<br />
+                            <span className="text-xs text-gray-400">
+                              Asegura tu cupo hoy. El resto (S/. {(players ? Number(players) * (roomPrices[selectedRoom] || 120) - 50 : 0).toFixed(2)}) se paga el día del juego.
+                            </span>
+                          </div>
+                        </label>
+
+                        <label className="flex items-center space-x-3">
+                          <input
+                            type="radio"
+                            name="pago"
+                            value="total"
+                            checked={paymentAmountOption === "total"}
+                            onChange={() => setPaymentAmountOption("total")}
+                            className="accent-brand-gold"
+                          />
+                          <div className="text-white font-sans text-sm md:text-base">
+                            <strong>Pagar el total ahora</strong> (S/. {(players ? Number(players) * (roomPrices[selectedRoom] || 120) : 0).toFixed(2)})<br />
+                            <span className="text-xs text-gray-400">Llega sin preocupaciones, ya está todo pagado.</span>
+                          </div>
+                        </label>
+                      </div>
+
+                      {/* Mostrar monto final elegido */}
+                      <div className="mt-4 text-white text-base font-sans flex justify-between items-center">
+                        <span className="font-semibold">Monto a pagar:</span>
+                        <span className="text-brand-gold font-bold text-xl">
+                          S/.{" "}
+                          {paymentAmountOption === "adelanto"
+                            ? "50.00"
+                            : players
+                              ? (Number(players) * (roomPrices[selectedRoom] || 120)).toFixed(2)
+                              : "0.00"}
+                        </span>
                       </div>
                     </motion.div>
 
