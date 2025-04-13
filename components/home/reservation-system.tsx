@@ -152,9 +152,33 @@ function ReservationSystem() {
       if (!phone.trim()) newErrors.phone = "Ingresa tu teléfono";
       if (!email.trim()) {
         newErrors.email = "Ingresa tu email";
-      } else if (!/\S+@\S+\.\S+/.test(email)) {
-        newErrors.email = "Email inválido";
+      } else {
+        // Lista extensa de TLDs permitidos
+        const allowedTLDs = [
+          "com", "net", "org", "edu", "gov", "mil", "info", "biz", "us", "uk",
+          "ca", "de", "fr", "au", "ru", "ch", "it", "nl", "se", "no", "es", "co",
+          "io", "tech", "xyz", "site", "online", "shop", "store", "blog", "app", "design",
+          "space", "today", "club", "live", "news", "world", "company", "agency", "media",
+          "pro", "in", "jp", "kr", "cn", "br", "mobi", "tv", "me", "int", "arpa", "ae",
+          "at", "be", "dk", "fi", "gr", "hk", "ie", "il", "lt", "lu", "mx", "nz", "pl",
+          "pt", "ro", "sg", "si", "sk", "tr", "tw", "vn", "click", "cloud", "solutions",
+          "marketing", "digital", "software", "systems", "network", "services", "consulting",
+          "experts", "gallery", "ltd", "ventures", "community", "social", "capital", "partners",
+          "international", "engineering", "photography", "fashion", "bike", "coffee", "cafe",
+          "art", "studio", "video", "games", "audio", "love", "one", "dev", "crew", "center",
+          "family", "works", "directory", "support", "global", "trade", "best", "zone"
+        ];
+
+        // Se arma una cadena separada por "|" con todos los TLD permitidos
+        const tldPattern = allowedTLDs.join("|");
+        // Se crea el regex dinámicamente para validar el email y que el dominio final sea uno de los permitidos
+        const emailRegex = new RegExp(`^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.(${tldPattern})$`, "i");
+
+        if (!emailRegex.test(email)) {
+          newErrors.email = "Email inválido. Asegúrate de ingresar un correo con un dominio válido.";
+        }
       }
+
       if (!players) newErrors.players = "Selecciona el número de jugadores";
     } else if (step === 3) {
       if (!paymentMethod) newErrors.payment = "Selecciona un método de pago";
@@ -262,7 +286,7 @@ function ReservationSystem() {
           </p>
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-3 md:mt-4"></div>
         </motion.div>
-  
+
         <div className="max-w-4xl mx-auto">
           <motion.div
             ref={ref}
@@ -297,10 +321,10 @@ function ReservationSystem() {
                         {selectedRoom === "codigo-enigma"
                           ? "Código Enigma"
                           : selectedRoom === "la-boveda"
-                          ? "La Bóveda"
-                          : selectedRoom === "el-laboratorio"
-                          ? "El Laboratorio"
-                          : ""}
+                            ? "La Bóveda"
+                            : selectedRoom === "el-laboratorio"
+                              ? "El Laboratorio"
+                              : ""}
                       </span>
                     </li>
                     <li className="flex justify-between">
@@ -345,9 +369,8 @@ function ReservationSystem() {
                   {[1, 2, 3].map((step) => (
                     <div key={step} className="flex flex-col items-center">
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          formStep >= step ? "bg-brand-gold text-brand-dark" : "bg-brand-dark/50 text-gray-400"
-                        } transition-colors duration-300`}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center ${formStep >= step ? "bg-brand-gold text-brand-dark" : "bg-brand-dark/50 text-gray-400"
+                          } transition-colors duration-300`}
                       >
                         {step}
                       </div>
@@ -360,7 +383,7 @@ function ReservationSystem() {
                     </div>
                   ))}
                 </div>
-  
+
                 {formStep === 1 && (
                   <motion.div variants={containerVariants} initial="hidden" animate="visible">
                     <AnimatePresence>
@@ -395,7 +418,7 @@ function ReservationSystem() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-  
+
                     <div className="space-y-3 md:space-y-4">
                       <Label htmlFor="room" className="text-base md:text-lg font-medium flex items-center font-sans">
                         <Key className="mr-2 h-5 w-5 text-brand-gold" />
@@ -435,7 +458,7 @@ function ReservationSystem() {
                         </p>
                       )}
                     </div>
-  
+
                     <div className="space-y-3 md:space-y-4 mt-6">
                       <Label htmlFor="date" className="text-base md:text-lg font-medium flex items-center font-sans">
                         <CalendarIcon className="mr-2 h-5 w-5 text-brand-gold" />
@@ -449,7 +472,7 @@ function ReservationSystem() {
                         </p>
                       )}
                     </div>
-  
+
                     <motion.div variants={itemVariants} className="space-y-3 md:space-y-4 mt-6">
                       <Label className="text-base md:text-lg font-medium flex items-center font-sans">
                         <Clock className="mr-2 h-5 w-5 text-brand-gold" />
@@ -491,7 +514,7 @@ function ReservationSystem() {
                         </p>
                       )}
                     </motion.div>
-  
+
                     <motion.div variants={itemVariants} className="mt-8 flex justify-end">
                       <Button type="button" onClick={nextStep} className="group font-sans h-12">
                         <span className="mr-2">Siguiente</span>
@@ -501,7 +524,7 @@ function ReservationSystem() {
                     </motion.div>
                   </motion.div>
                 )}
-  
+
                 {formStep === 2 && (
                   <motion.div variants={containerVariants} initial="hidden" animate="visible">
                     <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -615,7 +638,7 @@ function ReservationSystem() {
                     </motion.div>
                   </motion.div>
                 )}
-  
+
                 {formStep === 3 && (
                   <motion.div variants={containerVariants} initial="hidden" animate="visible">
                     <motion.div variants={itemVariants} className="space-y-3 md:space-y-4">
@@ -664,7 +687,7 @@ function ReservationSystem() {
                         </p>
                       )}
                     </motion.div>
-  
+
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="mt-4 space-y-4">
                       {paymentMethod === "yape" && (
                         <>
@@ -690,7 +713,7 @@ function ReservationSystem() {
                           </div>
                         </>
                       )}
-  
+
                       {paymentMethod === "local" && (
                         <>
                           <div className="bg-brand-dark/50 border border-brand-gold/30 rounded-lg p-4 text-sm text-white font-sans leading-relaxed">
@@ -711,7 +734,7 @@ function ReservationSystem() {
                         </>
                       )}
                     </motion.div>
-  
+
                     <motion.div variants={itemVariants} className="mt-8 p-4 border border-brand-gold/30 rounded-lg bg-brand-dark/50">
                       <h3 className="text-lg font-bold mb-3 text-brand-gold font-display">Resumen de tu reserva</h3>
                       <div className="grid grid-cols-2 gap-3 text-sm font-sans">
@@ -720,10 +743,10 @@ function ReservationSystem() {
                           {selectedRoom === "codigo-enigma"
                             ? "Código Enigma"
                             : selectedRoom === "la-boveda"
-                            ? "La Bóveda"
-                            : selectedRoom === "el-laboratorio"
-                            ? "El Laboratorio"
-                            : ""}
+                              ? "La Bóveda"
+                              : selectedRoom === "el-laboratorio"
+                                ? "El Laboratorio"
+                                : ""}
                         </div>
                         <div className="text-gray-400">Fecha:</div>
                         <div className="font-medium text-white">{date ? format(date, "PPP", { locale: es }) : ""}</div>
@@ -743,7 +766,7 @@ function ReservationSystem() {
                         </div>
                       </div>
                     </motion.div>
-  
+
                     <motion.div variants={itemVariants} className="mt-8 flex justify-between">
                       <Button type="button" variant="outline" onClick={prevStep} className="font-sans h-12">
                         Anterior
@@ -765,7 +788,7 @@ function ReservationSystem() {
                     </motion.div>
                   </motion.div>
                 )}
-  
+
                 <motion.p variants={itemVariants} className="text-xs text-gray-500 text-center font-sans">
                   Al realizar la reserva, aceptas nuestros términos y condiciones.
                   <br />
@@ -779,5 +802,5 @@ function ReservationSystem() {
     </section>
   );
 }
-  
+
 export default ReservationSystem;
