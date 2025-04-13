@@ -561,11 +561,30 @@ function ReservationSystem() {
                           required
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
+                          onKeyDown={(e) => {
+                            const allowedKeys = [
+                              "Backspace",
+                              "Delete",
+                              "ArrowLeft",
+                              "ArrowRight",
+                              "Tab",
+                            ];
+
+                            if (
+                              !/^[0-9]$/.test(e.key) && // no es número
+                              !allowedKeys.includes(e.key)
+                            ) {
+                              e.preventDefault();
+                            }
+                          }}
+                          inputMode="numeric"
+                          pattern="[0-9]*"
                           className={cn(
                             "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12",
                             errors.phone && "border-red-500"
                           )}
                         />
+
                         {errors.phone && (
                           <p className="text-red-500 text-xs mt-1 flex items-center font-sans">
                             <AlertCircle className="h-3 w-3 mr-1" />
