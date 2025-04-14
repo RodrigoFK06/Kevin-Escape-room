@@ -7,7 +7,7 @@ import { ResultRegistrationForm } from "@/components/home/results-register"
 export function TeamAndResultsSection() {
   return (
     // Se agrega "my-16" para margen superior e inferior externamente
-    <section className="my-16 py-16 md:py-24 bg-brand-dark relative w-full">
+    <section id="equipos" className="my-16 py-16 md:py-24 bg-brand-dark relative w-full">
       {/* Fondo semitransparente, igual que en otras secciones */}
       <div className="absolute inset-0 bg-[url('/spookyback.jpg?height=800&width=1200')] bg-cover bg-center opacity-10 rounded-2xl"></div>
 

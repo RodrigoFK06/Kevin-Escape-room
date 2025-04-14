@@ -29,6 +29,7 @@ export function Header() {
         "cuartos",
         "galeria",
         "promociones",
+        "equipos",
         "clasificacion",
         "reservas",
         "eventos",
@@ -91,6 +92,7 @@ export function Header() {
     { name: "Inicio", href: "/" },
     { name: "Cuartos", href: "#cuartos" },
     { name: "Promociones", href: "#promociones" },
+    { name: "Equipos", href: "#equipos" },
     /*{ name: "Reservas", href: "/reservas" },*/
     { name: "Clasificación", href: "#clasificacion" },
     { name: "Eventos", href: "#eventos" },
