@@ -716,17 +716,19 @@ function ReservationSystem() {
                             <p>
                               <span className="text-gray-400">Número de celular:</span>{" "}
                               <button
-                                onClick={() => {
-                                  navigator.clipboard.writeText("904293507");
-                                  toast({
-                                    title: "¡Copiado!",
-                                    description: "Número de celular copiado al portapapeles.",
-                                  });
-                                }}
-                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform"
-                              >
-                                904 293 507
-                              </button>
+  type="button"
+  onClick={() => {
+    navigator.clipboard.writeText("904293507");
+    toast({
+      title: "¡Copiado!",
+      description: "Número de celular copiado al portapapeles.",
+    });
+  }}
+  className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform"
+>
+  904 293 507
+</button>
+
                             </p>
 
 

@@ -29,7 +29,17 @@ export function Footer() {
             transition={{ duration: 0.5 }}
             className="space-y-4"
           >
-            <Logo variant="full" className="group" />
+            <Link href="/" className="inline-block">
+              <Image
+                src="/logoencryp.png"
+                alt="Encrypted Logo"
+                width={200}
+                height={90}
+                className="object-contain"
+              />
+            </Link>
+
+
             <p className="text-gray-400 text-sm font-sans">
               Descifra los enigmas. Encuentra las llaves. Escapa antes de que sea tarde.
             </p>
@@ -62,7 +72,7 @@ export function Footer() {
                 <Image src="/tiktok.png" alt="TikTok" width={18} height={18} />
                 <span className="sr-only">TikTok</span>
               </Link>
-              
+
             </div>
           </motion.div>
 
