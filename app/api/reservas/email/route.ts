@@ -3,28 +3,38 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
-  try {
-    const body = await req.json();
-    const {
-      cliente,
-      correo,
-      sala,
-      fecha,
-      hora,
-      jugadores,
-      metodo_pago,
-      monto_total,
-    } = body;
-
-    const transporter = nodemailer.createTransport({
-      host: "smtpout.secureserver.net", // o smtp.tudominio.com
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.SMTP_USER!,
-        pass: process.env.SMTP_PASS!,
-      },
-    });
+    try {
+      const body = await req.json();
+      console.log("Body recibido:", body);
+  
+      const {
+        cliente,
+        correo,
+        sala,
+        fecha,
+        hora,
+        jugadores,
+        metodo_pago,
+        monto_total,
+      } = body;
+  
+      if (!cliente || !correo) {
+        console.error("Datos incompletos:", { cliente, correo });
+        return NextResponse.json(
+          { success: false, error: "Faltan datos obligatorios" },
+          { status: 400 }
+        );
+      }
+  
+      const transporter = nodemailer.createTransport({
+        host: "smtpout.secureserver.net",
+        port: 465,
+        secure: true,
+        auth: {
+          user: process.env.SMTP_USER!,
+          pass: process.env.SMTP_PASS!,
+        },
+      });
 
     const html = `
   <div style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: #2c3e50; padding: 24px; background-color: #fdfdfd;">
@@ -70,16 +80,18 @@ export async function POST(req: Request) {
 `;
 
 
-    await transporter.sendMail({
+ const sendResult = await transporter.sendMail({
       from: `Encrypted <${process.env.SMTP_USER}>`,
       to: correo,
       subject: "Tu reserva ha sido confirmada",
       html,
     });
 
+    console.log("Correo enviado:", sendResult);
+
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Error al enviar correo:", error);
+  } catch (error: any) {
+    console.error("Error al enviar correo:", error.message || error);
     return NextResponse.json(
       { success: false, error: "Error al enviar el correo" },
       { status: 500 }
