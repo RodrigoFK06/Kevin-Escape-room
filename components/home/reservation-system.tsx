@@ -198,12 +198,15 @@ function ReservationSystem() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep(3)) return;
+  
     setIsSubmitting(true);
+  
     try {
       const horarioId = parseInt(selectedTime, 10);
       const formattedDate = date ? format(date, "yyyy-MM-dd") : "";
       const pricePerPerson = roomPrices[selectedRoom] || 120;
       const total = players ? Number(players) * pricePerPerson : 0;
+  
       const body = {
         reserva: {
           cliente: name,
@@ -217,14 +220,43 @@ function ReservationSystem() {
           estado: "confirmada",
         },
       };
+  
+      // ✅ 1. Primero guardamos la reserva en el backend
       const response = await fetch("/api/reservas/crear", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+  
       if (!response.ok) {
         throw new Error("Error al crear la reserva");
       }
+  
+      // ✅ 2. Luego enviamos el correo desde el backend Next.js (SMTP GoDaddy)
+      await fetch("/api/reservas/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cliente: name,
+          correo: email,
+          sala:
+            selectedRoom === "codigo-enigma"
+              ? "Código Enigma"
+              : selectedRoom === "la-boveda"
+              ? "La Bóveda"
+              : "El Laboratorio",
+          fecha: formattedDate,
+          hora: availableTimes.find((slot) => slot.id === selectedTime)?.time,
+          jugadores: players,
+          metodo_pago: paymentMethod === "yape" ? "Yape / Plin" : "Transferencia Bancaria",
+          monto_total:
+            paymentAmountOption === "adelanto"
+              ? 50
+              : Number(players) * (roomPrices[selectedRoom] || 120),
+        }),
+      });
+  
+      // ✅ 3. Feedback visual
       setIsSuccess(true);
       toast({
         title: "¡Reserva exitosa!",
@@ -242,6 +274,7 @@ function ReservationSystem() {
       setIsSubmitting(false);
     }
   };
+  
 
   const nextStep = () => {
     if (validateStep(formStep)) {
