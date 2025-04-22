@@ -198,15 +198,15 @@ function ReservationSystem() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep(3)) return;
-  
+
     setIsSubmitting(true);
-  
+
     try {
       const horarioId = parseInt(selectedTime, 10);
       const formattedDate = date ? format(date, "yyyy-MM-dd") : "";
       const pricePerPerson = roomPrices[selectedRoom] || 120;
       const total = players ? Number(players) * pricePerPerson : 0;
-  
+
       const body = {
         reserva: {
           cliente: name,
@@ -220,19 +220,24 @@ function ReservationSystem() {
           estado: "confirmada",
         },
       };
-  
+
       // ✅ 1. Primero guardamos la reserva en el backend
       const response = await fetch("/api/reservas/crear", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-  
+
       if (!response.ok) {
         throw new Error("Error al crear la reserva");
       }
-  
+
       // ✅ 2. Luego enviamos el correo desde el backend Next.js (SMTP GoDaddy)
+      const precioUnitario = roomPrices[selectedRoom] || 120;
+      const montoTotal = Number(players) * precioUnitario;
+      const montoReserva = paymentAmountOption === "adelanto" ? 50 : montoTotal;
+      const montoRestante = paymentAmountOption === "adelanto" ? montoTotal - 50 : 0;
+
       await fetch("/api/reservas/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -243,19 +248,20 @@ function ReservationSystem() {
             selectedRoom === "codigo-enigma"
               ? "Código Enigma"
               : selectedRoom === "la-boveda"
-              ? "La Bóveda"
-              : "El Laboratorio",
+                ? "La Bóveda"
+                : "El Laboratorio",
           fecha: formattedDate,
           hora: availableTimes.find((slot) => slot.id === selectedTime)?.time,
           jugadores: players,
           metodo_pago: paymentMethod === "yape" ? "Yape / Plin" : "Transferencia Bancaria",
-          monto_total:
-            paymentAmountOption === "adelanto"
-              ? 50
-              : Number(players) * (roomPrices[selectedRoom] || 120),
+          monto_reserva: montoReserva,
+          monto_total: montoTotal,
+          monto_restante: montoRestante,
+          payment_option: paymentAmountOption,
         }),
       });
-  
+
+
       // ✅ 3. Feedback visual
       setIsSuccess(true);
       toast({
@@ -274,7 +280,7 @@ function ReservationSystem() {
       setIsSubmitting(false);
     }
   };
-  
+
 
   const nextStep = () => {
     if (validateStep(formStep)) {
@@ -749,18 +755,18 @@ function ReservationSystem() {
                             <p>
                               <span className="text-gray-400">Número de celular:</span>{" "}
                               <button
-  type="button"
-  onClick={() => {
-    navigator.clipboard.writeText("904293507");
-    toast({
-      title: "¡Copiado!",
-      description: "Número de celular copiado al portapapeles.",
-    });
-  }}
-  className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform"
->
-  904 293 507
-</button>
+                                type="button"
+                                onClick={() => {
+                                  navigator.clipboard.writeText("904293507");
+                                  toast({
+                                    title: "¡Copiado!",
+                                    description: "Número de celular copiado al portapapeles.",
+                                  });
+                                }}
+                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform"
+                              >
+                                904 293 507
+                              </button>
 
                             </p>
 
