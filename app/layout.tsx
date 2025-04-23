@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Descifra los enigmas. Encuentra las llaves. Escapa antes de que sea tarde.",
   generator: "v0.dev",
   icons: {
-    icon: "/favico.png", // ← Aquí definimos el favicon correctamente
+    icon: "/faviconen.png", // ← Aquí definimos el favicon correctamente
   },
 }
 
