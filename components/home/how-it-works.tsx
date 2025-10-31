@@ -19,37 +19,37 @@ export function HowItWorks() {
     {
       icon: <Users className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Forma tu equipo",
-      description: "De 2 a 6 jugadores para enfrentar el desafío juntos.",
+      description: "De 2 a 6 jugadores para vivir una historia real dentro de un escenario completamente ambientado.",
       delay: 0.1,
     },
     {
       icon: <Brain className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Resuelve enigmas",
-      description: "Usa tu ingenio para descifrar acertijos y encontrar pistas ocultas.",
+      description: "Descifra códigos, sonidos y objetos creados para responder a tus acciones.",
       delay: 0.2,
     },
     {
       icon: <Search className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Descubre secretos",
-      description: "Investiga cada rincón y revela los misterios encriptados.",
+      description: "Interactúa con el entorno, las luces, voces y efectos te harán olvidar que es un juego.",
       delay: 0.3,
     },
     {
       icon: <Key className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Encuentra las llaves",
-      description: "Localiza las llaves físicas y mentales que te permitirán avanzar.",
+      description: "Cada elemento del cuarto está conectado, Lo que toques... puede activar algo inesperado.",
       delay: 0.4,
     },
     {
       icon: <Clock className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Contra el tiempo",
-      description: "Solo tienes 60 minutos antes de que sea demasiado tarde.",
+      description: "Tienes 60 minutos de tensión real, donde la historia avanza contigo dentro.",
       delay: 0.5,
     },
     {
       icon: <DoorOpen className="h-10 w-10 md:h-12 md:w-12 text-brand-gold" />,
       title: "Escapa o quédate",
-      description: "Encuentra la salida o conviértete en parte de la historia encriptada.",
+      description: "Encuentra la salida y conviértete en parte de la historia de ENCRYPTED.",
       delay: 0.6,
     },
   ]
@@ -178,9 +178,9 @@ export function HowItWorks() {
           className="mt-16 text-center"
         >
           <div className="inline-block bg-brand-dark/80 backdrop-blur-sm border border-brand-gold/30 rounded-lg p-6">
-            <h3 className="text-xl md:text-2xl font-bold mb-3 font-display">¿ESTÁS LISTO PARA LA EXPERIENCIA?</h3>
+            <h3 className="text-xl md:text-2xl font-bold mb-3 font-display">¿ESTÁS LISTO PARA LA EXPERIENCIA MÁS INMERSIVA DEL PERÚ?</h3>
             <p className="text-gray-400 mb-4 font-sans">
-              Cada minuto cuenta. Cada decisión importa. ¿Tienes lo que se necesita para descifrar y escapar?
+              En ENCRYPTED, no observas la historia. La vives.
             </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-block">
               <a
@@ -189,7 +189,7 @@ export function HowItWorks() {
               >
                 <Clock className="h-5 w-5 group-hover:hidden" />
                 <Key className="h-5 w-5 hidden group-hover:block animate-key-turn" />
-                RESERVA TU ESCAPE
+                AGENDA TU MISIÓN
               </a>
             </motion.div>
           </div>

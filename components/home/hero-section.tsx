@@ -88,8 +88,8 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="block">Descifra Resuelve Escapa</span>
-            <span className="block text-brand-gold">¿Podrás salir a tiempo?</span>
+            <span className="block">ROMPE EL CÓDIGO. ENFRENTA TUS MIEDOS.</span>
+            <span className="block text-brand-gold">ESCAPA... SI PUEDES.</span>
           </motion.h1>
           <motion.p
             className="text-lg md:text-xl lg:text-2xl text-white mb-6 md:mb-8 max-w-2xl mx-auto px-2 font-sans"
@@ -97,7 +97,7 @@ export function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Adéntrate en nuestras salas de escape donde cada enigma te acerca a la libertad. El tiempo corre. La llave espera.
+            El tiempo corre. La puerta se cierra. Solo los que piensan más rápido que el reloj lograrán escapar.
           </motion.p>
           <motion.div
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
@@ -115,7 +115,7 @@ export function HeroSection() {
               <Link href="/reservas" className="flex items-center gap-2">
                 <Lock className="h-5 w-5 group-hover:hidden" />
                 <Key className="h-5 w-5 hidden group-hover:block animate-key-turn" />
-                RESERVA AHORA
+                AGENDA TU MISIÓN
               </Link>
             </Button>
             <motion.p

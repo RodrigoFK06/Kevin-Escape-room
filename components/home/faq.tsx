@@ -40,7 +40,7 @@ export function Faq() {
     {
       question: "¿Hay edad mínima para participar?",
       answer:
-        "Sí, desde los 14 años pueden ingresar a algunas salas. Otras salas pueden requerir una edad mínima de 16 años, según la temática. Los jugadores menores de 18 deben venir acompañados por un adulto responsable.",
+        "Sí, desde los 14 años pueden ingresar a cualquiera de nuestras salas inmersivas, acompañados por un adulto responsable.",
       icon: <Users className="h-5 w-5 text-brand-gold" />,
     },
     {

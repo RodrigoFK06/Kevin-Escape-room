@@ -53,17 +53,17 @@ export function EscapeRooms() {
   const [rooms] = useState<Room[]>([
     {
       id: "codigo-enigma",
-      name: "Código Enigma",
+      name: "EL PACIENTE 136",
       image: "/placeholder.svg?height=600&width=800",
       difficulty: 4,
       happy: 5,
       players: "2-6",
       time: "60 min",
       description:
-        "Atrapado en una oficina de inteligencia, debes descifrar códigos para evitar que la info caiga en malas manos.",
+        "Internado en un pabellón psiquiátrico abandonado, el PAciente 136 volvió a despertar. Entre respiraciones, voces y pulsos de luz, descubrirás que nada fue un accidente. Solo los que entiendes su mente logran salir con la suya.",
       bookings: 3,
       featured: true,
-      tags: ["Enigmas", "Histórico", "Difícil"],
+      tags: ["Terror Psicológico", "Laboratorio", "Alta tensión"],
       slides: [
         { type: "video", url: "/trailer.mp4" },
         { type: "image", url: "/fondo1.jpeg" },
@@ -299,7 +299,7 @@ export function EscapeRooms() {
                     <Link href="/reservas" className="flex items-center gap-2">
                       <Lock className="h-3 w-3 md:h-4 md:w-4 group-hover:hidden" />
                       <Key className="h-3 w-3 md:h-4 md:w-4 hidden group-hover:block animate-key-turn" />
-                      Reservar Ahora
+                      AGENDA TU MISIÓN
                     </Link>
                   </Button>
 
@@ -443,7 +443,7 @@ export function EscapeRooms() {
                         <Link href="/reservas" className="flex items-center justify-center gap-2">
                           <Lock className="h-4 w-4 group-hover:hidden" />
                           <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
-                          Reservar Ahora
+                          AGENDA TU MISIÓN
                         </Link>
                       </Button>
 

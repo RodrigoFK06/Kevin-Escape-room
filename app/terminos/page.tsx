@@ -25,7 +25,7 @@ export default function TerminosPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-brand-gold mb-4">2. EDAD MÍNIMA</h2>
               <p>
-                La edad mínima para participar es de 15 años. Si el grupo incluye menores de edad, estos deberán
+                La edad mínima para participar es de 18 años. Si el grupo incluye menores de 14 años, estos deberán
                 estar acompañados por al menos un adulto responsable, quien asumirá la responsabilidad del grupo durante
                 toda la experiencia.
               </p>
@@ -33,9 +33,9 @@ export default function TerminosPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-brand-gold mb-4">3. CANTIDAD DE PARTICIPANTES</h2>
               <p>
-                Cada sala está diseñada para equipos de mínimo 2 y máximo 5 jugadores. En caso de desear participar con 6
+                Cada sala está diseñada para equipos de mínimo 2 y máximo 6 jugadores. En caso de desear participar con 8
                 personas o más, la solicitud estará sujeta a disponibilidad. Para ello, será necesario comunicarse
-                previamente por WhatsApp al <strong>+51 999 999 999</strong>, donde se brindará información sobre
+                previamente por WhatsApp al <strong>+51 981 575 968</strong>, donde se brindará información sobre
                 condiciones, horarios y tarifas aplicables.
               </p>
               <p>

@@ -21,11 +21,10 @@ export function TeamAndResultsSection() {
           className="text-center mb-10 md:mb-14"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-100 font-display">
-            Crea y registra tu <span className="text-brand-gold">Equipo y Puntaje</span>
+            REGISTRA TU <span className="text-brand-gold">EQUIPO</span> Y <span className="text-brand-gold">COMPITE POR EL PRIMER LUGAR</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-2 text-lg md:text-xl font-sans">
-            Registra nuevos equipos y registra los resultados finales tras cada experiencia,
-            todo en un solo lugar.
+            Cada grupo deja su marca. Registra tu equipo, anota su tiempo y guarda los resultados finales de cada sala. Solo los mejores logran llegar al hall of fame.
           </p>
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-6"></div>
         </motion.div>

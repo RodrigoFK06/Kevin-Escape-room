@@ -110,7 +110,7 @@ export function ContactSection() {
             CONTACTA <span className="text-brand-gold">CON NOSOTROS</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-2 font-sans">
-            ¿Tienes alguna pregunta? Estamos aquí para ayudarte. Contáctanos y te responderemos lo antes posible.
+            ¿Tienes dudas o buscas una experiencia a medida? Escríbenos y nuestro equipo te guiará para planear tu próxima inmersión ENCRYPTED.
           </p>
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-4" />
         </motion.div>

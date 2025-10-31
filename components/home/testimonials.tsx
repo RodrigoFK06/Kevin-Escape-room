@@ -39,7 +39,7 @@ export function Testimonials() {
       image: "/placeholder.svg?height=100&width=100",
       rating: 5,
       comment:
-        "¡Increíble experiencia! Código Enigma nos hizo pensar como nunca. Logramos escapar con solo 2 minutos restantes. La ambientación es impresionante y los acertijos están muy bien pensados. Definitivamente volveremos para probar otra sala.",
+        "¡Increíble experiencia! EL PACIENTE 136 nos hizo pensar como nunca. Logramos escapar con solo 2 minutos faltantes. La ambientación es impresionante y los acertijos están muy bien pensados. Definitivamente volveremos para probar otra sala.",
       date: "15/03/2023",
       room: "Código Enigma",
     },
@@ -142,7 +142,7 @@ export function Testimonials() {
             TESTIMONIOS Y <span className="text-brand-gold">RANKING</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-2 font-sans">
-            Descubre lo que otros jugadores opinan y compite por estar en nuestro ranking de los más rápidos.
+            Solo los más rápidos logran escribir su nombre aquí. ¿Podrás superar su tiempo?
           </p>
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-4"></div>
         </motion.div>

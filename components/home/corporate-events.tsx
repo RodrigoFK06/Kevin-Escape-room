@@ -65,7 +65,7 @@ export function CorporateEvents() {
             EVENTOS <span className="text-brand-gold">CORPORATIVOS</span> Y CUMPLEAÑOS
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-2">
-            Experiencias personalizadas para grupos, empresas y celebraciones especiales.
+            Diseñamos experiencias únicas para grupos, empresas y equipos que buscan más que diversión: una misión que une, reta y deja huella.
           </p>
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-4"></div>
         </motion.div>
@@ -117,7 +117,7 @@ export function CorporateEvents() {
                 Team Building Corporativo
               </h3>
               <p className="text-gray-400 mb-4">
-                Desafía a tu equipo en una experiencia única que fortalecerá la comunicación, el liderazgo y el trabajo en equipo.
+                Desafía a tu equipo en una experiencia inmersiva que pondrá a prueba su comunicación, liderazgo y trabajo en conjunto.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
@@ -179,7 +179,7 @@ export function CorporateEvents() {
                 Celebraciones y Cumpleaños
               </h3>
               <p className="text-gray-400 mb-4">
-                Celebra tu cumpleaños en una experiencia inolvidable con tus amigos. Una alternativa única para festejar.
+                Más que un festejo, es una historia compartida. Celebra entre enigmas, risas y momentos que no se repiten.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
@@ -188,11 +188,11 @@ export function CorporateEvents() {
                 </li>
                 <li className="flex items-start">
                   <Check className="h-5 w-5 text-brand-gold mr-2 flex-shrink-0" />
-                  <span className="text-sm text-gray-400">Decoración temática de terror</span>
+                  <span className="text-sm text-gray-400">Decoración temática personalizada</span>
                 </li>
                 <li className="flex items-start">
                   <Check className="h-5 w-5 text-brand-gold mr-2 flex-shrink-0" />
-                  <span className="text-sm text-gray-400">Área para torta y celebración</span>
+                  <span className="text-sm text-gray-400">Área especial para torta y celebración</span>
                 </li>
               </ul>
               <Button
@@ -241,7 +241,7 @@ export function CorporateEvents() {
                 Gift Cards
               </h3>
               <p className="text-gray-400 mb-4">
-                Regala una experiencia de terror y adrenalina. La gift card perfecta para los amantes del misterio y el suspenso.
+                Regala una historia que solo se descubre al vivirla. Las Gift Cards ENCRYPTED abren la puerta a una experiencia única.
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">

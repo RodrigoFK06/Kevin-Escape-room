@@ -10,7 +10,7 @@ export function Promotions() {
     {
       icon: <Award className="h-10 w-10 text-brand-gold" />,
       title: "Jugadores Frecuentes",
-      description: "Juega 3 veces y gana un 50% de descuento en tu siguiente reserva.",
+      description: "Si compeltas 3 misiones, obtén 50% de descuento en tu próxima inmersión.",
       delay: 0.4,
     },
     {
@@ -22,13 +22,13 @@ export function Promotions() {
     {
       icon: <Users className="h-10 w-10 text-brand-gold" />,
       title: "Familias",
-      description: "20% de descuento en grupos familiares.",
+      description: "Ven con los tuyos y disfruta de un 20% de descuento en grupos familiares de al menos 3 personas.",
       delay: 0.2,
     },
     {
       icon: <GraduationCap className="h-10 w-10 text-brand-gold" />,
       title: "Estudiantes",
-      description: "Muestra tu carnet y obtén 15% de descuento.",
+      description: "Presenta tu carnet universitario o escolar y recibe 20% de descuento en cualquier sala (SOLO DE LUINES A JUEVES).",
       delay: 0.3,
     },
     
@@ -49,7 +49,7 @@ export function Promotions() {
             PROMOCIONES Y <span className="text-brand-gold">DESCUENTOS</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-2">
-            Aprovecha nuestras ofertas especiales y vive la experiencia de terror a un precio aterrador.
+            Vive la experiencia más intensa de Lima con beneficios que solo los valientes descubren.
           </p>
           <div className="w-20 h-1 bg-brand-gold mx-auto mt-4"></div>
         </motion.div>
@@ -77,7 +77,7 @@ export function Promotions() {
                   className="border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark text-xs sm:text-sm w-full md:w-auto"
                   asChild
                 >
-                  <Link href="/reservas">RESERVA Y OBTÉN TU DESCUENTO</Link>
+                  <Link href="/reservas">AGENDA Y OBTÉN TU DESCUENTO</Link>
                 </Button>
               </div>
             </motion.div>

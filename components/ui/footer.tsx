@@ -45,28 +45,21 @@ export function Footer() {
             </p>
             <div className="flex space-x-4">
               <Link
-                href="#"
+                href="https://www.instagram.com/encryptedperu/?igsh=MXEybjl5dGo4d2VpOA%3D%3D#" target="_blank"
                 className="text-gray-400 hover:text-brand-gold transition-colors transform hover:scale-110 duration-300"
               >
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </Link>
               <Link
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61582619584485" target="_blank"
                 className="text-gray-400 hover:text-brand-gold transition-colors transform hover:scale-110 duration-300"
               >
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </Link>
               <Link
-                href="#"
-                className="text-gray-400 hover:text-brand-gold transition-colors transform hover:scale-110 duration-300"
-              >
-                <Image src="/x.png" alt="Twitter" width={18} height={18} />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link
-                href="#"
+                href="https://www.tiktok.com/@encryptedperu?_t=ZS-90rN1paXXb0&_r=1" target="_blank"
                 className="text-gray-400 hover:text-brand-gold transition-colors transform hover:scale-110 duration-300"
               >
                 <Image src="/tiktok.png" alt="TikTok" width={18} height={18} />
