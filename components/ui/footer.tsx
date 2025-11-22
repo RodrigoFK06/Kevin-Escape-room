@@ -113,19 +113,19 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-gray-400 font-sans">
               <li className="flex justify-between">
                 <span>Lunes a Jueves:</span>
-                <span className="text-brand-gold">15:00 - 22:00</span>
+                <span className="text-brand-gold">11:00 - 21:30</span>
               </li>
               <li className="flex justify-between">
                 <span>Viernes:</span>
-                <span className="text-brand-gold">15:00 - 23:00</span>
+                <span className="text-brand-gold">11:00 - 21:30</span>
               </li>
               <li className="flex justify-between">
                 <span>Sábados:</span>
-                <span className="text-brand-gold">11:00 - 23:00</span>
+                <span className="text-brand-gold">11:00 - 21:30</span>
               </li>
               <li className="flex justify-between">
                 <span>Domingos:</span>
-                <span className="text-brand-gold">11:00 - 22:00</span>
+                <span className="text-brand-gold">11:00 - 21:30</span>
               </li>
             </ul>
             <div className="mt-4 p-3 bg-brand-dark/80 border border-brand-gold/20 rounded-lg text-xs text-gray-400 font-sans">
@@ -150,19 +150,19 @@ export function Footer() {
               <li className="flex items-start gap-3 group">
                 <MapPin className="h-5 w-5 text-brand-gold flex-shrink-0 mt-0.5 group-hover:animate-pulse" />
                 <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
-                  Av. Ejemplo 123, Lima, Perú
+                  Calle Chiclayo 209 , Miraflores. Lima -Perú
                 </span>
               </li>
               <li className="flex items-center gap-3 group">
                 <Phone className="h-5 w-5 text-brand-gold flex-shrink-0 group-hover:animate-pulse" />
                 <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
-                  +51 123 456 789
+                  +51 981 575 968
                 </span>
               </li>
               <li className="flex items-center gap-3 group">
                 <Mail className="h-5 w-5 text-brand-gold flex-shrink-0 group-hover:animate-pulse" />
                 <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
-                  info@encrypted.com
+                  contacto@encryptedperu.com
                 </span>
               </li>
             </ul>

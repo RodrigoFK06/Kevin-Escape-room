@@ -60,7 +60,7 @@ export function EscapeRooms() {
       players: "2-6",
       time: "60 min",
       description:
-        "Internado en un pabellón psiquiátrico abandonado, el PAciente 136 volvió a despertar. Entre respiraciones, voces y pulsos de luz, descubrirás que nada fue un accidente. Solo los que entiendes su mente logran salir con la suya.",
+        "Internado en un pabellón psiquiátrico abandonado, el Paciente 136 volvió a despertar. Entre respiraciones, voces y pulsos de luz, descubrirás que nada fue un accidente. Solo los que entiendes su mente logran salir con la suya.",
       bookings: 3,
       featured: true,
       tags: ["Terror Psicológico", "Laboratorio", "Alta tensión"],
@@ -72,14 +72,14 @@ export function EscapeRooms() {
     },
     {
       id: "la-boveda",
-      name: "La Bóveda",
+      name: "LA SECUENCIA PERDIDA",
       image: "/placeholder.svg?height=600&width=800",
       difficulty: 5,
       happy: 5,
       players: "3-6",
       time: "60 min",
       description:
-        "Un robo perfecto a la bóveda más segura. Encuentra la combinación y escapa antes de la alarma.",
+        "El laboratorio del Dr. Silvan quedó sellado tras un fallo en su último experimento. Los registros hablan de un sistema de seguridad activado y de una inteligencia llamada EVE, que aún permanece en línea. Tu misión es desactivar el protocolo y descubrir qué intentaba ocultar Silvan antes de que el tiempo se agote. Pero ten cuidado… aquí, cada decisión altera el resultado.",
       bookings: 2,
       featured: true,
       tags: ["Heist", "Lógica", "Extremo"],
@@ -91,14 +91,14 @@ export function EscapeRooms() {
     },
     {
       id: "el-laboratorio",
-      name: "El Laboratorio",
+      name: "EL ÚLTIMO CONJURO",
       image: "/placeholder.svg?height=600&width=800",
       difficulty: 3,
       happy: 5,
       players: "2-6",
       time: "60 min",
       description:
-        "Un experimento salió mal. Descubre la fórmula y escapa del laboratorio antes de que sea tarde.",
+        "En una mansión olvidada por el tiempo, la familia Valdemar desapareció tras realizar un ritual que nadie comprendió. Las paredes guardan símbolos, voces y objetos que parecen esperar tu llegada. Descubre qué ocurrió aquella noche y rompe el ciclo… antes de que el conjuro se repita contigo dentro.",
       bookings: 3,
       tags: ["Ciencia", "Misterio", "Medio"],
       slides: [
@@ -440,10 +440,10 @@ export function EscapeRooms() {
 
                     <div className="flex flex-col space-y-3 z-100">
                       <Button variant="default" className="w-full group font-sans" asChild>
-                        <Link href="/reservas" className="flex items-center justify-center gap-2">
+                        <Link href="#cuartos" className="flex items-center justify-center gap-2">
                           <Lock className="h-4 w-4 group-hover:hidden" />
                           <Key className="h-4 w-4 hidden group-hover:block animate-key-turn" />
-                          AGENDA TU MISIÓN
+                          PRÓXIMAMENTE
                         </Link>
                       </Button>
 

@@ -103,6 +103,9 @@ export function CorporateEvents() {
                 className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
+              <div className="absolute inset-0 flex items-center justify-center bg-brand-dark/70">
+                <h3 className="text-3xl md:text-4xl font-bold text-white">PROXIMAMENTE</h3>
+              </div>
               <div className="absolute top-4 left-4 bg-brand-gold/90 text-brand-dark px-3 py-1 rounded-full text-xs font-bold flex items-center">
                 <Building className="h-3 w-3 mr-1" />
                 CORPORATIVO
@@ -133,12 +136,15 @@ export function CorporateEvents() {
                   <span className="text-sm text-gray-400">Catering y servicios adicionales</span>
                 </li>
               </ul>
+              <div className="text-center py-3 text-gray-500 text-sm">
+                Próximamente en los 3 cajones, lo más sencillo posible.
+              </div>
               <Button
                 variant="outline"
-                className="w-full border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button"
-                asChild
+                className="w-full border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button opacity-50 cursor-not-allowed"
+                disabled
               >
-                <Link href="#reservas">Solicitar Información</Link>
+                Solicitar Información
               </Button>
             </div>
           </motion.div>
@@ -165,6 +171,9 @@ export function CorporateEvents() {
                 className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
+              <div className="absolute inset-0 flex items-center justify-center bg-brand-dark/70">
+                <h3 className="text-3xl md:text-4xl font-bold text-white">PROXIMAMENTE</h3>
+              </div>
               <div className="absolute top-4 left-4 bg-brand-gold/90 text-brand-dark px-3 py-1 rounded-full text-xs font-bold flex items-center">
                 <Calendar className="h-3 w-3 mr-1" />
                 CELEBRACIÓN
@@ -195,12 +204,15 @@ export function CorporateEvents() {
                   <span className="text-sm text-gray-400">Área especial para torta y celebración</span>
                 </li>
               </ul>
+              <div className="text-center py-3 text-gray-500 text-sm">
+                Próximamente en los 3 cajones, lo más sencillo posible.
+              </div>
               <Button
                 variant="outline"
-                className="w-full border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button"
-                asChild
+                className="w-full border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button opacity-50 cursor-not-allowed"
+                disabled
               >
-                <Link href="#reservas">Reservar Celebración</Link>
+                Reservar Celebración
               </Button>
             </div>
           </motion.div>
@@ -227,6 +239,9 @@ export function CorporateEvents() {
                 className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent"></div>
+              <div className="absolute inset-0 flex items-center justify-center bg-brand-dark/70">
+                <h3 className="text-3xl md:text-4xl font-bold text-white">PROXIMAMENTE</h3>
+              </div>
               <div className="absolute top-4 left-4 bg-brand-gold/90 text-brand-dark px-3 py-1 rounded-full text-xs font-bold flex items-center">
                 <Award className="h-3 w-3 mr-1" />
                 REGALO
@@ -257,12 +272,15 @@ export function CorporateEvents() {
                   <span className="text-sm text-gray-400">Envío digital o físico</span>
                 </li>
               </ul>
+              <div className="text-center py-3 text-gray-500 text-sm">
+                Próximamente en los 3 cajones, lo más sencillo posible.
+              </div>
               <Button
                 variant="outline"
-                className="w-full border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button"
-                asChild
+                className="w-full border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-dark horror-button opacity-50 cursor-not-allowed"
+                disabled
               >
-                <Link href="#reservas">Comprar Gift Card</Link>
+                Comprar Gift Card
               </Button>
             </div>
           </motion.div>

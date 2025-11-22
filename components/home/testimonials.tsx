@@ -41,28 +41,9 @@ export function Testimonials() {
       comment:
         "¡Increíble experiencia! EL PACIENTE 136 nos hizo pensar como nunca. Logramos escapar con solo 2 minutos faltantes. La ambientación es impresionante y los acertijos están muy bien pensados. Definitivamente volveremos para probar otra sala.",
       date: "15/03/2023",
-      room: "Código Enigma",
+      room: "El Paciente 136",
     },
-    {
-      id: 2,
-      name: "María Fernández",
-      image: "/placeholder.svg?height=100&width=100",
-      rating: 5,
-      comment:
-        "La Bóveda superó todas nuestras expectativas. Los acertijos son desafiantes y la ambientación es perfecta. El personal fue muy amable y nos dio pistas cuando estábamos realmente atascados. Una experiencia que recomendaría a cualquiera que busque adrenalina.",
-      date: "22/03/2023",
-      room: "La Bóveda",
-    },
-    {
-      id: 3,
-      name: "Javier López",
-      image: "/placeholder.svg?height=100&width=100",
-      rating: 4,
-      comment:
-        "El Laboratorio es el escape room más difícil que he jugado. No logramos escapar, pero volveremos a intentarlo. Los efectos especiales son increíbles y realmente te sientes dentro de un laboratorio secreto. La dificultad es alta, pero eso lo hace más emocionante.",
-      date: "05/04/2023",
-      room: "El Laboratorio",
-    },
+    
   ]
 
   const [rankings, setRankings] = useState<TeamRanking[]>([])

@@ -10,7 +10,7 @@ export function Promotions() {
     {
       icon: <Award className="h-10 w-10 text-brand-gold" />,
       title: "Jugadores Frecuentes",
-      description: "Si compeltas 3 misiones, obtén 50% de descuento en tu próxima inmersión.",
+      description: "Si completas 3 misiones, obtén 50% de descuento en tu próxima inmersión.",
       delay: 0.4,
     },
     {
@@ -28,7 +28,7 @@ export function Promotions() {
     {
       icon: <GraduationCap className="h-10 w-10 text-brand-gold" />,
       title: "Estudiantes",
-      description: "Presenta tu carnet universitario o escolar y recibe 20% de descuento en cualquier sala (SOLO DE LUINES A JUEVES).",
+      description: "Presenta tu carnet universitario o escolar y recibe 20% de descuento en cualquier sala (SOLO DE LUNES A JUEVES).",
       delay: 0.3,
     },
     

@@ -90,10 +90,22 @@ function ReservationSystem() {
     "el-laboratorio": 3,
   };
 
-  const roomPrices: Record<string, number> = {
-    "codigo-enigma": 120,
-    "la-boveda": 100,
-    "el-laboratorio": 150,
+  // Función para calcular el precio según el tarifario oficial
+  const calculateTotalPrice = (numPlayers: number): number => {
+    switch (numPlayers) {
+      case 2:
+        return 110; // 2 x 55
+      case 3:
+        return 150; // 3 x 50
+      case 4:
+        return 180; // 4 x 45
+      case 5:
+        return 200; // 5 x 40
+      case 6:
+        return 240; // 6 x 40
+      default:
+        return 0;
+    }
   };
 
   const handleRoomSelect = (roomId: string) => {
@@ -204,8 +216,7 @@ function ReservationSystem() {
     try {
       const horarioId = parseInt(selectedTime, 10);
       const formattedDate = date ? format(date, "yyyy-MM-dd") : "";
-      const pricePerPerson = roomPrices[selectedRoom] || 120;
-      const total = players ? Number(players) * pricePerPerson : 0;
+      const total = players ? calculateTotalPrice(Number(players)) : 0;
 
       const body = {
         reserva: {
@@ -233,8 +244,7 @@ function ReservationSystem() {
       }
 
       // ✅ 2. Luego enviamos el correo desde el backend Next.js (SMTP GoDaddy)
-      const precioUnitario = roomPrices[selectedRoom] || 120;
-      const montoTotal = Number(players) * precioUnitario;
+      const montoTotal = players ? calculateTotalPrice(Number(players)) : 0;
       const montoReserva = paymentAmountOption === "adelanto" ? 50 : montoTotal;
       const montoRestante = paymentAmountOption === "adelanto" ? montoTotal - 50 : 0;
 
@@ -246,10 +256,10 @@ function ReservationSystem() {
           correo: email,
           sala:
             selectedRoom === "codigo-enigma"
-              ? "Código Enigma"
+              ? "El Paciente 136"
               : selectedRoom === "la-boveda"
-                ? "La Bóveda"
-                : "El Laboratorio",
+                ? "El Último Conjuro"
+                : "La Secuencia Perdida",
           fecha: formattedDate,
           hora: availableTimes.find((slot) => slot.id === selectedTime)?.time,
           jugadores: players,
@@ -359,11 +369,11 @@ function ReservationSystem() {
                       <span>Sala:</span>
                       <span className="font-medium">
                         {selectedRoom === "codigo-enigma"
-                          ? "Código Enigma"
+                          ? "El Paciente 136"
                           : selectedRoom === "la-boveda"
-                            ? "La Bóveda"
+                            ? "El Último Conjuro"
                             : selectedRoom === "el-laboratorio"
-                              ? "El Laboratorio"
+                              ? "La Secuencia Perdida"
                               : ""}
                       </span>
                     </li>
@@ -466,9 +476,9 @@ function ReservationSystem() {
                       </Label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         {[
-                          { id: "codigo-enigma", name: "Código Enigma", difficulty: "Difícil" },
-                          { id: "la-boveda", name: "La Bóveda", difficulty: "Extremo" },
-                          { id: "el-laboratorio", name: "El Laboratorio", difficulty: "Medio" },
+                          { id: "codigo-enigma", name: "El Paciente 136", difficulty: "Medio" },
+                          { id: "la-boveda", name: "El Último Conjuro", difficulty: "Medio" },
+                          { id: "el-laboratorio", name: "La Secuencia Perdida", difficulty: "Difícil" },
                         ].map((room) => (
                           <motion.button
                             key={room.id}
@@ -757,15 +767,15 @@ function ReservationSystem() {
                               <button
                                 type="button"
                                 onClick={() => {
-                                  navigator.clipboard.writeText("904293507");
+                                  navigator.clipboard.writeText("981575968");
                                   toast({
                                     title: "¡Copiado!",
                                     description: "Número de celular copiado al portapapeles.",
                                   });
                                 }}
                                 className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform"
-                              >
-                                904 293 507
+              >
+                                981 575 968
                               </button>
 
                             </p>
@@ -790,11 +800,11 @@ function ReservationSystem() {
                             <p className="mb-2 text-brand-gold font-semibold">Transferencia Bancaria</p>
                             <p>
                               <span className="text-gray-400">Cuenta BCP Soles:</span>{" "}
-                              <strong>57007192985095</strong>
+                              <strong>1947112978060</strong>
                             </p>
                             <p>
                               <span className="text-gray-400">Cuenta interbancaria:</span>{" "}
-                              <strong>00257010719298509506</strong>
+                              <strong>00219400711297806098</strong>
                             </p>
                           </div>
                           <div className="flex items-center justify-between bg-brand-dark/70 p-3 rounded-md border border-brand-gold/30">
@@ -811,11 +821,11 @@ function ReservationSystem() {
                         <div className="text-gray-400">Sala:</div>
                         <div className="font-medium text-white">
                           {selectedRoom === "codigo-enigma"
-                            ? "Código Enigma"
+                            ? "El Paciente 136"
                             : selectedRoom === "la-boveda"
-                              ? "La Bóveda"
+                              ? "El Último Conjuro"
                               : selectedRoom === "el-laboratorio"
-                                ? "El Laboratorio"
+                                ? "La Secuencia Perdida"
                                 : ""}
                         </div>
                         <div className="text-gray-400">Fecha:</div>
@@ -854,7 +864,7 @@ function ReservationSystem() {
                           <div className="text-white font-sans text-sm md:text-base">
                             <strong>Reservar con S/ 50</strong> (adelanto mínimo)<br />
                             <span className="text-xs text-gray-400">
-                              Asegura tu cupo hoy. El resto (S/. {(players ? Number(players) * (roomPrices[selectedRoom] || 120) - 50 : 0).toFixed(2)}) se paga el día del juego.
+                              Asegura tu cupo hoy. El resto (S/. {(players ? calculateTotalPrice(Number(players)) - 50 : 0).toFixed(2)}) se paga el día del juego.
                             </span>
                           </div>
                         </label>
@@ -869,7 +879,7 @@ function ReservationSystem() {
                             className="accent-brand-gold"
                           />
                           <div className="text-white font-sans text-sm md:text-base">
-                            <strong>Pagar el total ahora</strong> (S/. {(players ? Number(players) * (roomPrices[selectedRoom] || 120) : 0).toFixed(2)})<br />
+                            <strong>Pagar el total ahora</strong> (S/. {(players ? calculateTotalPrice(Number(players)) : 0).toFixed(2)})<br />
                             <span className="text-xs text-gray-400">Llega sin preocupaciones, ya está todo pagado.</span>
                           </div>
                         </label>
@@ -883,7 +893,7 @@ function ReservationSystem() {
                           {paymentAmountOption === "adelanto"
                             ? "50.00"
                             : players
-                              ? (Number(players) * (roomPrices[selectedRoom] || 120)).toFixed(2)
+                              ? calculateTotalPrice(Number(players)).toFixed(2)
                               : "0.00"}
                         </span>
                       </div>

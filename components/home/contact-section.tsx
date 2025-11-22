@@ -246,7 +246,7 @@ export function ContactSection() {
                 <MapPin className="h-5 w-5 text-brand-gold mr-2" />
                 Ubicación
               </h3>
-              <p className="text-gray-300 mb-4 font-sans">Av. Ejemplo 123, Lima, Perú</p>
+              <p className="text-gray-300 mb-4 font-sans">Calle Chiclayo 209 , Miraflores. Lima -Perú</p>
               <div className="relative h-64 rounded-lg overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=..."
