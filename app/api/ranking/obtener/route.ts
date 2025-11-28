@@ -1,26 +1,44 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const res = await fetch("https://mediumorchid-grasshopper-668573.hostingersite.com/admin/ranking/obtener", {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Cookie": "ci_session=3137924a68e6b3482f69b324ffa72f44", // ⚠️ REEMPLAZAR si expira
+    const rankings = await prisma.ranking.findMany({
+      include: {
+        equipo: {
+          select: {
+            id: true,
+            nombre: true
+          }
+        },
+        sala: {
+          select: {
+            nombre: true
+          }
+        }
       },
-      cache: "no-store",
-    })
+      orderBy: {
+        puntaje: 'desc'
+      }
+    });
 
-    if (!res.ok) {
-      console.error("API externa falló:", res.status, res.statusText)
-      return NextResponse.json({ error: true, message: "Fallo en la API externa" }, { status: 500 })
-    }
+    // Formatear datos para coincidir con formato PHP
+    const formattedRankings = rankings.map(r => ({
+      id: r.id,
+      equipo_id: r.equipo_id,
+      equipo_nombre: r.equipo.nombre,
+      sala_id: r.sala_id,
+      sala_nombre: r.sala.nombre,
+      puntaje: parseFloat(r.puntaje.toString()),
+      tiempo: r.tiempo,
+      cantidad_integrantes: r.cantidad_integrantes,
+      registrado_en: r.registrado_en.toISOString()
+    }));
 
-    const json = await res.json()
-    return NextResponse.json(json.data || [], { status: 200 })
-
-  } catch (err: any) {
-    console.error("Error en proxy API:", err.message)
-    return NextResponse.json({ error: true, message: err.message }, { status: 500 })
+    return NextResponse.json(formattedRankings);
+  } catch (error) {
+    console.error('Error al obtener ranking:', error);
+    // Devolver array vacío para mantener compatibilidad
+    return NextResponse.json([]);
   }
 }

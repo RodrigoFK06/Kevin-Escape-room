@@ -43,7 +43,36 @@ export function Testimonials() {
       date: "15/03/2023",
       room: "El Paciente 136",
     },
-    
+    {
+      id: 2,
+      name: "María González",
+      image: "/placeholder.svg?height=100&width=100",
+      rating: 5,
+      comment:
+        "El Último Conjuro fue simplemente mágico. Los efectos especiales y la historia te sumergen completamente. El nivel de dificultad es perfecto, ni muy fácil ni imposible. ¡Lo recomiendo 100%!",
+      date: "22/04/2023",
+      room: "El Último Conjuro",
+    },
+    {
+      id: 3,
+      name: "Roberto Sánchez",
+      image: "/placeholder.svg?height=100&width=100",
+      rating: 4,
+      comment:
+        "La Secuencia Perdida puso a prueba nuestra lógica y trabajo en equipo. Los puzzles tecnológicos son únicos. Casi no logramos salir pero la experiencia valió cada segundo.",
+      date: "10/05/2023",
+      room: "La Secuencia Perdida",
+    },
+    {
+      id: 4,
+      name: "Ana Torres",
+      image: "/placeholder.svg?height=100&width=100",
+      rating: 5,
+      comment:
+        "Vinimos con mi grupo de amigas y fue la mejor actividad que hemos hecho juntas. Los Game Masters son muy profesionales y la experiencia es de primera clase. Ya reservamos para volver el próximo mes.",
+      date: "18/06/2023",
+      room: "El Paciente 136",
+    },
   ]
 
   const [rankings, setRankings] = useState<TeamRanking[]>([])
@@ -56,11 +85,11 @@ export function Testimonials() {
         if (json && Array.isArray(json)) {
           const parsed = json.map((item: any) => ({
             id: Number(item.id),
-            name: item.equipo_nombre,
-            time: item.tiempo.slice(0, 5), // quitar segundos si están presentes
-            date: item.registrado_en,
-            room: item.sala_nombre,
-            puntaje: item.puntaje,
+            name: item.equipo_nombre || 'Equipo Sin Nombre',
+            time: `${item.tiempo || 0} min`,
+            date: item.registrado_en || new Date().toISOString(),
+            room: item.sala_nombre || 'Sala Desconocida',
+            puntaje: `${item.puntaje || 0} pts`,
           }))
           setRankings(parsed)
         }
@@ -223,15 +252,23 @@ export function Testimonials() {
             {/* Contenedor principal del ranking */}
             <div className="bg-[#0a141f] border border-brand-gold/20 rounded-lg overflow-hidden w-full">
               <div className="p-3 md:p-4 bg-brand-gold/20 border-b border-brand-gold/30 grid grid-cols-12 gap-2 md:gap-4 text-sm md:text-base font-sans">
-                <div className="col-span-1 font-bold text-center">#</div>
-                <div className="col-span-4 font-bold">Equipo</div>
-                <div className="col-span-2 font-bold text-center">Tiempo</div>
-                <div className="col-span-2 font-bold text-center">Puntaje</div>
-                <div className="col-span-3 font-bold text-center">Sala</div>
+                <div className="col-span-1 font-bold text-center text-gray-200">#</div>
+                <div className="col-span-4 font-bold text-gray-200">Equipo</div>
+                <div className="col-span-2 font-bold text-center text-gray-200">Tiempo</div>
+                <div className="col-span-2 font-bold text-center text-gray-200">Puntaje</div>
+                <div className="col-span-3 font-bold text-center text-gray-200">Sala</div>
               </div>
 
               <div className="divide-y divide-brand-gold/10">
-                {rankings.slice(0, visibleCount).map((team, index) => (
+                {rankings.length === 0 ? (
+                  <div className="p-8 text-center">
+                    <Trophy className="h-12 w-12 text-brand-gold/30 mx-auto mb-4" />
+                    <p className="text-gray-400 text-sm md:text-base">
+                      Aún no hay equipos en el ranking. ¡Sé el primero en aparecer aquí!
+                    </p>
+                  </div>
+                ) : (
+                  rankings.slice(0, visibleCount).map((team, index) => (
                   <motion.div
                     key={team.id}
                     className="p-3 md:p-4 grid grid-cols-12 gap-2 md:gap-4 hover:bg-brand-gold/5 transition-colors text-sm md:text-base font-sans"
@@ -247,42 +284,45 @@ export function Testimonials() {
                           <Trophy className="h-4 w-4 fill-yellow-500" />
                         </span>
                       ) : index === 1 ? (
-                        <span className="text-gray-400">2</span>
+                        <span className="text-gray-300">2</span>
                       ) : index === 2 ? (
-                        <span className="text-amber-700">3</span>
+                        <span className="text-amber-600">3</span>
                       ) : (
-                        index + 1
+                        <span className="text-gray-300">{index + 1}</span>
                       )}
                     </div>
 
                     {/* Columna Equipo */}
-                    <div className="col-span-4 font-medium truncate">{team.name}</div>
+                    <div className="col-span-4 font-medium truncate text-gray-200">{team.name}</div>
 
                     {/* Columna Tiempo */}
-                    <div className="col-span-2 text-center flex items-center justify-center">
+                    <div className="col-span-2 text-center flex items-center justify-center text-gray-200">
                       <Clock className="h-3 w-3 md:h-4 md:w-4 text-brand-gold mr-1" />
                       <span>{team.time}</span>
                     </div>
 
                     {/* Columna Puntaje */}
-                    <div className="col-span-2 text-center text-gray-400 truncate">{team.puntaje}</div>
+                    <div className="col-span-2 text-center text-gray-200 truncate font-semibold">{team.puntaje}</div>
 
                     {/* Columna Sala */}
-                    <div className="col-span-3 text-center text-gray-400 truncate">{team.room}</div>
+                    <div className="col-span-3 text-center text-gray-300 truncate text-xs md:text-sm">{team.room}</div>
                   </motion.div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
 
             {/* Botón para cambiar la cantidad visible */}
-            <div className="mt-4 text-center">
-              <button
-                onClick={() => setVisibleCount(visibleCount === 6 ? 10 : 6)}
-                className="text-brand-gold underline hover:no-underline text-sm md:text-base font-sans"
-              >
-                {visibleCount === 6 ? "Ver los 10 mejores" : "Ver solo los 5 mejores"}
-              </button>
-            </div>
+            {rankings.length > 6 && (
+              <div className="mt-4 text-center">
+                <button
+                  onClick={() => setVisibleCount(visibleCount === 6 ? 10 : 6)}
+                  className="text-brand-gold underline hover:no-underline text-sm md:text-base font-sans"
+                >
+                  {visibleCount === 6 ? "Ver los 10 mejores" : "Ver solo los 5 mejores"}
+                </button>
+              </div>
+            )}
 
             {/* Bloque de texto y botón final */}
             <div className="mt-6 text-center bg-[#0a141f]/60 backdrop-blur-sm border border-brand-gold/30 rounded-lg p-4">
@@ -290,7 +330,7 @@ export function Testimonials() {
                 {rankings.length > 0 ? (
                   <>
                     El equipo <strong className="text-brand-gold">{rankings[0].name}</strong> escapó en{" "}
-                    <strong className="text-brand-gold">{rankings[0].time} min</strong>. ¿Podrás superarlos?
+                    <strong className="text-brand-gold">{rankings[0].time}</strong>. ¿Podrás superarlos?
                     <br />
                     Juega 3 veces y gana un 50% de descuento en tu siguiente juego.
                   </>

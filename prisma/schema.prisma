@@ -1,0 +1,144 @@
+// Escape Room Database Schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Sala {
+  id             Int       @id @default(autoincrement())
+  nombre         String    @unique @db.VarChar(100)
+  descripcion    String    @db.Text
+  min_jugadores  Int
+  max_jugadores  Int
+  duracion       Int
+  dificultad     Dificultad
+  rating         Decimal   @default(0.0) @db.Decimal(2, 1)
+  tags           String?   @db.VarChar(255)
+  imagen         String?   @db.VarChar(255)
+  destacado      Boolean   @default(false) @db.TinyInt
+  reservas_hoy   Int       @default(0)
+  created_at     DateTime  @default(now())
+
+  horarios       Horario[]
+  reservas       Reserva[]
+  rankings       Ranking[]
+
+  @@map("sala")
+}
+
+model Horario {
+  id       Int      @id @default(autoincrement())
+  sala_id  Int
+  hora     DateTime @db.Time
+
+  sala     Sala     @relation(fields: [sala_id], references: [id])
+  reservas Reserva[]
+
+  @@unique([sala_id, hora], name: "sala_hora")
+  @@map("horario")
+}
+
+model Equipo {
+  id         Int       @id @default(autoincrement())
+  nombre     String    @unique @db.VarChar(100)
+  codigo     String?   @db.VarChar(10)
+  creado_en  DateTime  @default(now())
+
+  integrantes Integrante[]
+  rankings    Ranking[]
+
+  @@map("equipo")
+}
+
+model Integrante {
+  id         Int     @id @default(autoincrement())
+  equipo_id  Int
+  nombre     String  @db.VarChar(100)
+
+  equipo     Equipo  @relation(fields: [equipo_id], references: [id], onDelete: Cascade)
+
+  @@map("integrante")
+}
+
+model Reserva {
+  id                  Int            @id @default(autoincrement())
+  cliente             String         @db.VarChar(100)
+  correo              String         @db.VarChar(100)
+  telefono            String         @db.VarChar(20)
+  sala_id             Int
+  horario_id          Int
+  fecha               DateTime       @db.Date
+  cantidad_jugadores  Int
+  estado              EstadoReserva  @default(pendiente)
+  metodo_pago         MetodoPago
+  precio_total        Decimal        @db.Decimal(8, 2)
+  created_at          DateTime       @default(now())
+  activo              Boolean        @default(true) @db.TinyInt
+
+  sala                Sala           @relation(fields: [sala_id], references: [id], onDelete: Cascade)
+  horario             Horario        @relation(fields: [horario_id], references: [id], onDelete: Cascade)
+
+  @@unique([sala_id, horario_id, fecha], name: "sala_fecha_hora")
+  @@map("reserva")
+}
+
+model Ranking {
+  id                    Int      @id @default(autoincrement())
+  equipo_id             Int
+  sala_id               Int
+  puntaje               Decimal  @db.Decimal(10, 2)
+  tiempo                Int      @default(0)
+  cantidad_integrantes  Int?
+  registrado_en         DateTime @default(now())
+
+  equipo                Equipo   @relation(fields: [equipo_id], references: [id], onDelete: Cascade)
+  sala                  Sala     @relation(fields: [sala_id], references: [id], onDelete: Cascade)
+
+  @@unique([equipo_id, sala_id], name: "equipo_sala")
+  @@map("ranking")
+}
+
+model UsuarioAdmin {
+  id         Int           @id @default(autoincrement())
+  nombre     String        @db.VarChar(255)
+  email      String        @unique @db.VarChar(255)
+  password   String        @db.VarChar(255)
+  rol        RolAdmin      @default(editor)
+  estado     EstadoUsuario @default(activo)
+  created_at DateTime      @default(now())
+
+  @@map("usuarios_admin")
+}
+
+enum Dificultad {
+  Baja
+  Media
+  Alta
+  Extrema
+}
+
+enum EstadoReserva {
+  pendiente
+  confirmada
+  cancelada
+}
+
+enum MetodoPago {
+  yape
+  plin
+  transferencia
+}
+
+enum RolAdmin {
+  admin
+  editor
+}
+
+enum EstadoUsuario {
+  activo
+  inactivo
+}

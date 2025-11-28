@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { API_BASE_URL } from "@/lib/config"
+import { prisma } from "@/lib/prisma"
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -7,26 +7,46 @@ export async function GET(request: Request) {
   const fecha = searchParams.get("fecha")
 
   if (!salaId || !fecha) {
-    return NextResponse.json({ error: "Parámetros inválidos" }, { status: 400 })
+    return NextResponse.json({ error: "Faltan parámetros" }, { status: 400 })
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/admin/horarios/disponibles?sala_id=${salaId}&fecha=${fecha}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+    // Obtener todos los horarios activos de la sala
+    const horarios = await prisma.horario.findMany({
+      where: {
+        sala_id: parseInt(salaId)
       },
-      cache: "no-store",
+      select: {
+        id: true,
+        hora: true
+      }
+    });
+
+    // Formatear horas a HH:MM
+    const horariosFormateados = horarios.map(h => ({
+      id: h.id.toString(),
+      hora: h.hora.toISOString().substring(11, 16) // HH:MM
+    }));
+
+    // Obtener IDs de horarios ya reservados ese día para esa sala
+    const reservasOcupadas = await prisma.reserva.findMany({
+      where: {
+        fecha: new Date(fecha),
+        sala_id: parseInt(salaId)
+      },
+      select: {
+        horario_id: true
+      }
+    });
+
+    const ocupados = reservasOcupadas.map(r => r.horario_id.toString());
+
+    return NextResponse.json({
+      horarios: horariosFormateados,
+      ocupados: ocupados
     })
-
-    if (!res.ok) {
-      throw new Error("Error al obtener horarios")
-    }
-
-    const data = await res.json()
-    return NextResponse.json(data)
   } catch (error) {
-    console.error("Error en proxy de horarios disponibles:", error)
+    console.error("Error al obtener horarios disponibles:", error)
     return NextResponse.json({ error: "Fallo al obtener los horarios" }, { status: 500 })
   }
 }

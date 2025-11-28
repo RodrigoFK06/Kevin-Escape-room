@@ -20,7 +20,6 @@ export function ResultRegistrationForm() {
     const payload = {
       codigo_equipo: codigoEquipo.trim(),
       codigo_resultado: codigoResultado.trim(),
-      sala_id: salaId ? Number(salaId) : undefined,
     }
 
     try {
@@ -30,17 +29,18 @@ export function ResultRegistrationForm() {
         body: JSON.stringify(payload),
       })
 
+      const data = await res.json()
+
       if (!res.ok) {
-        const errorText = await res.text()
-        throw new Error(errorText || "Error al enviar los resultados")
+        throw new Error(data.error || "Error al enviar los resultados")
       }
 
-      setMessage("Resultado registrado correctamente.")
+      setMessage("✅ Resultado registrado correctamente. ¡Tu puntuación ha sido guardada!")
       setCodigoEquipo("")
       setCodigoResultado("")
       setSalaId("")
     } catch (error: any) {
-      setMessage("Error: " + error.message)
+      setMessage("❌ " + error.message)
     } finally {
       setLoading(false)
     }
@@ -99,25 +99,6 @@ export function ResultRegistrationForm() {
             className="w-full rounded-md border border-brand-gold/30 bg-[#0a141f] text-gray-100 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
             placeholder='Ej. #XGf"50"@cR"5"Z*"1000"&Q'
             required
-          />
-        </div>
-
-        {/* Sala ID (Opcional) */}
-        <div>
-          <label
-            htmlFor="salaId"
-            className="block text-base md:text-lg font-medium text-gray-300 font-sans mb-1"
-          >
-            Sala ID (opcional)
-          </label>
-          <input
-            id="salaId"
-            type="number"
-            min={1}
-            value={salaId}
-            onChange={(e) => setSalaId(e.target.value)}
-            className="w-full rounded-md border border-brand-gold/30 bg-[#0a141f] text-gray-100 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
-            placeholder="Ej. 1"
           />
         </div>
 

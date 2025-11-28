@@ -1,43 +1,37 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-// Maneja la solicitud OPTIONS para CORS (preflight)
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  })
-}
-
-// Maneja la solicitud GET y reenvía al endpoint externo
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const res = await fetch("https://mediumorchid-grasshopper-668573.hostingersite.com/admin/equipos/ultimo-codigo", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    // Obtener el equipo más reciente
+    const equipo = await prisma.equipo.findFirst({
+      orderBy: {
+        creado_en: 'desc'
       },
-    })
+      select: {
+        id: true,
+        codigo: true,
+        nombre: true
+      }
+    });
 
-    if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText || "Error al obtener el último código")
+    if (!equipo) {
+      return NextResponse.json(
+        { error: 'No se encontró ningún equipo.' },
+        { status: 404 }
+      );
     }
 
-    const data = await res.json()
-
-    return NextResponse.json(data, {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-  } catch (err: any) {
-    console.error("Error en GET ultimo-codigo:", err)
-    return NextResponse.json({ error: true, message: err.message }, { status: 500 })
+    return NextResponse.json({
+      equipo_id: equipo.id,
+      codigo: equipo.codigo,
+      nombre: equipo.nombre
+    });
+  } catch (error) {
+    console.error('Error al obtener último código de equipo:', error);
+    return NextResponse.json(
+      { error: 'Error al obtener el código del equipo' },
+      { status: 500 }
+    );
   }
 }

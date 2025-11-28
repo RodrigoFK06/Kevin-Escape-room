@@ -1,0 +1,55 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const salaId = searchParams.get("sala_id");
+  const fecha = searchParams.get("fecha");
+
+  try {
+    const whereClause: any = {};
+
+    if (salaId) {
+      whereClause.sala_id = parseInt(salaId);
+    }
+
+    if (fecha) {
+      whereClause.fecha = new Date(fecha);
+    }
+
+    const reservas = await prisma.reserva.findMany({
+      where: whereClause,
+      include: {
+        horario: {
+          select: {
+            hora: true
+          }
+        },
+        sala: {
+          select: {
+            nombre: true
+          }
+        }
+      },
+      orderBy: {
+        fecha: 'asc'
+      }
+    });
+
+    // Formatear datos
+    const formattedReservas = reservas.map(r => ({
+      ...r,
+      hora: r.horario.hora.toISOString().substring(11, 19),
+      sala_nombre: r.sala.nombre,
+      fecha: r.fecha.toISOString().split('T')[0],
+      precio_total: parseFloat(r.precio_total.toString()),
+      created_at: r.created_at.toISOString()
+    }));
+
+    return NextResponse.json({ data: formattedReservas });
+  } catch (error) {
+    console.error('Error al obtener reservas:', error);
+    // Devolver array vacío para mantener compatibilidad
+    return NextResponse.json({ data: [] });
+  }
+}

@@ -1,57 +1,93 @@
-import { NextResponse } from "next/server"
-
-// Respuesta para la solicitud OPTIONS (preflight CORS)
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  })
-}
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { generateTeamCode } from "@/lib/utils-backend";
 
 export async function POST(request: Request) {
   try {
-    // Recibe el body del cliente
-    const body = await request.json()
+    const json = await request.json();
 
-    // Se reenvía la petición al endpoint externo
-    const res = await fetch("https://mediumorchid-grasshopper-668573.hostingersite.com/admin/equipos/crear", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        // ⚠️ REEMPLAZAR si expira la cookie
-        "Cookie": "ci_session=3137924a68e6b3482f69b324ffa72f44",
-      },
-      body: JSON.stringify(body),
-    })
-
-    if (!res.ok) {
-      console.error("API externa falló:", res.status, res.statusText)
+    // Validaciones
+    if (!json.nombre_equipo || json.nombre_equipo.trim() === '') {
       return NextResponse.json(
-        { error: true, message: "Fallo en la API externa" },
-        { status: res.status }
-      )
+        { error: 'El nombre del equipo es obligatorio.' },
+        { status: 400 }
+      );
     }
 
-    const json = await res.json()
+    if (!json.integrantes || !Array.isArray(json.integrantes) || json.integrantes.length === 0) {
+      return NextResponse.json(
+        { error: 'Debe proporcionar al menos un integrante.' },
+        { status: 400 }
+      );
+    }
 
-    // Se agrega la cabecera CORS en la respuesta para el cliente
-    return new NextResponse(JSON.stringify(json), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-  } catch (err: any) {
-    console.error("Error en proxy API:", err.message)
+    for (let i = 0; i < json.integrantes.length; i++) {
+      const integrante = json.integrantes[i];
+      if (!integrante.nombre || integrante.nombre.trim() === '') {
+        return NextResponse.json(
+          { error: `El nombre del integrante #${i + 1} es obligatorio.` },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Generar código único
+    let codigo = generateTeamCode();
+    
+    // Verificar que el código sea único
+    let equipoExistente = await prisma.equipo.findFirst({
+      where: { codigo }
+    });
+    
+    while (equipoExistente) {
+      codigo = generateTeamCode();
+      equipoExistente = await prisma.equipo.findFirst({
+        where: { codigo }
+      });
+    }
+
+    // Crear equipo e integrantes en una transacción
+    const result = await prisma.$transaction(async (tx) => {
+      const equipo = await tx.equipo.create({
+        data: {
+          nombre: json.nombre_equipo,
+          codigo: codigo
+        }
+      });
+
+      // Crear integrantes
+      await tx.integrante.createMany({
+        data: json.integrantes.map((i: any) => ({
+          equipo_id: equipo.id,
+          nombre: i.nombre
+        }))
+      });
+
+      return equipo;
+    });
+
     return NextResponse.json(
-      { error: true, message: err.message },
+      {
+        message: 'Equipo creado exitosamente.',
+        codigo_equipo: codigo,
+        equipo_id: result.id
+      },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    console.error('Error al crear equipo:', error);
+    
+    // Manejar error de nombre duplicado
+    if (error.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'Ya existe un equipo con ese nombre.' },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json(
+      { error: 'Error al crear el equipo' },
       { status: 500 }
-    )
+    );
   }
 }
