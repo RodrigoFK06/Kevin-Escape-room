@@ -135,9 +135,19 @@ function ReservationSystem() {
   };
 
   const handleDateSelect = async (selected: Date | undefined) => {
+    if (!selectedRoom) {
+      toast({
+        title: "Selecciona una sala primero",
+        description: "Debes elegir una sala antes de seleccionar la fecha.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setDate(selected);
     setSelectedTime("");
-    if (!selectedRoom || !selected) return;
+    if (!selected) return;
+    
     const formatted = format(selected, "yyyy-MM-dd");
     try {
       const response = await fetchHorariosDisponibles(roomIds[selectedRoom].toString(), formatted);
@@ -519,7 +529,15 @@ function ReservationSystem() {
                         <CalendarIcon className="mr-2 h-5 w-5 text-brand-gold" />
                         Selecciona una fecha
                       </Label>
-                      <DatePicker date={date} onSelect={handleDateSelect} error={Boolean(errors.date)} />
+                      <div className={cn(!selectedRoom && "opacity-50 pointer-events-none")}>
+                        <DatePicker date={date} onSelect={handleDateSelect} error={Boolean(errors.date)} />
+                      </div>
+                      {!selectedRoom && (
+                        <p className="text-yellow-500 text-xs mt-1 flex items-center font-sans">
+                          <AlertCircle className="h-3 w-3 mr-1" />
+                          Primero selecciona una sala
+                        </p>
+                      )}
                       {errors.date && (
                         <p className="text-red-500 text-xs mt-1 flex items-center font-sans">
                           <AlertCircle className="h-3 w-3 mr-1" />
@@ -533,8 +551,14 @@ function ReservationSystem() {
                         <Clock className="mr-2 h-5 w-5 text-brand-gold" />
                         Selecciona un horario
                       </Label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3">
-                        {availableTimes.length === 0 ? (
+                      <div className={cn("grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3", (!selectedRoom || !date) && "opacity-50 pointer-events-none")}>
+                        {!selectedRoom || !date ? (
+                          <div className="col-span-full w-full max-w-sm mx-auto text-center">
+                            <p className="text-yellow-500 text-xs mt-1">
+                              Primero selecciona una sala y una fecha
+                            </p>
+                          </div>
+                        ) : availableTimes.length === 0 ? (
                           <div className="col-span-full w-full max-w-sm mx-auto text-center">
                             <p className="text-gray-400 text-xs mt-1">
                               No hay horarios disponibles para la fecha seleccionada.
