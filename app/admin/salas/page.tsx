@@ -31,44 +31,44 @@ export default function SalasPage() {
       {
         id: 1,
         nombre: 'El Paciente 136',
-        descripcion: 'Un hospital psiquiátrico abandonado guarda oscuros secretos...',
+        descripcion: 'Internado en un pabellón psiquiátrico abandonado, el Paciente 136 volvió a despertar. Entre respiraciones, voces y pulsos de luz, descubrirás que nada fue un accidente.',
         min_jugadores: 2,
         max_jugadores: 6,
         duracion: 60,
         dificultad: 'Media',
-        rating: 4.8,
-        tags: 'Terror, Misterio, Psicológico',
+        rating: 5.0,
+        tags: 'Terror Psicológico, Laboratorio, Alta tensión',
         imagen: '/rooms/paciente136.jpg',
         destacado: true,
-        reservas_hoy: 5
+        reservas_hoy: 0
       },
       {
         id: 2,
         nombre: 'El Último Conjuro',
-        descripcion: 'Una antigua biblioteca de magia oscura te espera...',
+        descripcion: 'En una mansión olvidada por el tiempo, la familia Valdemar desapareció tras realizar un ritual que nadie comprendió. Descubre qué ocurrió aquella noche.',
         min_jugadores: 2,
         max_jugadores: 6,
         duracion: 60,
         dificultad: 'Media',
-        rating: 4.7,
-        tags: 'Magia, Enigmas, Aventura',
+        rating: 5.0,
+        tags: 'Misterio, Ritual, Mansión',
         imagen: '/rooms/conjuro.jpg',
         destacado: false,
-        reservas_hoy: 3
+        reservas_hoy: 0
       },
       {
         id: 3,
         nombre: 'La Secuencia Perdida',
-        descripcion: 'Un laboratorio científico con experimentos peligrosos...',
+        descripcion: 'El laboratorio del Dr. Silvan quedó sellado tras un fallo en su último experimento. Tu misión es desactivar el protocolo y descubrir qué intentaba ocultar Silvan.',
         min_jugadores: 2,
         max_jugadores: 6,
         duracion: 60,
         dificultad: 'Alta',
-        rating: 4.9,
-        tags: 'Ciencia, Tecnología, Desafío',
+        rating: 5.0,
+        tags: 'Ciencia Ficción, Tecnología, Puzzle',
         imagen: '/rooms/secuencia.jpg',
         destacado: false,
-        reservas_hoy: 4
+        reservas_hoy: 0
       }
     ];
 

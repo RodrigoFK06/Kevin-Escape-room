@@ -40,28 +40,8 @@ export function Testimonials() {
       rating: 5,
       comment:
         "¡Increíble experiencia! EL PACIENTE 136 nos hizo pensar como nunca. Logramos escapar con solo 2 minutos faltantes. La ambientación es impresionante y los acertijos están muy bien pensados. Definitivamente volveremos para probar otra sala.",
-      date: "15/03/2023",
+      date: "15/11/2025",
       room: "El Paciente 136",
-    },
-    {
-      id: 2,
-      name: "María González",
-      image: "/placeholder.svg?height=100&width=100",
-      rating: 5,
-      comment:
-        "El Último Conjuro fue simplemente mágico. Los efectos especiales y la historia te sumergen completamente. El nivel de dificultad es perfecto, ni muy fácil ni imposible. ¡Lo recomiendo 100%!",
-      date: "22/04/2023",
-      room: "El Último Conjuro",
-    },
-    {
-      id: 3,
-      name: "Roberto Sánchez",
-      image: "/placeholder.svg?height=100&width=100",
-      rating: 4,
-      comment:
-        "La Secuencia Perdida puso a prueba nuestra lógica y trabajo en equipo. Los puzzles tecnológicos son únicos. Casi no logramos salir pero la experiencia valió cada segundo.",
-      date: "10/05/2023",
-      room: "La Secuencia Perdida",
     },
     {
       id: 4,
@@ -70,7 +50,7 @@ export function Testimonials() {
       rating: 5,
       comment:
         "Vinimos con mi grupo de amigas y fue la mejor actividad que hemos hecho juntas. Los Game Masters son muy profesionales y la experiencia es de primera clase. Ya reservamos para volver el próximo mes.",
-      date: "18/06/2023",
+      date: "07/11/2025",
       room: "El Paciente 136",
     },
   ]

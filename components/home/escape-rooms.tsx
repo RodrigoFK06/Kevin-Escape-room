@@ -60,7 +60,7 @@ export function EscapeRooms() {
       players: "2-6",
       time: "60 min",
       description:
-        "Internado en un pabellón psiquiátrico abandonado, el Paciente 136 volvió a despertar. Entre respiraciones, voces y pulsos de luz, descubrirás que nada fue un accidente. Solo los que entiendes su mente logran salir con la suya.",
+        "Internado en un pabellón psiquiátrico abandonado, el Paciente 136 volvió a despertar. Entre respiraciones, voces y pulsos de luz, descubrirás que nada fue un accidente. Solo los que entienden su mente logran salir con la suya.",
       bookings: 3,
       featured: true,
       tags: ["Terror Psicológico", "Laboratorio", "Alta tensión"],

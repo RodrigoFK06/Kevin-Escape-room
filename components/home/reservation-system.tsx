@@ -476,26 +476,31 @@ function ReservationSystem() {
                       </Label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         {[
-                          { id: "codigo-enigma", name: "El Paciente 136", difficulty: "Medio" },
-                          { id: "la-boveda", name: "El Último Conjuro", difficulty: "Medio" },
-                          { id: "el-laboratorio", name: "La Secuencia Perdida", difficulty: "Difícil" },
+                          { id: "codigo-enigma", name: "El Paciente 136", difficulty: "Medio", available: true },
+                          { id: "la-boveda", name: "El Último Conjuro", difficulty: "Medio", available: false },
+                          { id: "el-laboratorio", name: "La Secuencia Perdida", difficulty: "Difícil", available: false },
                         ].map((room) => (
                           <motion.button
                             key={room.id}
                             type="button"
-                            onClick={() => handleRoomSelect(room.id)}
+                            onClick={() => room.available && handleRoomSelect(room.id)}
+                            disabled={!room.available}
                             className={cn(
                               "relative group overflow-hidden rounded-lg border p-5 transition-all duration-300 h-auto",
+                              !room.available && "opacity-50 cursor-not-allowed",
                               selectedRoom === room.id
                                 ? "border-brand-gold bg-brand-gold/20"
                                 : "border-brand-gold/30 hover:border-brand-gold/60 hover:bg-brand-gold/10"
                             )}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
+                            whileHover={room.available ? { scale: 1.02 } : {}}
+                            whileTap={room.available ? { scale: 0.98 } : {}}
                           >
                             <div className="relative z-10">
                               <h3 className="font-bold text-lg mb-1">{room.name}</h3>
                               <p className="text-sm text-gray-400">{room.difficulty}</p>
+                              {!room.available && (
+                                <span className="text-xs text-red-400 font-semibold mt-1 block">Próximamente</span>
+                              )}
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                           </motion.button>
@@ -589,7 +594,7 @@ function ReservationSystem() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           className={cn(
-                            "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12",
+                            "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12 text-white placeholder:text-gray-400",
                             errors.name && "border-red-500"
                           )}
                         />
@@ -629,7 +634,7 @@ function ReservationSystem() {
                           inputMode="numeric"
                           pattern="[0-9]*"
                           className={cn(
-                            "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12",
+                            "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12 text-white placeholder:text-gray-400",
                             errors.phone && "border-red-500"
                           )}
                         />
@@ -653,7 +658,7 @@ function ReservationSystem() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           className={cn(
-                            "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12",
+                            "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12 text-white placeholder:text-gray-400",
                             errors.email && "border-red-500"
                           )}
                         />
@@ -798,13 +803,40 @@ function ReservationSystem() {
                         <>
                           <div className="bg-brand-dark/50 border border-brand-gold/30 rounded-lg p-4 text-sm text-white font-sans leading-relaxed">
                             <p className="mb-2 text-brand-gold font-semibold">Transferencia Bancaria</p>
-                            <p>
+                            <p className="mb-2">
                               <span className="text-gray-400">Cuenta BCP Soles:</span>{" "}
-                              <strong>1947112978060</strong>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  navigator.clipboard.writeText("1947112978060");
+                                  toast({
+                                    title: "¡Copiado!",
+                                    description: "Cuenta BCP copiada al portapapeles.",
+                                  });
+                                }}
+                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform hover:text-brand-gold/80"
+                              >
+                                1947112978060
+                              </button>
                             </p>
                             <p>
                               <span className="text-gray-400">Cuenta interbancaria:</span>{" "}
-                              <strong>00219400711297806098</strong>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  navigator.clipboard.writeText("00219400711297806098");
+                                  toast({
+                                    title: "¡Copiado!",
+                                    description: "Cuenta interbancaria copiada al portapapeles.",
+                                  });
+                                }}
+                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform hover:text-brand-gold/80"
+                              >
+                                00219400711297806098
+                              </button>
+                            </p>
+                            <p className="text-xs mt-2 text-gray-400">
+                              Haz clic en los números para copiarlos. Envía el comprobante por WhatsApp.
                             </p>
                           </div>
                           <div className="flex items-center justify-between bg-brand-dark/70 p-3 rounded-md border border-brand-gold/30">
