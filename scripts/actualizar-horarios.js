@@ -41,9 +41,9 @@ async function actualizarHorarios() {
     let insertados = 0;
     for (const salaId of salas) {
       for (const hora of nuevosHorarios) {
-        // Convertir "HH:MM:SS" a Date object con fecha arbitraria
+        // Crear un Date en UTC directamente sin conversión de zona horaria
         const [hours, minutes, seconds] = hora.split(':').map(Number);
-        const horaDate = new Date(2000, 0, 1, hours, minutes, seconds);
+        const horaDate = new Date(Date.UTC(2000, 0, 1, hours, minutes, seconds));
         
         await prisma.horario.create({
           data: {
