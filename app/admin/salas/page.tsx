@@ -25,9 +25,10 @@ export default function SalasPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Por ahora mostramos datos mock ya que no hay endpoint /api/salas/obtener
-    // En producción deberías crear ese endpoint
-    const mockSalas: Sala[] = [
+    const fetchSalas = async () => {
+      try {
+        // Datos de las salas
+        const mockSalas: Sala[] = [
       {
         id: 1,
         nombre: 'El Paciente 136',
@@ -72,8 +73,33 @@ export default function SalasPage() {
       }
     ];
 
-    setSalas(mockSalas);
-    setLoading(false);
+        // Obtener reservas de hoy para cada sala
+        const hoy = new Date().toISOString().split('T')[0];
+        const response = await fetch(`/api/reservas/obtener?fecha=${hoy}`);
+        const data = await response.json();
+        
+        // Contar reservas por sala
+        const reservasPorSala: Record<number, number> = {};\n        if (data.data && Array.isArray(data.data)) {
+          data.data.forEach((reserva: any) => {
+            reservasPorSala[reserva.sala_id] = (reservasPorSala[reserva.sala_id] || 0) + 1;
+          });
+        }
+
+        // Actualizar contador de reservas
+        const salasConReservas = mockSalas.map(sala => ({
+          ...sala,
+          reservas_hoy: reservasPorSala[sala.id] || 0
+        }));
+
+        setSalas(salasConReservas);
+      } catch (error) {
+        console.error('Error cargando salas:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSalas();
   }, []);
 
   const getDificultadColor = (dificultad: string) => {
@@ -178,7 +204,7 @@ export default function SalasPage() {
                   <p className="text-xs text-gray-700 mb-2">Características:</p>
                   <div className="flex flex-wrap gap-1">
                     {sala.tags.split(',').map((tag, idx) => (
-                      <Badge key={idx} variant="secondary" className="text-xs text-gray-900">
+                      <Badge key={idx} className="text-xs bg-brand-gold/20 text-brand-gold border border-brand-gold/30">
                         {tag.trim()}
                       </Badge>
                     ))}

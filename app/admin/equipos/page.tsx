@@ -137,7 +137,7 @@ export default function EquiposPage() {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline" className="font-mono bg-gray-100 text-gray-900 border-gray-300">
+                        <Badge variant="outline" className="font-mono bg-gray-900 text-white border-gray-600">
                           {equipo.codigo || 'N/A'}
                         </Badge>
                       </TableCell>

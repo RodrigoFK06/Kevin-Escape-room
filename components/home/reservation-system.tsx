@@ -702,18 +702,18 @@ function ReservationSystem() {
                           <SelectTrigger
                             id="players"
                             className={cn(
-                              "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12",
+                              "bg-[#0a141f] border-brand-gold/30 focus:border-brand-gold/80 focus:ring-brand-gold/20 font-sans h-12 text-white",
                               errors.players && "border-red-500"
                             )}
                           >
-                            <SelectValue placeholder="Selecciona el número de jugadores" />
+                            <SelectValue placeholder="Selecciona el número de jugadores" className="text-white" />
                           </SelectTrigger>
-                          <SelectContent className="bg-[#0a141f] border-brand-gold/30">
-                            <SelectItem value="2">2 jugadores</SelectItem>
-                            <SelectItem value="3">3 jugadores</SelectItem>
-                            <SelectItem value="4">4 jugadores</SelectItem>
-                            <SelectItem value="5">5 jugadores</SelectItem>
-                            <SelectItem value="6">6 jugadores</SelectItem>
+                          <SelectContent className="bg-[#0a141f] border-brand-gold/30 text-white">
+                            <SelectItem value="2" className="text-white hover:bg-brand-gold/20 focus:bg-brand-gold/20 cursor-pointer">2 jugadores</SelectItem>
+                            <SelectItem value="3" className="text-white hover:bg-brand-gold/20 focus:bg-brand-gold/20 cursor-pointer">3 jugadores</SelectItem>
+                            <SelectItem value="4" className="text-white hover:bg-brand-gold/20 focus:bg-brand-gold/20 cursor-pointer">4 jugadores</SelectItem>
+                            <SelectItem value="5" className="text-white hover:bg-brand-gold/20 focus:bg-brand-gold/20 cursor-pointer">5 jugadores</SelectItem>
+                            <SelectItem value="6" className="text-white hover:bg-brand-gold/20 focus:bg-brand-gold/20 cursor-pointer">6 jugadores</SelectItem>
                           </SelectContent>
                         </Select>
                         {errors.players && (
@@ -791,7 +791,7 @@ function ReservationSystem() {
                         <>
                           <div className="bg-brand-dark/50 border border-brand-gold/30 rounded-lg p-4 text-sm text-white font-sans leading-relaxed">
                             <p className="mb-2 text-brand-gold font-semibold">Yape / Plin</p>
-                            <p>
+                            <div className="flex items-center gap-2">
                               <span className="text-gray-400">Número de celular:</span>{" "}
                               <button
                                 type="button"
@@ -802,14 +802,14 @@ function ReservationSystem() {
                                     description: "Número de celular copiado al portapapeles.",
                                   });
                                 }}
-                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform"
-              >
+                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform hover:text-brand-gold/80 flex items-center gap-1"
+                              >
                                 981 575 968
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
                               </button>
-
-                            </p>
-
-
+                            </div>
                             <p className="text-xs mt-2 text-gray-400">
                               Realiza el pago a este número y envía el comprobante por WhatsApp.
                             </p>
@@ -827,7 +827,7 @@ function ReservationSystem() {
                         <>
                           <div className="bg-brand-dark/50 border border-brand-gold/30 rounded-lg p-4 text-sm text-white font-sans leading-relaxed">
                             <p className="mb-2 text-brand-gold font-semibold">Transferencia Bancaria</p>
-                            <p className="mb-2">
+                            <div className="mb-2 flex items-center gap-2 flex-wrap">
                               <span className="text-gray-400">Cuenta BCP Soles:</span>{" "}
                               <button
                                 type="button"
@@ -838,12 +838,15 @@ function ReservationSystem() {
                                     description: "Cuenta BCP copiada al portapapeles.",
                                   });
                                 }}
-                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform hover:text-brand-gold/80"
+                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform hover:text-brand-gold/80 flex items-center gap-1"
                               >
                                 1947112978060
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
                               </button>
-                            </p>
-                            <p>
+                            </div>
+                            <div className="flex items-center gap-2 flex-wrap">
                               <span className="text-gray-400">Cuenta interbancaria:</span>{" "}
                               <button
                                 type="button"
@@ -854,11 +857,14 @@ function ReservationSystem() {
                                     description: "Cuenta interbancaria copiada al portapapeles.",
                                   });
                                 }}
-                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform hover:text-brand-gold/80"
+                                className="text-brand-gold font-bold focus:outline-none active:scale-95 transition transform hover:text-brand-gold/80 flex items-center gap-1"
                               >
                                 00219400711297806098
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
                               </button>
-                            </p>
+                            </div>
                             <p className="text-xs mt-2 text-gray-400">
                               Haz clic en los números para copiarlos. Envía el comprobante por WhatsApp.
                             </p>
