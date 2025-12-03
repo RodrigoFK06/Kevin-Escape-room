@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, Filter, Calendar, User, Mail, Phone, DoorOpen, Clock, CheckCircle, XCircle, Edit } from 'lucide-react';
+import { Search, Filter, Calendar, User, Mail, Phone, DoorOpen, Clock, CheckCircle, XCircle, Edit, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useToast } from '@/hooks/use-toast';
 
 interface Reserva {
   id: number;
@@ -29,12 +32,17 @@ interface Reserva {
 }
 
 export default function ReservasPage() {
+  const { toast } = useToast();
   const [reservas, setReservas] = useState<Reserva[]>([]);
   const [filteredReservas, setFilteredReservas] = useState<Reserva[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterEstado, setFilterEstado] = useState<string>('todas');
   const [filterSala, setFilterSala] = useState<string>('todas');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [currentReserva, setCurrentReserva] = useState<Partial<Reserva>>({});
+  const [horarios, setHorarios] = useState<any[]>([]);
 
   useEffect(() => {
     fetchReservas();
@@ -111,10 +119,83 @@ export default function ReservasPage() {
       });
 
       if (response.ok) {
+        toast({
+          title: "Éxito",
+          description: `Estado cambiado a ${nuevoEstado}`
+        });
         fetchReservas();
       }
     } catch (error) {
       console.error('Error actualizando reserva:', error);
+      toast({
+        title: "Error",
+        description: "No se pudo actualizar el estado",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleOpenModal = async (reserva: Reserva) => {
+    setCurrentReserva(reserva);
+    
+    // Cargar horarios disponibles para la sala
+    try {
+      const response = await fetch('/api/horarios/obtener');
+      const data = await response.json();
+      const horariosFiltered = data.data.filter((h: any) => h.sala_id === reserva.sala_id);
+      setHorarios(horariosFiltered);
+    } catch (error) {
+      console.error('Error cargando horarios:', error);
+    }
+    
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setCurrentReserva({});
+    setHorarios([]);
+  };
+
+  const handleSaveReserva = async () => {
+    try {
+      setIsSaving(true);
+
+      if (!currentReserva.cliente || !currentReserva.correo || !currentReserva.telefono) {
+        toast({
+          title: "Error",
+          description: "Cliente, correo y teléfono son requeridos",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const response = await fetch(`/api/reservas/actualizar/${currentReserva.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reserva: currentReserva })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Éxito",
+          description: "Reserva actualizada correctamente"
+        });
+        handleCloseModal();
+        fetchReservas();
+      } else {
+        throw new Error(data.error || 'Error al guardar');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "No se pudo guardar la reserva",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -132,9 +213,9 @@ export default function ReservasPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-gold mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando reservas...</p>
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-brand-gold" />
+          <p className="text-gray-700">Cargando reservas...</p>
         </div>
       </div>
     );
@@ -282,12 +363,21 @@ export default function ReservasPage() {
                       </TableCell>
                       <TableCell>
                         <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleOpenModal(reserva)}
+                            title="Editar reserva"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
                           {reserva.estado === 'pendiente' && (
                             <Button
                               size="sm"
                               variant="outline"
                               onClick={() => handleEstadoChange(reserva.id, 'confirmada')}
                               className="text-green-600 hover:text-green-700"
+                              title="Confirmar"
                             >
                               <CheckCircle className="h-4 w-4" />
                             </Button>
@@ -298,6 +388,7 @@ export default function ReservasPage() {
                               variant="outline"
                               onClick={() => handleEstadoChange(reserva.id, 'cancelada')}
                               className="text-red-600 hover:text-red-700"
+                              title="Cancelar"
                             >
                               <XCircle className="h-4 w-4" />
                             </Button>
@@ -312,6 +403,165 @@ export default function ReservasPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modal de Edición */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Editar Reserva</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="cliente">Nombre del Cliente *</Label>
+                <Input
+                  id="cliente"
+                  value={currentReserva.cliente || ''}
+                  onChange={(e) => setCurrentReserva({...currentReserva, cliente: e.target.value})}
+                  placeholder="Nombre completo"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="telefono">Teléfono *</Label>
+                <Input
+                  id="telefono"
+                  value={currentReserva.telefono || ''}
+                  onChange={(e) => setCurrentReserva({...currentReserva, telefono: e.target.value})}
+                  placeholder="+51 999 999 999"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="correo">Correo Electrónico *</Label>
+              <Input
+                id="correo"
+                type="email"
+                value={currentReserva.correo || ''}
+                onChange={(e) => setCurrentReserva({...currentReserva, correo: e.target.value})}
+                placeholder="correo@ejemplo.com"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="fecha">Fecha</Label>
+                <Input
+                  id="fecha"
+                  type="date"
+                  value={currentReserva.fecha ? new Date(currentReserva.fecha).toISOString().split('T')[0] : ''}
+                  onChange={(e) => setCurrentReserva({...currentReserva, fecha: e.target.value})}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="horario">Horario</Label>
+                <Select 
+                  value={currentReserva.horario_id?.toString()} 
+                  onValueChange={(value) => setCurrentReserva({...currentReserva, horario_id: parseInt(value)})}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccionar horario" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {horarios.map((h: any) => (
+                      <SelectItem key={h.id} value={h.id.toString()}>
+                        {h.hora.slice(0, 5)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="cantidad">Cantidad de Jugadores</Label>
+                <Input
+                  id="cantidad"
+                  type="number"
+                  min="1"
+                  value={currentReserva.cantidad_jugadores || ''}
+                  onChange={(e) => setCurrentReserva({...currentReserva, cantidad_jugadores: parseInt(e.target.value)})}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="precio">Precio Total (S/)</Label>
+                <Input
+                  id="precio"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={currentReserva.precio_total || ''}
+                  onChange={(e) => setCurrentReserva({...currentReserva, precio_total: parseFloat(e.target.value)})}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="metodo_pago">Método de Pago</Label>
+                <Select 
+                  value={currentReserva.metodo_pago} 
+                  onValueChange={(value) => setCurrentReserva({...currentReserva, metodo_pago: value})}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="efectivo">Efectivo</SelectItem>
+                    <SelectItem value="yape">Yape</SelectItem>
+                    <SelectItem value="transferencia">Transferencia</SelectItem>
+                    <SelectItem value="tarjeta">Tarjeta</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="estado">Estado</Label>
+                <Select 
+                  value={currentReserva.estado} 
+                  onValueChange={(value) => setCurrentReserva({...currentReserva, estado: value})}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pendiente">Pendiente</SelectItem>
+                    <SelectItem value="confirmada">Confirmada</SelectItem>
+                    <SelectItem value="cancelada">Cancelada</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 border border-gray-200 rounded p-3">
+              <p className="text-sm text-gray-900">
+                <strong>Sala:</strong> {currentReserva.sala?.nombre}
+              </p>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={handleCloseModal} disabled={isSaving}>
+              Cancelar
+            </Button>
+            <Button onClick={handleSaveReserva} disabled={isSaving}>
+              {isSaving ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Guardando...
+                </>
+              ) : (
+                <>Guardar Cambios</>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
