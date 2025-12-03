@@ -10,10 +10,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Search, Ticket, Copy, Check, Users, Clock, Trophy, Calendar, QrCode, DoorOpen } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
+interface Integrante {
+  id: number;
+  nombre: string;
+}
+
 interface Equipo {
   id: number;
   nombre: string;
   codigo: string;
+  integrantes?: Integrante[];
 }
 
 interface Sala {
