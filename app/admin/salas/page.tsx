@@ -79,7 +79,8 @@ export default function SalasPage() {
         const data = await response.json();
         
         // Contar reservas por sala
-        const reservasPorSala: Record<number, number> = {};\n        if (data.data && Array.isArray(data.data)) {
+        const reservasPorSala: Record<number, number> = {};
+        if (data.data && Array.isArray(data.data)) {
           data.data.forEach((reserva: any) => {
             reservasPorSala[reserva.sala_id] = (reservasPorSala[reserva.sala_id] || 0) + 1;
           });
