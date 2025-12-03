@@ -3,11 +3,16 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Trophy, Users, DoorOpen, Clock, Award } from 'lucide-react';
+import { Trophy, Users, DoorOpen, Clock, Award, Edit, Trash2, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useToast } from '@/hooks/use-toast';
 
 interface Ranking {
   id: number;
@@ -22,10 +27,14 @@ interface Ranking {
 }
 
 export default function RankingPage() {
+  const { toast } = useToast();
   const [rankings, setRankings] = useState<Ranking[]>([]);
   const [filteredRankings, setFilteredRankings] = useState<Ranking[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterSala, setFilterSala] = useState<string>('todas');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [currentRanking, setCurrentRanking] = useState<Partial<Ranking>>({});
 
   useEffect(() => {
     fetchRankings();
@@ -37,6 +46,7 @@ export default function RankingPage() {
 
   const fetchRankings = async () => {
     try {
+      setLoading(true);
       const response = await fetch('/api/ranking/obtener');
       const data = await response.json();
       
@@ -51,10 +61,101 @@ export default function RankingPage() {
       }
     } catch (error) {
       console.error('Error cargando ranking:', error);
+      toast({
+        title: "Error",
+        description: "No se pudo cargar el ranking",
+        variant: "destructive"
+      });
       setRankings([]);
       setFilteredRankings([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleOpenModal = (ranking: Ranking) => {
+    setCurrentRanking(ranking);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setCurrentRanking({});
+  };
+
+  const handleSaveRanking = async () => {
+    try {
+      setIsSaving(true);
+
+      if (!currentRanking.puntaje || !currentRanking.tiempo || !currentRanking.cantidad_integrantes) {
+        toast({
+          title: "Error",
+          description: "Todos los campos son requeridos",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const response = await fetch(`/api/ranking/actualizar/${currentRanking.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          puntaje: currentRanking.puntaje,
+          tiempo: currentRanking.tiempo,
+          cantidad_integrantes: currentRanking.cantidad_integrantes
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Éxito",
+          description: "Ranking actualizado correctamente"
+        });
+        handleCloseModal();
+        fetchRankings();
+      } else {
+        throw new Error(data.error || 'Error al guardar');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "No se pudo guardar el ranking",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDeleteRanking = async (id: number) => {
+    if (!confirm('¿Estás seguro de eliminar este registro del ranking?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/ranking/eliminar/${id}`, {
+        method: 'DELETE'
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Éxito",
+          description: "Registro eliminado correctamente"
+        });
+        fetchRankings();
+      } else {
+        throw new Error(data.mensaje || data.error);
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "No se pudo eliminar el registro",
+        variant: "destructive"
+      });
     }
   };
 
@@ -76,9 +177,9 @@ export default function RankingPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-gold mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando ranking...</p>
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-brand-gold" />
+          <p className="text-gray-700">Cargando ranking...</p>
         </div>
       </div>
     );
@@ -135,12 +236,13 @@ export default function RankingPage() {
                   <TableHead className="text-gray-900 font-semibold">Tiempo</TableHead>
                   <TableHead className="text-gray-900 font-semibold">Integrantes</TableHead>
                   <TableHead className="text-gray-900 font-semibold">Fecha</TableHead>
+                  <TableHead className="text-gray-900 font-semibold text-right">Acciones</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredRankings.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8 text-gray-700">
+                    <TableCell colSpan={8} className="text-center py-8 text-gray-700">
                       No hay registros en el ranking
                     </TableCell>
                   </TableRow>
@@ -185,6 +287,26 @@ export default function RankingPage() {
                       </TableCell>
                       <TableCell className="text-sm text-gray-900">
                         {format(new Date(ranking.registrado_en), 'dd/MM/yyyy', { locale: es })}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2 justify-end">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleOpenModal(ranking)}
+                          >
+                            <Edit className="h-3 w-3 mr-1" />
+                            Editar
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            onClick={() => handleDeleteRanking(ranking.id)}
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
@@ -241,6 +363,84 @@ export default function RankingPage() {
           </Card>
         </div>
       )}
+
+      {/* Modal de Edición */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Editar Ranking</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label>Equipo (Solo lectura)</Label>
+              <Input
+                value={currentRanking.equipo_nombre || ''}
+                disabled
+                className="bg-gray-100"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Sala (Solo lectura)</Label>
+              <Input
+                value={currentRanking.sala_nombre || ''}
+                disabled
+                className="bg-gray-100"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="puntaje">Puntaje *</Label>
+              <Input
+                id="puntaje"
+                type="number"
+                min="0"
+                value={currentRanking.puntaje || ''}
+                onChange={(e) => setCurrentRanking({...currentRanking, puntaje: parseInt(e.target.value)})}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="tiempo">Tiempo (minutos) *</Label>
+              <Input
+                id="tiempo"
+                type="number"
+                min="1"
+                value={currentRanking.tiempo || ''}
+                onChange={(e) => setCurrentRanking({...currentRanking, tiempo: parseInt(e.target.value)})}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="cantidad_integrantes">Cantidad de Integrantes *</Label>
+              <Input
+                id="cantidad_integrantes"
+                type="number"
+                min="1"
+                value={currentRanking.cantidad_integrantes || ''}
+                onChange={(e) => setCurrentRanking({...currentRanking, cantidad_integrantes: parseInt(e.target.value)})}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={handleCloseModal} disabled={isSaving}>
+              Cancelar
+            </Button>
+            <Button onClick={handleSaveRanking} disabled={isSaving}>
+              {isSaving ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Guardando...
+                </>
+              ) : (
+                <>Guardar</>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
