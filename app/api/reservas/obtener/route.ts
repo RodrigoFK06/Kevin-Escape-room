@@ -37,14 +37,24 @@ export async function GET(request: Request) {
     });
 
     // Formatear datos
-    const formattedReservas = reservas.map(r => ({
-      ...r,
-      hora: r.horario.hora.toISOString().substring(11, 19),
-      sala_nombre: r.sala.nombre,
-      fecha: r.fecha.toISOString().split('T')[0],
-      precio_total: parseFloat(r.precio_total.toString()),
-      created_at: r.created_at.toISOString()
-    }));
+    const formattedReservas = reservas.map(r => {
+      // Extraer hora en formato HH:MM:SS desde el objeto Date de MySQL TIME
+      const horaDate = new Date(r.horario.hora);
+      const horaString = horaDate.toISOString().substring(11, 19);
+      
+      return {
+        ...r,
+        horario: {
+          hora: horaString
+        },
+        sala: {
+          nombre: r.sala.nombre
+        },
+        fecha: r.fecha.toISOString().split('T')[0],
+        precio_total: parseFloat(r.precio_total.toString()),
+        created_at: r.created_at.toISOString()
+      };
+    });
 
     return NextResponse.json({ data: formattedReservas });
   } catch (error) {
