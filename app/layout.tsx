@@ -20,10 +20,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className="dark scroll-smooth" suppressHydrationWarning>
-      <head />
-      <body className="font-sans bg-[#0e1a28] text-white min-h-screen overflow-x-hidden">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+    <html lang="es" className="dark scroll-smooth" suppressHydrationWarning style={{colorScheme: 'dark'}}>
+      <head>
+        <meta name="color-scheme" content="dark" />
+      </head>
+      <body className="font-sans bg-[#0e1a28] text-white min-h-screen overflow-x-hidden" style={{colorScheme: 'dark'}}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
           <div className="relative z-0">{children}</div>
           <Toaster />
         </ThemeProvider>

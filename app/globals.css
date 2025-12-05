@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Force dark mode globally */
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  color-scheme: dark !important;
+  background-color: #0e1a28 !important;
+  color: white !important;
+}
+
+/* Prevent browser from applying light mode styles */
+html:not(.dark),
+body:not(.dark) {
+  color-scheme: dark !important;
+  background-color: #0e1a28 !important;
+  color: white !important;
+}
+
+/* Force dark mode on all inputs and form elements */
+input,
+textarea,
+select,
+button {
+  color-scheme: dark !important;
+}
+
 /* Calendar styles - Fixed for dark mode */
 .rdp {
   --rdp-cell-size: 40px !important;

@@ -116,14 +116,17 @@ function ReservationSystem() {
     setAvailableTimes([]);
     setSelectedTime("");
 
-    try {
-      const audio = new Audio("/placeholder.mp3");
-      audio.volume = 0.3;
-      audio.play().catch((err) => {
-        console.log("Autoplay bloqueado:", err);
-      });
-    } catch (error) {
-      console.error("Error al reproducir audio:", error);
+    // Reproducir audio solo si el usuario ya ha interactuado con la página
+    if (typeof window !== 'undefined') {
+      try {
+        const audio = new Audio("/placeholder.mp3");
+        audio.volume = 0.3;
+        audio.play().catch(() => {
+          // Silenciar error de autoplay bloqueado (comportamiento esperado del navegador)
+        });
+      } catch {
+        // Ignorar error de audio
+      }
     }
 
     if (previewTimerRef.current) {
@@ -286,17 +289,15 @@ function ReservationSystem() {
       const total = players ? calculateTotalPrice(Number(players)) : 0;
 
       const body = {
-        reserva: {
-          cliente: name,
-          correo: email,
-          telefono: phone,
-          horario_id: horarioId,
-          fecha: formattedDate,
-          cantidad_jugadores: Number(players),
-          metodo_pago: paymentMethod,
-          precio_total: total,
-          estado: "confirmada",
-        },
+        cliente: name,
+        correo: email,
+        telefono: phone,
+        horario_id: horarioId,
+        fecha: formattedDate,
+        cantidad_jugadores: Number(players),
+        metodo_pago: paymentMethod,
+        precio_total: total,
+        estado: "confirmada",
       };
 
       // ✅ 1. Primero guardamos la reserva en el backend
@@ -307,7 +308,8 @@ function ReservationSystem() {
       });
 
       if (!response.ok) {
-        throw new Error("Error al crear la reserva");
+        const errorData = await response.json();
+        throw new Error(errorData.detalle || "Error al crear la reserva");
       }
 
       // ✅ 2. Luego enviamos el correo desde el backend Next.js (SMTP GoDaddy)
