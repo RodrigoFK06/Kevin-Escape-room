@@ -297,7 +297,7 @@ function ReservationSystem() {
         cantidad_jugadores: Number(players),
         metodo_pago: paymentMethod,
         precio_total: total,
-        estado: "confirmada",
+        estado: "pendiente",
       };
 
       // ✅ 1. Primero guardamos la reserva en el backend

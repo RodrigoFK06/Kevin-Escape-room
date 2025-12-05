@@ -345,12 +345,15 @@ export default function ReservasPage() {
                           </div>
                           <div className="flex items-center gap-1">
                             <Clock className="h-3 w-3 text-gray-600" />
-                            <span className="text-gray-900">{reserva.horario.hora.slice(0, 5)}</span>
+                            <span className="text-gray-900">{reserva.horario?.hora?.slice(0, 5) || 'N/A'}</span>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline">{reserva.cantidad_jugadores}</Badge>
+                        <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-300">
+                          <User className="h-3 w-3 mr-1" />
+                          {reserva.cantidad_jugadores}
+                        </Badge>
                       </TableCell>
                       <TableCell>
                         <span className="text-sm capitalize text-gray-900">{reserva.metodo_pago}</span>
@@ -478,13 +481,14 @@ export default function ReservasPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="cantidad">Cantidad de Jugadores</Label>
+                <Label htmlFor="cantidad" className="text-gray-900 font-medium">Cantidad de Jugadores</Label>
                 <Input
                   id="cantidad"
                   type="number"
                   min="1"
                   value={currentReserva.cantidad_jugadores || ''}
                   onChange={(e) => setCurrentReserva({...currentReserva, cantidad_jugadores: parseInt(e.target.value)})}
+                  className="bg-white text-gray-900 border-gray-300"
                 />
               </div>
 
