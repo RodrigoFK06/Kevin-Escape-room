@@ -114,7 +114,7 @@ export function Testimonials() {
       id="clasificacion"
       className="py-16 md:py-24 bg-gradient-to-b from-[#0a141f] to-brand-dark relative w-full overflow-hidden rounded-2xl"
     >
-      <div className="absolute inset-0 bg-[url('/fondo1.jpeg?height=800&width=1200')] bg-cover bg-center opacity-5 rounded-2xl mb-12"></div>
+      <div className="absolute inset-0 bg-[url('/1.png?height=800&width=1200')] bg-cover bg-center opacity-5 rounded-2xl mb-12"></div>
 
       {/* Elementos decorativos */}
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#0a141f]/30 to-transparent"></div>

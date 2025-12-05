@@ -54,7 +54,7 @@ export function EscapeRooms() {
     {
       id: "codigo-enigma",
       name: "EL PACIENTE 136",
-      image: "/placeholder.svg?height=600&width=800",
+      image: "/1.png",
       difficulty: 4,
       happy: 5,
       players: "2-6",
@@ -66,14 +66,14 @@ export function EscapeRooms() {
       tags: ["Terror Psicológico", "Laboratorio", "Alta tensión"],
       slides: [
         { type: "video", url: "/trailer.mp4" },
-        { type: "image", url: "/fondo1.jpeg" },
+        { type: "image", url: "/1.png" },
         { type: "image", url: "/fondo2.jpg" },
       ],
     },
     {
       id: "la-boveda",
       name: "LA SECUENCIA PERDIDA",
-      image: "/placeholder.svg?height=600&width=800",
+      image: "/3(1).png",
       difficulty: 5,
       happy: 5,
       players: "3-6",
@@ -92,7 +92,7 @@ export function EscapeRooms() {
     {
       id: "el-laboratorio",
       name: "EL ÚLTIMO CONJURO",
-      image: "/placeholder.svg?height=600&width=800",
+      image: "/2(1).png",
       difficulty: 3,
       happy: 5,
       players: "2-6",
