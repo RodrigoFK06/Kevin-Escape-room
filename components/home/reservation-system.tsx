@@ -149,14 +149,42 @@ function ReservationSystem() {
     if (!selected) return;
     
     const formatted = format(selected, "yyyy-MM-dd");
+    const today = format(new Date(), "yyyy-MM-dd");
+    const isToday = formatted === today;
+    
     try {
       const response = await fetchHorariosDisponibles(roomIds[selectedRoom].toString(), formatted);
       const { horarios, ocupados } = response;
-      const final = horarios.map((h: any) => ({
-        id: h.id,
-        time: h.hora,
-        available: !ocupados.includes(h.id),
-      }));
+      
+      // Obtener hora actual en Lima (UTC-5)
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentTimeInMinutes = currentHour * 60 + currentMinute;
+      
+      const final = horarios.map((h: any) => {
+        const isOccupied = ocupados.includes(h.id);
+        let isPast = false;
+        
+        // Si es hoy, verificar si el horario ya pasó
+        if (isToday) {
+          const [hourStr, minuteStr] = h.hora.split(':');
+          const slotHour = parseInt(hourStr, 10);
+          const slotMinute = parseInt(minuteStr, 10);
+          const slotTimeInMinutes = slotHour * 60 + slotMinute;
+          
+          // Marcar como no disponible si el horario ya pasó
+          // Agregamos un margen de 30 minutos para que no se pueda reservar un horario muy cercano
+          isPast = slotTimeInMinutes <= (currentTimeInMinutes + 30);
+        }
+        
+        return {
+          id: h.id,
+          time: h.hora,
+          available: !isOccupied && !isPast,
+        };
+      });
+      
       setAvailableTimes(final);
     } catch (error) {
       console.error("Error al obtener horarios:", error);
@@ -220,6 +248,35 @@ function ReservationSystem() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateStep(3)) return;
+
+    // Validación adicional: verificar que el horario seleccionado no haya pasado
+    if (date) {
+      const formatted = format(date, "yyyy-MM-dd");
+      const today = format(new Date(), "yyyy-MM-dd");
+      
+      if (formatted === today) {
+        const selectedSlot = availableTimes.find((slot) => slot.id === selectedTime);
+        if (selectedSlot) {
+          const [hourStr, minuteStr] = selectedSlot.time.split(':');
+          const slotHour = parseInt(hourStr, 10);
+          const slotMinute = parseInt(minuteStr, 10);
+          const slotTimeInMinutes = slotHour * 60 + slotMinute;
+          
+          const now = new Date();
+          const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
+          
+          if (slotTimeInMinutes <= (currentTimeInMinutes + 30)) {
+            toast({
+              title: "Horario no disponible",
+              description: "El horario seleccionado ya pasó. Por favor, elige otro horario.",
+              variant: "destructive",
+            });
+            setIsSubmitting(false);
+            return;
+          }
+        }
+      }
+    }
 
     setIsSubmitting(true);
 
