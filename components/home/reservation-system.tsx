@@ -79,9 +79,9 @@ function ReservationSystem() {
   }
 
   const roomImages = {
-    "codigo-enigma": "/placeholder.svg?height=800&width=1200",
-    "la-boveda": "/placeholder.svg?height=800&width=1200",
-    "el-laboratorio": "/placeholder.svg?height=800&width=1200",
+    "codigo-enigma": "/1.png",
+    "la-boveda": "/3(1).png",
+    "el-laboratorio": "/2(1).png",
   };
 
   const roomIds: Record<string, number> = {
@@ -203,7 +203,17 @@ function ReservationSystem() {
       if (!selectedTime) newErrors.time = "Selecciona un horario";
     } else if (step === 2) {
       if (!name.trim()) newErrors.name = "Ingresa tu nombre";
-      if (!phone.trim()) newErrors.phone = "Ingresa tu teléfono";
+      
+      // Validación de teléfono peruano
+      if (!phone.trim()) {
+        newErrors.phone = "Ingresa tu teléfono";
+      } else {
+        const phoneRegex = /^9\d{8}$/; // Formato: 9 seguido de 8 dígitos (total 9 dígitos)
+        if (!phoneRegex.test(phone.trim())) {
+          newErrors.phone = "Ingresa un número de celular válido (ej: 987654321)";
+        }
+      }
+      
       if (!email.trim()) {
         newErrors.email = "Ingresa tu email";
       } else {
@@ -327,8 +337,8 @@ function ReservationSystem() {
             selectedRoom === "codigo-enigma"
               ? "El Paciente 136"
               : selectedRoom === "la-boveda"
-                ? "El Último Conjuro"
-                : "La Secuencia Perdida",
+                ? "La Secuencia Perdida"
+                : "El Último Conjuro",
           fecha: formattedDate,
           hora: availableTimes.find((slot) => slot.id === selectedTime)?.time,
           jugadores: players,
@@ -440,9 +450,9 @@ function ReservationSystem() {
                         {selectedRoom === "codigo-enigma"
                           ? "El Paciente 136"
                           : selectedRoom === "la-boveda"
-                            ? "El Último Conjuro"
+                            ? "La Secuencia Perdida"
                             : selectedRoom === "el-laboratorio"
-                              ? "La Secuencia Perdida"
+                              ? "El Último Conjuro"
                               : ""}
                       </span>
                     </li>
@@ -546,8 +556,8 @@ function ReservationSystem() {
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         {[
                           { id: "codigo-enigma", name: "El Paciente 136", difficulty: "Medio", available: true },
-                          { id: "la-boveda", name: "El Último Conjuro", difficulty: "Medio", available: false },
-                          { id: "el-laboratorio", name: "La Secuencia Perdida", difficulty: "Difícil", available: false },
+                          { id: "la-boveda", name: "La Secuencia Perdida", difficulty: "Difícil", available: false },
+                          { id: "el-laboratorio", name: "El Último Conjuro", difficulty: "Medio", available: false },
                         ].map((room) => (
                           <motion.button
                             key={room.id}
@@ -816,7 +826,7 @@ function ReservationSystem() {
                             errors.payment && "border-red-500"
                           )}
                         >
-                          <RadioGroupItem value="yape" id="yape" className="hidden" />
+                          <RadioGroupItem value="yape" id="yape" />
                           <span className="flex items-center text-sm md:text-base font-sans">
                             <Smartphone className="mr-2 h-4 w-4 md:h-5 md:w-5 text-brand-gold" />
                             <Smartphone className="mr-2 h-4 w-4 md:h-5 md:w-5 text-brand-gold" />
@@ -831,7 +841,7 @@ function ReservationSystem() {
                             errors.payment && "border-red-500"
                           )}
                         >
-                          <RadioGroupItem value="local" id="local" className="hidden" />
+                          <RadioGroupItem value="local" id="local" />
                           <span className="cursor-pointer text-sm md:text-base font-sans">
                             Transferencia bancaria
                           </span>
@@ -944,9 +954,9 @@ function ReservationSystem() {
                           {selectedRoom === "codigo-enigma"
                             ? "El Paciente 136"
                             : selectedRoom === "la-boveda"
-                              ? "El Último Conjuro"
+                              ? "La Secuencia Perdida"
                               : selectedRoom === "el-laboratorio"
-                                ? "La Secuencia Perdida"
+                                ? "El Último Conjuro"
                                 : ""}
                         </div>
                         <div className="text-gray-400">Fecha:</div>

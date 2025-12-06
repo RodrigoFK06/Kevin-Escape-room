@@ -446,10 +446,6 @@ export function EscapeRooms() {
                           PRÓXIMAMENTE
                         </Link>
                       </Button>
-
-                      <p className="text-xs text-center text-brand-gold animate-pulse font-sans">
-                        {room.bookings} personas reservaron esta sala hoy
-                      </p>
                     </div>
                   </div>
                 </div>

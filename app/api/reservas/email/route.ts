@@ -72,7 +72,7 @@ export async function POST(req: Request) {
     </div>
 
     <div style="margin-bottom: 24px; line-height: 1.7;">
-      <p>📤 <strong>Envía una foto del voucher a nuestro WhatsApp:</strong> <a href="https://wa.me/51904293507" style="color: #2d3436;">904 293 507</a></p>
+      <p>📤 <strong>Envía una foto del voucher a nuestro WhatsApp:</strong> <a href="https://wa.me/51981575968" style="color: #2d3436;">981 575 968</a></p>
       <p>📧 <strong>¿Dudas o consultas?</strong> Escríbenos a <a href="mailto:contacto@encryptedperu.com">contacto@encryptedperu.com</a></p>
       <p>📋 <strong>¿Necesitas factura?</strong> Ten en cuenta que se agregará el <strong>IGV (18%)</strong>.</p>
     </div>
