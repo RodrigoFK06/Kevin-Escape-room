@@ -395,9 +395,10 @@ export default function RankingPage() {
               <Input
                 id="puntaje"
                 type="number"
+                step="0.01"
                 min="0"
-                value={currentRanking.puntaje || ''}
-                onChange={(e) => setCurrentRanking({...currentRanking, puntaje: parseInt(e.target.value)})}
+                value={currentRanking.puntaje ?? ''}
+                onChange={(e) => setCurrentRanking({...currentRanking, puntaje: parseFloat(e.target.value) || 0})}
               />
             </div>
 
@@ -407,8 +408,8 @@ export default function RankingPage() {
                 id="tiempo"
                 type="number"
                 min="1"
-                value={currentRanking.tiempo || ''}
-                onChange={(e) => setCurrentRanking({...currentRanking, tiempo: parseInt(e.target.value)})}
+                value={currentRanking.tiempo ?? ''}
+                onChange={(e) => setCurrentRanking({...currentRanking, tiempo: parseInt(e.target.value) || 0})}
               />
             </div>
 
@@ -418,8 +419,8 @@ export default function RankingPage() {
                 id="cantidad_integrantes"
                 type="number"
                 min="1"
-                value={currentRanking.cantidad_integrantes || ''}
-                onChange={(e) => setCurrentRanking({...currentRanking, cantidad_integrantes: parseInt(e.target.value)})}
+                value={currentRanking.cantidad_integrantes ?? ''}
+                onChange={(e) => setCurrentRanking({...currentRanking, cantidad_integrantes: parseInt(e.target.value) || 0})}
               />
             </div>
           </div>

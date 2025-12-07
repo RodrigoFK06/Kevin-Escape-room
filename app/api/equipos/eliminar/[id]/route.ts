@@ -8,22 +8,30 @@ export async function DELETE(
   try {
     const equipoId = parseInt(params.id);
 
-    // Verificar si hay rankings para este equipo
-    const rankings = await prisma.ranking.count({
-      where: { equipo_id: equipoId }
+    // Verificar si el equipo existe
+    const equipo = await prisma.equipo.findUnique({
+      where: { id: equipoId },
+      include: {
+        rankings: true,
+        integrantes: true
+      }
     });
 
-    if (rankings > 0) {
+    if (!equipo) {
       return NextResponse.json(
-        { 
-          error: "No se puede eliminar el equipo", 
-          mensaje: `El equipo tiene ${rankings} registro(s) en el ranking. Elimina los registros del ranking primero.`
-        },
-        { status: 400 }
+        { error: "El equipo no existe" },
+        { status: 404 }
       );
     }
 
-    // Eliminar integrantes primero (por la relación)
+    // Eliminar rankings asociados primero
+    if (equipo.rankings.length > 0) {
+      await prisma.ranking.deleteMany({
+        where: { equipo_id: equipoId }
+      });
+    }
+
+    // Eliminar integrantes (por la relación cascade)
     await prisma.integrante.deleteMany({
       where: { equipo_id: equipoId }
     });
@@ -35,7 +43,7 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      mensaje: "Equipo eliminado exitosamente"
+      mensaje: "Equipo y sus registros asociados eliminados exitosamente"
     });
 
   } catch (error: any) {
