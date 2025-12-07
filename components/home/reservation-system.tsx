@@ -305,7 +305,7 @@ function ReservationSystem() {
         horario_id: horarioId,
         fecha: formattedDate,
         cantidad_jugadores: Number(players),
-        metodo_pago: paymentMethod,
+        metodo_pago: paymentMethod === "local" ? "transferencia" : paymentMethod,
         precio_total: total,
         estado: "pendiente",
       };
