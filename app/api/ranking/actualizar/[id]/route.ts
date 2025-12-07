@@ -7,35 +7,35 @@ export async function PUT(
 ) {
   try {
     const data = await request.json();
+    const rankingId = parseInt(params.id);
 
-    if (!data.equipo_id || !data.sala_id || !data.tiempo) {
+    // Validar que se envíen los campos requeridos
+    if (data.puntaje === undefined || data.tiempo === undefined || data.cantidad_integrantes === undefined) {
       return NextResponse.json(
-        { error: 'Faltan campos requeridos.' },
+        { success: false, error: 'Faltan campos requeridos (puntaje, tiempo, cantidad_integrantes)' },
         { status: 400 }
       );
     }
 
-    const minutos = parseInt(data.tiempo);
-
-    await prisma.ranking.update({
-      where: { id: parseInt(params.id) },
+    // Actualizar solo los campos editables
+    const updated = await prisma.ranking.update({
+      where: { id: rankingId },
       data: {
-        equipo_id: parseInt(data.equipo_id),
-        sala_id: parseInt(data.sala_id),
-        tiempo: minutos,
-        puntaje: parseFloat(data.puntaje || 0),
-        cantidad_integrantes: data.cantidad_integrantes ? parseInt(data.cantidad_integrantes) : null
+        puntaje: parseFloat(data.puntaje),
+        tiempo: parseInt(data.tiempo),
+        cantidad_integrantes: parseInt(data.cantidad_integrantes)
       }
     });
 
     return NextResponse.json({
       success: true,
-      mensaje: 'Ranking actualizado vía API JSON.'
+      mensaje: 'Ranking actualizado correctamente',
+      data: updated
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error al actualizar ranking:', error);
     return NextResponse.json(
-      { error: 'Error al actualizar el ranking' },
+      { success: false, error: 'Error al actualizar el ranking', detalle: error.message },
       { status: 500 }
     );
   }
