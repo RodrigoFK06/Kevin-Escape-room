@@ -3,9 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { nombre, integrantes } = body;
 
@@ -18,7 +19,7 @@ export async function PUT(
 
     // Actualizar nombre del equipo
     const equipoActualizado = await prisma.equipo.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: { nombre }
     });
 
@@ -26,7 +27,7 @@ export async function PUT(
     if (integrantes && Array.isArray(integrantes)) {
       // Eliminar integrantes existentes
       await prisma.integrante.deleteMany({
-        where: { equipo_id: parseInt(params.id) }
+        where: { equipo_id: parseInt(id) }
       });
 
       // Crear nuevos integrantes
@@ -34,7 +35,7 @@ export async function PUT(
         await prisma.integrante.createMany({
           data: integrantes.map((nombre: string) => ({
             nombre,
-            equipo_id: parseInt(params.id)
+            equipo_id: parseInt(id)
           }))
         });
       }

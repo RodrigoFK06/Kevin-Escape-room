@@ -3,11 +3,12 @@ import { prisma } from "@/lib/prisma";
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const data = await request.json();
-    const rankingId = parseInt(params.id);
+    const { id } = await params;
+    const rankingId = parseInt(id);
 
     // Validar que se envíen los campos requeridos
     if (data.puntaje === undefined || data.tiempo === undefined || data.cantidad_integrantes === undefined) {

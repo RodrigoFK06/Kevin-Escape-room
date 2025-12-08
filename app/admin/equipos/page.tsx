@@ -36,22 +36,53 @@ export default function EquiposPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [currentEquipo, setCurrentEquipo] = useState<Partial<Equipo>>({});
   const [integrantesList, setIntegrantesList] = useState<string[]>(['']);
+  const [sortField, setSortField] = useState<'nombre' | 'codigo' | 'creado_en'>('creado_en');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
     fetchEquipos();
   }, []);
 
-  useEffect(() => {
-    if (searchTerm) {
-      const filtered = equipos.filter(e =>
-        e.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        e.codigo?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredEquipos(filtered);
+  const handleSort = (field: 'nombre' | 'codigo' | 'creado_en') => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      setFilteredEquipos(equipos);
+      setSortField(field);
+      setSortDirection('desc');
     }
-  }, [searchTerm, equipos]);
+  };
+
+  useEffect(() => {
+    let filtered = searchTerm
+      ? equipos.filter(e =>
+          e.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          e.codigo?.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : [...equipos];
+
+    // Aplicar ordenamiento
+    filtered.sort((a, b) => {
+      let aVal: any = a[sortField];
+      let bVal: any = b[sortField];
+      
+      if (sortField === 'creado_en') {
+        aVal = new Date(a.creado_en).getTime();
+        bVal = new Date(b.creado_en).getTime();
+      }
+      
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+      }
+      
+      const aStr = String(aVal || '').toLowerCase();
+      const bStr = String(bVal || '').toLowerCase();
+      return sortDirection === 'asc'
+        ? aStr.localeCompare(bStr)
+        : bStr.localeCompare(aStr);
+    });
+
+    setFilteredEquipos(filtered);
+  }, [searchTerm, equipos, sortField, sortDirection]);
 
   const fetchEquipos = async () => {
     try {
@@ -241,10 +272,31 @@ export default function EquiposPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-gray-900 font-semibold">Nombre del Equipo</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Código</TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('nombre')}>
+                    <div className="flex items-center gap-1">
+                      Nombre del Equipo
+                      {sortField === 'nombre' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('codigo')}>
+                    <div className="flex items-center gap-1">
+                      Código
+                      {sortField === 'codigo' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-gray-900 font-semibold">Integrantes</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Fecha de Registro</TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('creado_en')}>
+                    <div className="flex items-center gap-1">
+                      Fecha de Registro
+                      {sortField === 'creado_en' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-gray-900 font-semibold text-right">Acciones</TableHead>
                 </TableRow>
               </TableHeader>

@@ -3,10 +3,11 @@ import { prisma } from "@/lib/prisma";
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const equipoId = parseInt(params.id);
+    const { id } = await params;
+    const equipoId = parseInt(id);
 
     // Verificar si el equipo existe
     const equipo = await prisma.equipo.findUnique({

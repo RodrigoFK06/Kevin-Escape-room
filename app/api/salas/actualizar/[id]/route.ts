@@ -4,9 +4,10 @@ import { validateRequiredFields } from "@/lib/utils-backend";
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { sala } = body;
 
@@ -18,7 +19,7 @@ export async function PUT(
     }
 
     const salaActualizada = await prisma.sala.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: {
         nombre: sala.nombre,
         descripcion: sala.descripcion,

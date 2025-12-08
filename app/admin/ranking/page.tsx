@@ -35,6 +35,8 @@ export default function RankingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [currentRanking, setCurrentRanking] = useState<Partial<Ranking>>({});
+  const [sortField, setSortField] = useState<keyof Ranking>('puntaje');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
     fetchRankings();
@@ -42,7 +44,7 @@ export default function RankingPage() {
 
   useEffect(() => {
     applyFilters();
-  }, [filterSala, rankings]);
+  }, [filterSala, rankings, sortField, sortDirection]);
 
   const fetchRankings = async () => {
     try {
@@ -159,12 +161,37 @@ export default function RankingPage() {
     }
   };
 
-  const applyFilters = () => {
-    if (filterSala === 'todas') {
-      setFilteredRankings(rankings);
+  const handleSort = (field: keyof Ranking) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      setFilteredRankings(rankings.filter(r => r.sala_id === parseInt(filterSala)));
+      setSortField(field);
+      setSortDirection('desc');
     }
+  };
+
+  const applyFilters = () => {
+    let filtered = filterSala === 'todas'
+      ? [...rankings]
+      : rankings.filter(r => r.sala_id === parseInt(filterSala));
+
+    // Aplicar ordenamiento
+    filtered.sort((a, b) => {
+      const aVal = a[sortField];
+      const bVal = b[sortField];
+      
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+      }
+      
+      const aStr = String(aVal).toLowerCase();
+      const bStr = String(bVal).toLowerCase();
+      return sortDirection === 'asc'
+        ? aStr.localeCompare(bStr)
+        : bStr.localeCompare(aStr);
+    });
+
+    setFilteredRankings(filtered);
   };
 
   const getMedalIcon = (position: number) => {
@@ -230,12 +257,54 @@ export default function RankingPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-16 text-gray-900 font-semibold">Pos.</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Equipo</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Sala</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Puntaje</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Tiempo</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Integrantes</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Fecha</TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('equipo_nombre')}>
+                    <div className="flex items-center gap-1">
+                      Equipo
+                      {sortField === 'equipo_nombre' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('sala_nombre')}>
+                    <div className="flex items-center gap-1">
+                      Sala
+                      {sortField === 'sala_nombre' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('puntaje')}>
+                    <div className="flex items-center gap-1">
+                      Puntaje
+                      {sortField === 'puntaje' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('tiempo')}>
+                    <div className="flex items-center gap-1">
+                      Tiempo
+                      {sortField === 'tiempo' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('cantidad_integrantes')}>
+                    <div className="flex items-center gap-1">
+                      Integrantes
+                      {sortField === 'cantidad_integrantes' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('registrado_en')}>
+                    <div className="flex items-center gap-1">
+                      Fecha
+                      {sortField === 'registrado_en' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-gray-900 font-semibold text-right">Acciones</TableHead>
                 </TableRow>
               </TableHeader>

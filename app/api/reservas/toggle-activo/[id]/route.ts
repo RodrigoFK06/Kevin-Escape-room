@@ -3,9 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const data = await request.json();
     const estado = data.reserva?.activo;
 
@@ -20,7 +21,7 @@ export async function PUT(
     }
 
     await prisma.reserva.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: { activo: Boolean(estado) }
     });
 

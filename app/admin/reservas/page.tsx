@@ -43,6 +43,8 @@ export default function ReservasPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [currentReserva, setCurrentReserva] = useState<Partial<Reserva>>({});
   const [horarios, setHorarios] = useState<any[]>([]);
+  const [sortField, setSortField] = useState<'fecha' | 'cliente' | 'cantidad_jugadores' | 'precio_total'>('fecha');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
     fetchReservas();
@@ -50,7 +52,7 @@ export default function ReservasPage() {
 
   useEffect(() => {
     applyFilters();
-  }, [searchTerm, filterEstado, filterSala, reservas]);
+  }, [searchTerm, filterEstado, filterSala, reservas, sortField, sortDirection]);
 
   const fetchReservas = async () => {
     try {
@@ -77,6 +79,15 @@ export default function ReservasPage() {
     }
   };
 
+  const handleSort = (field: 'fecha' | 'cliente' | 'cantidad_jugadores' | 'precio_total') => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
+
   const applyFilters = () => {
     let filtered = [...reservas];
 
@@ -98,6 +109,27 @@ export default function ReservasPage() {
     if (filterSala !== 'todas') {
       filtered = filtered.filter(r => r.sala_id === parseInt(filterSala));
     }
+
+    // Aplicar ordenamiento
+    filtered.sort((a, b) => {
+      let aVal: any = a[sortField];
+      let bVal: any = b[sortField];
+      
+      if (sortField === 'fecha') {
+        aVal = new Date(a.fecha).getTime();
+        bVal = new Date(b.fecha).getTime();
+      }
+      
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+      }
+      
+      const aStr = String(aVal).toLowerCase();
+      const bStr = String(bVal).toLowerCase();
+      return sortDirection === 'asc'
+        ? aStr.localeCompare(bStr)
+        : bStr.localeCompare(aStr);
+    });
 
     setFilteredReservas(filtered);
   };
@@ -292,12 +324,40 @@ export default function ReservasPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-gray-900 font-semibold">Cliente</TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('cliente')}>
+                    <div className="flex items-center gap-1">
+                      Cliente
+                      {sortField === 'cliente' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-gray-900 font-semibold">Contacto</TableHead>
                   <TableHead className="text-gray-900 font-semibold">Sala</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Fecha y Hora</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Jugadores</TableHead>
-                  <TableHead className="text-gray-900 font-semibold">Pago</TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('fecha')}>
+                    <div className="flex items-center gap-1">
+                      Fecha y Hora
+                      {sortField === 'fecha' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('cantidad_jugadores')}>
+                    <div className="flex items-center gap-1">
+                      Jugadores
+                      {sortField === 'cantidad_jugadores' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead className="text-gray-900 font-semibold cursor-pointer hover:bg-gray-50" onClick={() => handleSort('precio_total')}>
+                    <div className="flex items-center gap-1">
+                      Pago
+                      {sortField === 'precio_total' && (
+                        <span className="text-brand-gold">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+                      )}
+                    </div>
+                  </TableHead>
                   <TableHead className="text-gray-900 font-semibold">Total</TableHead>
                   <TableHead className="text-gray-900 font-semibold">Estado</TableHead>
                   <TableHead className="text-gray-900 font-semibold">Acciones</TableHead>
