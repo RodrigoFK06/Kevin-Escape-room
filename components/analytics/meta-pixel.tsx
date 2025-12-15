@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 // Reemplaza este ID con tu ID real del Pixel de Meta
@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-export function MetaPixel() {
+function MetaPixelTracking() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -62,6 +62,14 @@ export function MetaPixel() {
         />
       </noscript>
     </>
+  );
+}
+
+export function MetaPixel() {
+  return (
+    <Suspense fallback={null}>
+      <MetaPixelTracking />
+    </Suspense>
   );
 }
 
