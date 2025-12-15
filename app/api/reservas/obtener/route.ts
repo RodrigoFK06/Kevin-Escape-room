@@ -14,7 +14,8 @@ export async function GET(request: Request) {
     }
 
     if (fecha) {
-      whereClause.fecha = new Date(fecha);
+      // Convertir fecha a zona horaria local para búsqueda correcta
+      whereClause.fecha = new Date(fecha + 'T00:00:00');
     }
 
     const reservas = await prisma.reserva.findMany({

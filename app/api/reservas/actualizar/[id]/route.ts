@@ -52,6 +52,9 @@ export async function PUT(
     }
 
     // Actualizar reserva
+    // Convertir fecha a zona horaria local
+    const fechaLocal = new Date(reservaData.fecha + 'T00:00:00');
+    
     const reservaActualizada = await prisma.reserva.update({
       where: { id: parseInt(id) },
       data: {
@@ -60,7 +63,7 @@ export async function PUT(
         telefono: reservaData.telefono,
         sala_id: horario.sala_id,
         horario_id: parseInt(reservaData.horario_id),
-        fecha: new Date(reservaData.fecha),
+        fecha: fechaLocal,
         cantidad_jugadores: parseInt(reservaData.cantidad_jugadores),
         metodo_pago: reservaData.metodo_pago,
         precio_total: parseFloat(reservaData.precio_total),

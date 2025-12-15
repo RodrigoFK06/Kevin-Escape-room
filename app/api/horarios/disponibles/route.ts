@@ -29,9 +29,12 @@ export async function GET(request: Request) {
     }));
 
     // Obtener IDs de horarios ya reservados ese día para esa sala
+    // Convertir fecha a zona horaria local
+    const fechaBusqueda = new Date(fecha + 'T00:00:00');
+    
     const reservasOcupadas = await prisma.reserva.findMany({
       where: {
-        fecha: new Date(fecha),
+        fecha: fechaBusqueda,
         sala_id: parseInt(salaId)
       },
       select: {

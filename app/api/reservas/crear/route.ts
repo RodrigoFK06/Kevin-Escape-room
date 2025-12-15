@@ -40,6 +40,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Crear la reserva
+    // Convertir fecha a objeto Date en zona horaria local (Perú UTC-5)
+    // Agregamos 'T00:00:00' para forzar medianoche local, no UTC
+    const fechaLocal = new Date(body.fecha + 'T00:00:00');
+    
     const reserva = await prisma.reserva.create({
       data: {
         cliente: body.cliente,
@@ -47,7 +51,7 @@ export async function POST(request: NextRequest) {
         telefono: body.telefono,
         sala_id: horario.sala_id,
         horario_id: parseInt(body.horario_id),
-        fecha: new Date(body.fecha),
+        fecha: fechaLocal,
         cantidad_jugadores: parseInt(body.cantidad_jugadores),
         metodo_pago: body.metodo_pago,
         precio_total: parseFloat(body.precio_total),

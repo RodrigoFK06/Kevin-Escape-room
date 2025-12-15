@@ -4,6 +4,7 @@ import "./globals.css"
 import "./fonts.css"
 import { ThemeProvider } from "@/components/ui/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
+import { MetaPixel } from "@/components/analytics/meta-pixel"
 
 export const metadata: Metadata = {
   title: "Encrypted - Escape Room",
@@ -25,6 +26,7 @@ export default function RootLayout({
         <meta name="color-scheme" content="dark" />
       </head>
       <body className="font-sans bg-[#0e1a28] text-white min-h-screen overflow-x-hidden" style={{colorScheme: 'dark'}}>
+        <MetaPixel />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
           <div className="relative z-0">{children}</div>
           <Toaster />
