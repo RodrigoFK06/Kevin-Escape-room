@@ -116,8 +116,8 @@ export default function ReservasPage() {
       let bVal: any = b[sortField];
       
       if (sortField === 'fecha') {
-        aVal = new Date(a.fecha).getTime();
-        bVal = new Date(b.fecha).getTime();
+        aVal = new Date(a.fecha + 'T00:00:00').getTime();
+        bVal = new Date(b.fecha + 'T00:00:00').getTime();
       }
       
       if (typeof aVal === 'number' && typeof bVal === 'number') {
@@ -401,7 +401,7 @@ export default function ReservasPage() {
                         <div className="space-y-1 text-sm">
                           <div className="flex items-center gap-1">
                             <Calendar className="h-3 w-3 text-gray-600" />
-                            <span className="text-gray-900">{format(new Date(reserva.fecha), 'dd/MM/yyyy', { locale: es })}</span>
+                            <span className="text-gray-900">{format(new Date(reserva.fecha + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Clock className="h-3 w-3 text-gray-600" />
@@ -514,7 +514,7 @@ export default function ReservasPage() {
                 <Input
                   id="fecha"
                   type="date"
-                  value={currentReserva.fecha ? new Date(currentReserva.fecha).toISOString().split('T')[0] : ''}
+                  value={currentReserva.fecha ? new Date(currentReserva.fecha + 'T00:00:00').toISOString().split('T')[0] : ''}
                   onChange={(e) => setCurrentReserva({...currentReserva, fecha: e.target.value})}
                 />
               </div>
