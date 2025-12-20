@@ -1,9 +1,6 @@
 'use client';
 
 import { useEffect } from "react";
-'use client';
-
-import { useEffect } from "react";
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
@@ -15,7 +12,6 @@ import { RoomReviews } from "@/components/rooms/room-reviews"
 import { RoomDifficulty } from "@/components/rooms/room-difficulty"
 import { RoomBookingWidget } from "@/components/rooms/room-booking-widget"
 import { Star, Users, Clock, Skull, Brain, Lock } from "lucide-react"
-import { MetaEvents } from "@/components/analytics/meta-pixel"
 import { MetaEvents } from "@/components/analytics/meta-pixel"
 
 // Datos simulados de las salas
