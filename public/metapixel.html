@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Propuesta Bytecore · Meta Pixel Setup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light dark; }
+    html, body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff !important; }
+      .page { box-shadow: none !important; border: 0 !important; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+  <script>
+    tailwind.config = { theme:{ extend:{ colors:{
+      brand:{ DEFAULT:'#328298', hover:'#266F87', deep:'#1D4E6A', tint:'#D6EFF2' }
+    }}}}
+  </script>
+</head>
+<body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+
+  <header class="no-print sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-neutral-900/60 shadow-sm">
+    <div class="mx-auto max-w-6xl px-3 sm:px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="inline-flex items-center gap-2 rounded-full bg-neutral-800 text-white dark:bg-white dark:text-neutral-900 px-3 py-1 text-sm font-semibold shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm-1 5h2v10h-2V7Zm-3 3h2v7H8v-7Zm8 0h2v7h-2v-7Z"/></svg>
+          Bytecore
+        </span>
+        <span class="hidden sm:inline-flex rounded-full bg-[#D6EFF2] text-[#1D4E6A] dark:bg-[#1D4E6A]/40 dark:text-[#D6EFF2] px-3 py-1 text-xs font-medium">Tracking & Analytics</span>
+      </div>
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <button id="btnQuote" role="tab" class="no-print inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold w-full sm:w-auto bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 hover:opacity-90 transition-all">
+          Cotización
+        </button>
+        <button id="btnProposal" role="tab" class="no-print inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold w-full sm:w-auto bg-neutral-200 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100 hover:opacity-90 transition-all">
+          Detalle del Contrato
+        </button>
+        <button onclick="window.print()" class="no-print w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold bg-[#328298] text-white hover:bg-[#266F87] transition-all">
+          Descargar PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl p-4 sm:p-6 lg:p-10">
+    <section class="page rounded-3xl border border-neutral-200/60 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm">
+      
+      <div class="p-6 sm:p-8">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="md:col-span-2">
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#1D4E6A] dark:text-[#D6EFF2]">Implementación Meta Pixel (ROI)</h1>
+            <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">Integración de tracking avanzado y medición de conversiones para campañas publicitarias.</p>
+          </div>
+          <div class="flex md:justify-end items-start gap-2">
+            <span class="rounded-full bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200 px-3 py-1 text-xs font-semibold">Estado: Pendiente</span>
+            <span class="rounded-full bg-[#D6EFF2] text-[#1D4E6A] dark:bg-[#1D4E6A]/40 dark:text-[#D6EFF2] px-3 py-1 text-xs font-semibold">Válido hasta: 22 Dic</span>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 p-4 flex justify-between items-center">
+          <div>
+            <h3 class="font-semibold text-sm text-neutral-700 dark:text-neutral-300">Cliente</h3>
+            <p class="text-sm mt-1 font-medium">KEVIN RODOLFO ESQUIVEL LUNA</p>
+          </div>
+          <div class="text-right">
+             <h3 class="font-semibold text-sm text-neutral-700 dark:text-neutral-300">Fecha de Emisión</h3>
+            <p class="text-sm mt-1">20 de Diciembre, 2025</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-neutral-200 dark:border-neutral-800"></div>
+
+      <section id="quote" class="p-6 sm:p-8 space-y-8 animate-in fade-in duration-300">
+        
+        <div class="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/80 p-5">
+          <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#328298]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            Resumen de Inversión
+          </h2>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border-separate border-spacing-y-2">
+              <thead>
+                <tr class="text-left text-neutral-500 text-xs uppercase tracking-wide">
+                  <th class="py-2 px-3">Servicio</th>
+                  <th class="py-2 px-3">Alcance Técnico</th>
+                  <th class="py-2 px-3 text-right">Tiempo Est.</th>
+                  <th class="py-2 px-3 text-right">Inversión Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-[#D6EFF2]/30 dark:bg-[#1D4E6A]/20 border border-[#328298]">
+                  <td class="py-4 px-3 font-bold text-[#328298] align-top">
+                    Implementación Integral<br>Meta Pixel
+                  </td>
+                  <td class="py-4 px-3 text-neutral-600 dark:text-neutral-300 align-top">
+                    <p class="font-medium mb-1">Integración Fullstack (Frontend + Backend):</p>
+                    <ul class="list-disc pl-4 space-y-1 text-xs sm:text-sm">
+                      <li><strong>5 Eventos de Conversión:</strong> ViewContent, InitiateCheckout, Schedule, Purchase (ROI Real), Contact.</li>
+                      <li><strong>Ingeniería de Datos:</strong> Prevención de duplicados y validación de moneda (PEN).</li>
+                      <li><strong>Testing:</strong> Validación técnica con Meta Pixel Helper.</li>
+                    </ul>
+                  </td>
+                  <td class="py-4 px-3 text-right font-medium align-top whitespace-nowrap">3 Semanas<br><span class="text-xs text-neutral-500">(Enero 2026)</span></td>
+                  <td class="py-4 px-3 text-right font-bold text-lg align-top text-[#328298]">S/ 600.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4 text-sm">
+           <div class="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 p-5">
+             <h3 class="font-semibold mb-2 flex items-center gap-2">
+                <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Plazos y Entregas
+             </h3>
+             <p class="text-neutral-600 dark:text-neutral-400 text-justify">
+               Debido a las festividades de fin de año, el servicio tiene una duración estimada de <strong>3 semanas hábiles</strong>. La fecha máxima de entrega programada es para el <strong>21-22 de Enero de 2026</strong>.
+             </p>
+           </div>
+           <div class="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 p-5">
+             <h3 class="font-semibold mb-2 flex items-center gap-2">
+                <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                Forma de Pago
+             </h3>
+             <ul class="list-disc pl-4 text-neutral-600 dark:text-neutral-400 space-y-1">
+                 <li><strong>100% (S/ 600)</strong> al iniciar (Pago completo debido a descuento aplicado)</li>
+             </ul>
+           </div>
+        </div>
+        
+        <div class="text-center mt-8">
+            <p class="text-xs text-neutral-400 uppercase tracking-widest">Bytecore</p>
+        </div>
+      </section>
+
+      <section id="proposal" class="hidden p-6 sm:p-8 space-y-8 animate-in fade-in duration-300">
+        <div class="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/80 p-5">
+          <h2 class="text-xl font-bold text-center mb-6 uppercase tracking-wide text-[#1D4E6A] dark:text-[#D6EFF2]">Términos y Alcance Técnico</h2>
+          
+          <div class="space-y-8 text-sm text-justify leading-relaxed">
+            
+            <div>
+              <h3 class="font-bold text-base text-neutral-900 dark:text-white mb-2 flex items-center gap-2">
+                <span class="bg-[#328298] text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                OBJETO DEL SERVICIO
+              </h3>
+              <p class="pl-8 text-neutral-600 dark:text-neutral-300">Implementación profesional de sistema de tracking y medición de conversiones integrado al sistema de reservas de Encrypted Escape Room, permitiendo medir con precisión el Retorno de Inversión (ROI).</p>
+            </div>
+
+            <div>
+              <h3 class="font-bold text-base text-neutral-900 dark:text-white mb-4 flex items-center gap-2">
+                <span class="bg-[#328298] text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+                ALCANCE TÉCNICO DETALLADO
+              </h3>
+              
+              <div class="pl-8 grid gap-4">
+                <div class="bg-neutral-50 dark:bg-neutral-800 p-4 rounded-lg border-l-4 border-[#328298]">
+                    <h4 class="font-bold text-[#328298] mb-2">A. Configuración Base (Next.js 15)</h4>
+                    <ul class="list-disc pl-4 space-y-1 text-neutral-600 dark:text-neutral-300">
+                        <li>Instalación de código base en todas las páginas.</li>
+                        <li>Configuración de variables de entorno seguras (`.env.local`).</li>
+                        <li>Implementación de `Suspense Boundary` para optimización.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-neutral-50 dark:bg-neutral-800 p-4 rounded-lg border-l-4 border-[#328298]">
+                    <h4 class="font-bold text-[#328298] mb-2">B. Eventos Personalizados (Funnel)</h4>
+                    <ul class="space-y-2 text-neutral-600 dark:text-neutral-300">
+                        <li class="flex gap-2"><span class="text-green-500">✓</span> <strong>ViewContent:</strong> Usuario ve detalles de una sala.</li>
+                        <li class="flex gap-2"><span class="text-green-500">✓</span> <strong>InitiateCheckout:</strong> Click en el botón "Reservar".</li>
+                        <li class="flex gap-2"><span class="text-green-500">✓</span> <strong>Schedule:</strong> Solicitud de reserva enviada (pendiente).</li>
+                        <li class="flex gap-2"><span class="text-green-500">✓</span> <strong>Purchase:</strong> Confirmación administrativa (ROI Real en Soles).</li>
+                        <li class="flex gap-2"><span class="text-green-500">✓</span> <strong>Contact:</strong> Clicks en WhatsApp, teléfono o email.</li>
+                    </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-bold text-base text-neutral-900 dark:text-white mb-2 flex items-center gap-2">
+                <span class="bg-[#328298] text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
+                CRONOGRAMA DE EJECUCIÓN (Enero 2026)
+              </h3>
+              <div class="pl-8 space-y-3">
+                  <div class="flex items-start gap-3">
+                      <div class="min-w-[80px] text-xs font-bold uppercase text-neutral-500 pt-1">Semana 1</div>
+                      <div>
+                          <strong class="block text-neutral-900 dark:text-white">Fase 1: Desarrollo e Implementación</strong>
+                          <p class="text-xs text-neutral-500">Codificación de eventos, lógica de negocio y hooks en Next.js.</p>
+                      </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                      <div class="min-w-[80px] text-xs font-bold uppercase text-neutral-500 pt-1">Semana 2</div>
+                      <div>
+                          <strong class="block text-neutral-900 dark:text-white">Fase 2: Testing y Validación</strong>
+                          <p class="text-xs text-neutral-500">Pruebas de compilación, verificación de eventos y ajustes de precisión.</p>
+                      </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                      <div class="min-w-[80px] text-xs font-bold uppercase text-neutral-500 pt-1">Semana 3</div>
+                      <div>
+                          <strong class="block text-neutral-900 dark:text-white">Fase 3: Configuración Final y Entrega</strong>
+                          <p class="text-xs text-neutral-500">Inserción del Pixel ID del cliente, validación en vivo y cierre.</p>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            
+             <div class="pl-8">
+                 <div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                     <p class="text-yellow-800 dark:text-yellow-200 text-xs font-semibold">
+                         NOTA SOBRE PLAZOS Y VALIDEZ:<br>
+                         Esta cotización es válida hasta el 22 de Diciembre, 2025. Debido a las festividades de fin de año, el servicio tiene una duración estimada de 3 semanas hábiles, con fecha máxima de entrega programada para el 21-22 de Enero de 2026.
+                     </p>
+                 </div>
+            </div>
+
+          </div>
+
+          <div class="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+             <div class="grid md:grid-cols-2 gap-10 text-sm">
+              <div class="flex flex-col gap-8">
+                <div class="border-b border-dashed border-neutral-400 dark:border-neutral-600 h-16 flex items-end justify-center pb-2">
+                    </div>
+                <div class="text-center">
+                    <p class="font-bold">KEVIN RODOLFO ESQUIVEL LUNA</p>
+                    <p class="text-xs text-neutral-500">Aceptación del Cliente</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-8">
+                <div class="border-b border-dashed border-neutral-400 dark:border-neutral-600 h-16 flex items-end justify-center pb-2">
+                     <span class="font-script text-2xl text-[#328298]">Rodrigo Torres</span>
+                </div>
+                <div class="text-center">
+                    <p class="font-bold">BYTECORE</p>
+                    <p class="text-xs text-neutral-500">Proveedor de Servicios</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <script>
+    const btnQuote = document.getElementById('btnQuote');
+    const btnProposal = document.getElementById('btnProposal');
+    const quote = document.getElementById('quote');
+    const proposal = document.getElementById('proposal');
+
+    const SELECTED = ['bg-[#328298]','text-white'];
+    const UNSELECTED = ['bg-neutral-200','text-neutral-900'];
+    const SELECTED_DARK = ['dark:bg-[#D6EFF2]','dark:text-[#0C2F3F]'];
+    const UNSELECTED_DARK = ['dark:bg-neutral-800','dark:text-neutral-100'];
+
+    function applyActive(btn, active) {
+      if (active) {
+        btn.classList.add(...SELECTED, ...SELECTED_DARK);
+        btn.classList.remove(...UNSELECTED, ...UNSELECTED_DARK);
+      } else {
+        btn.classList.add(...UNSELECTED, ...UNSELECTED_DARK);
+        btn.classList.remove(...SELECTED, ...SELECTED_DARK);
+      }
+    }
+
+    function setActive(which) {
+      if (which === 'quote') {
+        quote.classList.remove('hidden');
+        proposal.classList.add('hidden');
+        applyActive(btnQuote, true);
+        applyActive(btnProposal, false);
+      } else {
+        quote.classList.add('hidden');
+        proposal.classList.remove('hidden');
+        applyActive(btnQuote, false);
+        applyActive(btnProposal, true);
+      }
+    }
+
+    applyActive(btnQuote, true);
+    applyActive(btnProposal, false);
+
+    btnQuote.addEventListener('click', () => setActive('quote'));
+    btnProposal.addEventListener('click', () => setActive('proposal'));
+  </script>
+</body>
+</html>

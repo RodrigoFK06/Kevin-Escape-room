@@ -13,6 +13,7 @@ import {
 import { motion } from "framer-motion"
 import { Logo } from "@/components/ui/logo"
 import Image from "next/image"
+import { MetaEvents } from "@/components/analytics/meta-pixel"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -155,15 +156,23 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 group">
                 <Phone className="h-5 w-5 text-brand-gold flex-shrink-0 group-hover:animate-pulse" />
-                <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
+                <a 
+                  href="tel:+51981575968"
+                  onClick={() => MetaEvents.contact('phone')}
+                  className="text-sm text-gray-400 group-hover:text-white transition-colors cursor-pointer"
+                >
                   +51 981 575 968
-                </span>
+                </a>
               </li>
               <li className="flex items-center gap-3 group">
                 <Mail className="h-5 w-5 text-brand-gold flex-shrink-0 group-hover:animate-pulse" />
-                <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
+                <a 
+                  href="mailto:contacto@encryptedperu.com"
+                  onClick={() => MetaEvents.contact('email')}
+                  className="text-sm text-gray-400 group-hover:text-white transition-colors cursor-pointer"
+                >
                   contacto@encryptedperu.com
-                </span>
+                </a>
               </li>
             </ul>
             <div className="mt-4 p-3 bg-brand-gold/10 border border-brand-gold/30 rounded-lg">

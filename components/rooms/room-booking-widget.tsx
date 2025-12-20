@@ -12,6 +12,7 @@ import { format } from "date-fns"
 import { es } from "date-fns/locale"
 import { CalendarIcon, Clock, Users, CreditCard } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { MetaEvents } from "@/components/analytics/meta-pixel"
 
 interface RoomBookingWidgetProps {
   room: any
@@ -35,6 +36,9 @@ export function RoomBookingWidget({ room }: RoomBookingWidgetProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+
+    // ✅ Disparar evento InitiateCheckout cuando hace clic en reservar
+    MetaEvents.initiateReservation(room.name, totalPrice);
 
     // Simulación de envío
     setTimeout(() => {

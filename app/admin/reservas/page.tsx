@@ -13,6 +13,7 @@ import { Search, Filter, Calendar, User, Mail, Phone, DoorOpen, Clock, CheckCirc
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { useToast } from '@/hooks/use-toast';
+import { MetaEvents } from '@/components/analytics/meta-pixel';
 
 interface Reserva {
   id: number;
@@ -151,6 +152,15 @@ export default function ReservasPage() {
       });
 
       if (response.ok) {
+        // ✅ Disparar evento Meta Pixel Purchase cuando se confirma la reserva
+        if (nuevoEstado === 'confirmada') {
+          MetaEvents.completePurchase(
+            reserva.sala?.nombre || 'Sala',
+            reserva.precio_total,
+            reserva.id
+          );
+        }
+
         toast({
           title: "Éxito",
           description: `Estado cambiado a ${nuevoEstado}`

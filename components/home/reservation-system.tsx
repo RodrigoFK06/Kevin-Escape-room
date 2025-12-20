@@ -26,6 +26,7 @@ import Image from "next/image";
 import { DatePicker } from "@/components/ui/date-picker";
 import { fetchHorariosDisponibles } from "@/lib/api-horarios";
 import { useToast } from "@/components/ui/use-toast";
+import { MetaEvents } from "@/components/analytics/meta-pixel";
 
 type TimeSlot = {
   id: string;
@@ -322,6 +323,8 @@ function ReservationSystem() {
         throw new Error(errorData.detalle || "Error al crear la reserva");
       }
 
+      const reservaData = await response.json();
+
       // ✅ 2. Luego enviamos el correo desde el backend Next.js (SMTP GoDaddy)
       const montoTotal = players ? calculateTotalPrice(Number(players)) : 0;
       const montoReserva = paymentAmountOption === "adelanto" ? 50 : montoTotal;
@@ -350,8 +353,20 @@ function ReservationSystem() {
         }),
       });
 
+      // ✅ 3. Disparar evento Meta Pixel Schedule (reserva pendiente)
+      const roomName = selectedRoom === "codigo-enigma"
+        ? "El Paciente 136"
+        : selectedRoom === "la-boveda"
+          ? "La Secuencia Perdida"
+          : "El Último Conjuro";
+      
+      MetaEvents.scheduleReservation(
+        roomName,
+        montoTotal,
+        reservaData.id || 0
+      );
 
-      // ✅ 3. Feedback visual
+      // ✅ 4. Feedback visual
       setIsSuccess(true);
       toast({
         title: "¡Reserva exitosa!",

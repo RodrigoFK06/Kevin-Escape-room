@@ -97,23 +97,35 @@ export const MetaEvents = {
     });
   },
 
-  // Evento cuando se inicia una reserva
+  // Evento cuando se inicia una reserva (botón de reservar)
   initiateReservation: (roomName: string, price: number) => {
     trackEvent('InitiateCheckout', {
       content_name: roomName,
       value: price,
-      currency: 'USD',
+      currency: 'PEN',
     });
   },
 
-  // Evento cuando se completa una reserva
-  completeReservation: (roomName: string, price: number, reservationId: number) => {
+  // ✅ EVENTO SCHEDULE: Cuando el cliente completa la reserva (pendiente de aprobación)
+  scheduleReservation: (roomName: string, price: number, reservationId: number) => {
+    trackEvent('Schedule', {
+      content_name: roomName,
+      value: price,
+      currency: 'PEN',
+      content_ids: [reservationId.toString()],
+      content_type: 'reservation',
+      status: 'scheduled'
+    });
+  },
+
+  // ✅ EVENTO PURCHASE: Cuando el admin confirma la reserva (venta real)
+  completePurchase: (roomName: string, price: number, reservationId: number) => {
     trackEvent('Purchase', {
       content_name: roomName,
       value: price,
-      currency: 'USD',
+      currency: 'PEN',
       content_ids: [reservationId.toString()],
-      content_type: 'reservation',
+      content_type: 'confirmed_reservation',
     });
   },
 
